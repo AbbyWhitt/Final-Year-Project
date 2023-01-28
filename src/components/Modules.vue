@@ -36,39 +36,36 @@
                       <v-text-field
                         label="Module Code*"
                         required
+                        variant="underlined"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="Module Name*"
                         required
+                        variant="underlined"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
-                      <v-text-field label="Assignment Name"></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-text-field label="Due Date*" required></v-text-field>
-                    </v-col>
+                  </v-row>
+
+                  <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-autocomplete
-                        label="Assignment Type"
-                        :items="[
-                          'Online Exam',
-                          'In-person Exam',
-                          'Coursework',
-                          'Practical',
-                          'Formative',
-                        ]"
+                        label="Module Semester"
+                        :items="['Sem 1', 'Sem 2']"
                         variant="underlined"
                       ></v-autocomplete>
                     </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-checkbox label="Has Multiple Assignments"></v-checkbox>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        variant="underlined"
+                        label="Last Assignment Due Date"
+                        type="date"
+                      ></v-text-field>
                     </v-col>
                   </v-row>
                 </v-container>
-                <small>*indicates required field</small>
+                <small style="color:red;">*indicates required field</small>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -93,17 +90,15 @@
       </v-row>
     </v-container>
 
-
     <v-container>
       <v-row>
         <v-table fixed-header class="w-screen">
           <thead>
             <tr>
               <th class="text-left">Module Code</th>
-              <th class="text-left">Assigment Name</th>
-              <th class="text-left">Assignment Type</th>
-              <th class="text-left">Due Date</th>
-              <th class="text-left">Progress (%)</th>
+              <th class="text-left">Module Name</th>
+              <th class="text-left">Semester</th>
+              <th class="text-left">Last Assignment Due</th>
             </tr>
           </thead>
           <tbody>
