@@ -1,7 +1,7 @@
 <template>
   <v-app-bar class="w-screen" :elevation="0" app color="#449682">
     <template v-slot:prepend>
-      <div class="text-h5 title">StudyBuddy</div>
+      <div class="text-h5 title font-weight-light">StudyBuddy</div>
     </template>
 
     <div class="pr-16 mr-16" id="clock" style="color: white; font-size: 20px;">
