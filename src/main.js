@@ -6,6 +6,7 @@ import { loadFonts } from "./plugins/webfontloader";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -13,7 +14,7 @@ import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyADsbnxx07GauNIzs36bDYibnz2PAbRjWw",
+  apiKey: "AIzaSyADsbnxx07GauNIzs36bDYibnz2PAbRjWw", //TODO: never make public.
   authDomain: "ci601fyp.firebaseapp.com",
   projectId: "ci601fyp",
   storageBucket: "ci601fyp.appspot.com",
@@ -25,9 +26,12 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-
+const db = getFirestore(app);
 
 loadFonts();
 
 createApp(App).use(router).use(vuetify).mount("#app");
+
+export {
+  db
+}
