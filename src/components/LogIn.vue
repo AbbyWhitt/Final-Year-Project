@@ -10,9 +10,9 @@
 
       <v-container>
         <v-row rows="2">
-        <v-col md="4" offset-md="4">
+        <v-col md="4" offset-md="4" class="mt-auto">
           <v-card class="pa-10">
-            <h1>Sign Into Account</h1>
+            <h1>Sign Into StudyBuddy</h1>
             <v-text-field
             label="Email"
             placeholder="example@email.com"
@@ -23,7 +23,6 @@
 
             <v-text-field
             label="Password"
-            placeholder="Password123!"
             outlined
             v-model="password"
             variant="underlined"
@@ -75,6 +74,7 @@ const login = () => {
 
       router.push("/Dashboard"); //once logged in this sends to home
     })
+
     .catch((error) => {
       console.log(error.code);
       switch (error.code) {
@@ -101,5 +101,9 @@ const signInWithGoogle = () => {};
 <style>
 .btn{
     color: white !important;
+}
+.h-screen{
+  background: radial-gradient(circle,#7bc3b2 15%,#58B39D 25%,#3d8674 83%);
+  display: grid;
 }
 </style>
