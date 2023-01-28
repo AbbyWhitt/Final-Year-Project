@@ -47,12 +47,6 @@
             @click="signInWithGoogle"
             elevation="3"
             >Login with Google</v-btn>
-            <v-btn
-            class="my-3"
-            prepend-icon="mdi-google"
-            @click="signInWithGoogle"
-            elevation="3"
-            >Login with Google</v-btn>
             </div>
           </v-card>
         </v-col>
