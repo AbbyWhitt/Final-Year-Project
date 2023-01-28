@@ -18,7 +18,7 @@
       <router-link class="items" to="Modules">
         <v-list-item
           class="py-5"
-          prepend-icon="mdi-book-open-variant"
+          prepend-icon="mdi-book-open-blank-variant"
           value="Module"
         >
           <v-list-item-title class="itemsTitle"> My Modules </v-list-item-title>

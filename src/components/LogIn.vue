@@ -98,7 +98,7 @@ const signInWithGoogle = () => {};
 
 </script>
 
-<style>
+<style scoped>
 .btn{
     color: white !important;
 }
