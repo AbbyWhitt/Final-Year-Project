@@ -2,16 +2,14 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="10">
+        <v-col cols="8">
           <v-card class="d-flex" flat rounded="0">
             <v-icon
               icon="mdi-book-open-variant"
               size="large"
               class="pa-6"
             ></v-icon>
-            <v-card-title class="text-h5 ml-n3">
-              Modules
-            </v-card-title>
+            <v-card-title class="text-h5 ml-n3"> Modules </v-card-title>
           </v-card>
         </v-col>
 
@@ -38,6 +36,7 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           label="Module Code*"
+                          v-model="modContent.modCode"
                           required
                           variant="underlined"
                         ></v-text-field>
@@ -45,6 +44,7 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           label="Module Name*"
+                          v-model="modContent.modName"
                           required
                           variant="underlined"
                         ></v-text-field>
@@ -55,14 +55,18 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-autocomplete
                           label="Module Semester"
-                          :items="['Sem 1', 'Sem 2']"
+                          v-model="modContent.semester"
+                          :items="semesters"
                           variant="underlined"
+                          item-title="title"
+                          item-value="value"
                         ></v-autocomplete>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           variant="underlined"
                           label="Last Assignment Due Date"
+                          v-model="modContent.lastAssignDue"
                           type="date"
                         ></v-text-field>
                       </v-col>
@@ -72,21 +76,25 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue-darken-1"
-                    variant="text"
-                    @click="dialog = false"
-                  >
-                    Close
+                  <v-btn color="#449682" variant="text" type="submit">
+                    Create
                   </v-btn>
-                  <v-btn color="blue-darken-1" variant="text" type="submit">
-                    Save
+                  <v-btn color="black" variant="text" @click="dialog = false">
+                    Cancel
                   </v-btn>
                 </v-card-actions>
               </v-form>
             </v-card>
           </v-dialog>
         </v-col>
+        <v-btn
+          rounded="lg"
+          class="mt-4 text"
+          color="#449682"
+          @click="edit = !edit"
+        >
+          {{ btnText }}
+        </v-btn>
       </v-row>
     </v-container>
 
@@ -99,6 +107,8 @@
               <th class="text-left">Module Name</th>
               <th class="text-left">Semester</th>
               <th class="text-left">Last Assignment Due</th>
+              <th />
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -106,7 +116,31 @@
               <td>{{ mod.modCode }}</td>
               <td>{{ mod.modName }}</td>
               <td>{{ mod.semester }}</td>
-              <td>{{ mod.lastAssignmentDue.toDate().toLocaleDateString({year: 'numeric', month: 'long', day: 'numeric'}) }}</td>
+              <td>
+                {{
+                  mod.lastAssignmentDue.toDate().toLocaleDateString({
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                }}
+              </td>
+              <td>
+                <v-btn
+                  v-if="edit"
+                  rounded="pill"
+                  size="small"
+                  color="error"
+                  @click="deleteModule(mod)"
+                  >Delete</v-btn
+                >
+              </td>
+              <td>
+                <v-btn v-if="edit" rounded="pill" size="small" color="info"
+                  >Update</v-btn
+                >
+              </td>
+              <!-- icon="mdi-trash-can-outline" color="error" -->
             </tr>
           </tbody>
         </v-table>
@@ -116,56 +150,71 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { db } from "@/main";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  addDoc,
+  deleteDoc,
+} from "firebase/firestore";
 
 export default {
   name: "Module",
   data: () => ({
     dialog: false,
+    edit: false,
     mods: [],
+    modContent: {
+      modCode: null,
+      modName: null,
+      semester: null,
+      lastAssignDue: null,
+    },
+    semesters: [
+      { title: "Sem 1", value: 1 },
+      { title: "Sem 2", value: 2 },
+    ],
   }),
-
+  computed: {
+    btnText() {
+      return this.edit ? "Cancel Editing" : "Edit Modules";
+    },
+  },
   methods: {
-    addModule() {
-      console.log("AddModule");
+    async addModule() {
+      await addDoc(collection(db, "modules"), {
+        modName: this.modContent.modName,
+        modCode: this.modContent.modCode,
+        semester: this.modContent.semester,
+        lastAssignDue: new Date(this.modContent.lastAssignDue),
+      });
+      this.dialog = false;
+    },
+    deleteModule(module) {
+      deleteDoc(doc(db, "modules", module.Id));
     },
   },
 
-  async mounted() {
-    // const querySnapshot = await getDocs(collection(db, "modules"));
-    // let fbMod = []
-    // querySnapshot.forEach((doc) => {
-    // // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    //   const mod = {
-    //     modCode: doc.data().modCode,
-    //     modName: doc.data().modName,
-    //     semester: doc.data().semester,
-    //     lastAssignmentDue: doc.data().lastAssignDue
-    //   }
-    //   fbMod.push(mod)
-    // });
-    // this.mods= fbMod
-
+  mounted() {
     onSnapshot(collection(db, "modules"), (querySnapshot) => {
       const fbMod = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
         const mod = {
           modCode: doc.data().modCode,
           modName: doc.data().modName,
           semester: doc.data().semester,
           lastAssignmentDue: doc.data().lastAssignDue,
+          Id: doc.id,
         };
         fbMod.push(mod);
       });
-      fbMod.sort((a,b) => (a.modCode > b.modCode) ? 1 : ((b.modCode > a.modCode) ? -1 : 0))
+
+      fbMod.sort((a, b) =>
+        a.modCode > b.modCode ? 1 : b.modCode > a.modCode ? -1 : 0
+      );
       this.mods = fbMod;
     });
-    
-    console.log(this.mods)
   },
 
   unmounted() {},
