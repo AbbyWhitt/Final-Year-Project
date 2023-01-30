@@ -1,7 +1,5 @@
 <template>
     <v-app>
-    <AppBar />
-    <SideBar />
     <v-main>
       <registerAccount />
     </v-main>
