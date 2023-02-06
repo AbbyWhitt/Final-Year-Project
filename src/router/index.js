@@ -4,6 +4,7 @@ import FlashcardSet from "../views/FlashcardSet.vue";
 import Module from "../views/Module.vue";
 import SignIn from "../views/SignIn.vue";
 import Register from "../views/Register.vue";
+import Account from "../views/Account.vue";
 // import Modules from "../views/"
 
 const routes = [
@@ -27,15 +28,15 @@ const routes = [
     name: "Modules",
     component: Module,
   }, 
-  // {
-  //   path: "/Login",
-  //   name: "login",
-  //   component: SignIn,
-  // },
   {
     path: "/CreateAccount",
     name: "register",
     component: Register,
+  },
+  {
+    path: "/Profile",
+    name: "profile",
+    component: Account,
   }
   /* {
     path: "/about",

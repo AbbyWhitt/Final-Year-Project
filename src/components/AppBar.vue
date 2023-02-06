@@ -9,9 +9,13 @@
     </div>
 
     <template v-slot:append>
+      <router-link to="/Profile">
+      <v-btn>
       <v-avatar>
         <v-icon dark size="40" style="color: white"> mdi-account-circle </v-icon>
       </v-avatar>
+      </v-btn>
+      </router-link>
     </template>
   </v-app-bar>
 </template>
