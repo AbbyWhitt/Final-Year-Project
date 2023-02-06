@@ -4,22 +4,31 @@
       <v-container>
         <v-col cols="4">
           <v-card>
-            <v-table fixed-header height="500px">
+            <v-table fixed-header height="760px">
               <thead>
                 <tr>
-                  <th class="text-left">Module Code</th>
+                  <th class="text-left">Module Name</th>
 
                   <th class="text-left">Assignment</th>
+
+                  <th class="text-left">Due Date</th>
 
                   <th class="text-left">Progress</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr v-for="item in desserts" :key="item.name">
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.calories }}</td>
-                  <td>{{ item.progress }}</td>
+                <tr v-for="mod in mods" :key="mod.modCode">
+                  <td>{{ mod.modName }}</td>
+                  <td>
+                {{
+                  mod.lastAssignmentDue.toDate().toLocaleDateString({
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                }}
+                </td>
                 </tr>
               </tbody>
             </v-table>
@@ -31,56 +40,35 @@
 </template>
 
 <script>
+import { db } from "@/main";
+import { collection, onSnapshot } from "firebase/firestore";
+
 export default {
-  data() {
-    return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          progress: "20%",
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          progress: "50%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          progress: "60%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-        },
-        {
-          name: "Donut",
-          calories: 452,
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-        },
-      ],
-    };
+  data: () => ({
+    mods: [],
+    modContent: {
+      modName: null,
+      lastAssignDue: null,
+    },
+  }),
+
+  mounted() {
+    onSnapshot(collection(db, "modules"), (querySnapshot) => {
+      const fbMod = [];
+      querySnapshot.forEach((doc) => {
+        const mod = {
+          modName: doc.data().modName,
+          lastAssignmentDue: doc.data().lastAssignDue,
+          Id: doc.id,
+        };
+        fbMod.push(mod);
+      });
+      
+      this.mods = fbMod;
+    });
   },
+
+  unmounted() {},
 };
 </script>
 
