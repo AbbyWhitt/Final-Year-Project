@@ -158,6 +158,7 @@ import {
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export default {
   name: "Module",
@@ -175,6 +176,7 @@ export default {
       { title: "Sem 1", value: 1 },
       { title: "Sem 2", value: 2 },
     ],
+    unsubscribe: null,
   }),
   computed: {
     btnText() {
@@ -183,7 +185,8 @@ export default {
   },
   methods: {
     async addModule() {
-      await addDoc(collection(db, "modules"), {
+      const currentUser = getAuth().currentUser;
+      await addDoc(collection(db, "users", currentUser.uid, "modules"), {
         modName: this.modContent.modName,
         modCode: this.modContent.modCode,
         semester: this.modContent.semester,
@@ -197,7 +200,8 @@ export default {
   },
 
   mounted() {
-    onSnapshot(collection(db, "modules"), (querySnapshot) => {
+    const currentUser = getAuth().currentUser;
+    onSnapshot(collection(db, "users", currentUser.uid, "modules"), (querySnapshot) => {
       const fbMod = [];
       querySnapshot.forEach((doc) => {
         const mod = {

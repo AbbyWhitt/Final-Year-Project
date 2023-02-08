@@ -104,6 +104,7 @@ const login = () => {
         default:
           errorMsg.value = "Email or Password was incorrect";
           break;
+          
       }
     });
 };

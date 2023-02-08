@@ -19,6 +19,15 @@
               <h1>Create a StudyBuddy Account</h1>
               <v-text-field
                 type="text"
+                label="Name"
+                placeholder="John"
+                outlined
+                v-model="name"
+                variant="underlined"
+              ></v-text-field>
+
+              <v-text-field
+                type="text"
                 label="Email"
                 placeholder="example@email.com"
                 outlined
@@ -34,7 +43,10 @@
                 type="password"
               ></v-text-field>
 
-              <v-checkbox label="*Tick here to agree to the StudyBuddy T&Cs"></v-checkbox>  <!-- TODO: Make T&Cs page and link it back here and make create button disabled until ticked.  -->
+              <v-checkbox
+                label="*Tick here to agree to the StudyBuddy T&Cs"
+              ></v-checkbox>
+              <!-- TODO: Make T&Cs page and link it back here and make create button disabled until ticked.  -->
 
               <p v-if="errorMsg">{{ errorMsg }}</p>
               <div style="text-align: center">
@@ -57,10 +69,12 @@
                   >Login with Google</v-btn
                 >
 
-                  <v-divider />
+                <v-divider />
 
                 <router-link to="/">
-                 <v-btn style="color: #3d8674;" variant="plain">Back to Login</v-btn>
+                  <v-btn style="color: #3d8674" variant="plain"
+                    >Back to Login</v-btn
+                  >
                 </router-link>
               </div>
             </v-card>
@@ -74,25 +88,46 @@
 <script setup>
 import { ref } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc} from "firebase/firestore";
+import { db } from "@/main";
 import { useRouter } from "vue-router";
 const email = ref("");
 const password = ref("");
 const router = useRouter();
+const name = ref("")
 
-const register = () => {
+const register = async () => {
+  try{
   const auth = getAuth(); //This allows the user sigin to be cached in local storage to stay logged in even in new tabs
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
-      console.log("Success Registration!");
+  const cred = await createUserWithEmailAndPassword(auth, email.value, password.value)
+  const userData = {
+    name: name.value,
+    email: email.value,
+  }
+  await setDoc(doc(db, "users", cred.user.uid), userData );
+  
+  console.log(auth.currentUser); //this is for cached signin
 
-      console.log(auth.currentUser); //this is for cached signin
-
-      router.push("/Dashboard"); //once logged in this sends to home
-    })
-    .catch((error) => {
+  router.push("/Dashboard"); //once logged in this sends to home
+  }
+    catch(error){
       console.log(error.code);
-      alert(error.message);
-    });
+      switch (error.code) {
+        case "auth/invalid-email":
+          errorMsg.value = "Invalid Email Address";
+          break;
+        case "auth/wrong-password":
+          errorMsg.value = "Password must have at least 6 characters";
+          break;
+        case "auth/uid-already-exists":
+          errorMsg.value = "A User with this email already exsits"
+          break;
+        default:
+          errorMsg.value = "Unable to create user, please check Email is vaild";
+          break;
+          
+      }
+    };
 };
 
 const signInWithGoogle = () => {};
