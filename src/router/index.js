@@ -5,6 +5,7 @@ import Module from "../views/Module.vue";
 import SignIn from "../views/SignIn.vue";
 import Register from "../views/Register.vue";
 import Account from "../views/Account.vue";
+import Flashcards from "../views/Flashcards.vue";
 // import Modules from "../views/"
 
 const routes = [
@@ -37,7 +38,15 @@ const routes = [
     path: "/Profile",
     name: "profile",
     component: Account,
-  }
+  },
+  {
+    path: "/RevisionCards/:setId",
+    name: "flashcards",
+    components: {
+      default: Flashcards
+    },
+    props: { default: true }
+  },
   /* {
     path: "/about",
     name: "about",
