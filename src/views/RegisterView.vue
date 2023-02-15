@@ -1,7 +1,7 @@
 <template>
     <v-app>
     <v-main>
-      <registerAccount />
+      <Register />
     </v-main>
   </v-app>
 </template>
@@ -11,7 +11,7 @@ import { defineComponent } from "vue";
 
 // Components
 import SideBar from "../components/SideBar.vue";
-import registerAccount from "../components/registerAccount.vue";
+import Register from "../components/Register.vue";
 import AppBar from "../components/AppBar.vue";
 
 export default defineComponent({
@@ -20,7 +20,7 @@ export default defineComponent({
   components: {
     AppBar,
     SideBar,
-    registerAccount,
+    Register,
   },
 });
 </script>

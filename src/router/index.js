@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import FlashcardSet from "../views/FlashcardSet.vue";
-import Module from "../views/Module.vue";
-import SignIn from "../views/SignIn.vue";
-import Register from "../views/Register.vue";
-import Account from "../views/Account.vue";
-import Flashcards from "../views/Flashcards.vue";
+import FlashcardSetView from "../views/FlashcardSetView.vue";
+import ModuleView from "../views/ModuleView.vue";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import AccountView from "../views/AccountView.vue";
+import FlashcardsView from "../views/FlashcardsView.vue";
 // import Modules from "../views/"
 
 const routes = [
   {
     path: "/",
     name: "login",
-    component: SignIn,
+    component: LoginView,
   },
   {
     path: "/Dashboard",
@@ -22,28 +22,28 @@ const routes = [
   {
     path: "/Flashcards",
     name: "FlashcardSets",
-    component: FlashcardSet,
+    component: FlashcardSetView,
   },
   {
     path: "/Modules",
     name: "Modules",
-    component: Module,
+    component: ModuleView,
   }, 
   {
     path: "/CreateAccount",
     name: "register",
-    component: Register,
+    component: RegisterView,
   },
   {
     path: "/Profile",
     name: "profile",
-    component: Account,
+    component: AccountView,
   },
   {
     path: "/RevisionCards/:setId",
     name: "flashcards",
     components: {
-      default: Flashcards
+      default: FlashcardsView
     },
     props: { default: true }
   },

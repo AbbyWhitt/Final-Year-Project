@@ -110,6 +110,7 @@ export default {
   created() {
     const currentUser = getAuth().currentUser;
     onSnapshot(collection(db, "users", currentUser.uid, "flashcard-sets"), (querySnapshot) => {
+      this.flashcardSets = []; //clear array before pushing more info otherwise it renders double
       querySnapshot.forEach((doc) => {
         this.flashcardSets.push({
           uid: doc.id,
