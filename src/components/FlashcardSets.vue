@@ -46,7 +46,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#449682" variant="text" type="submit">
+                  <v-btn color="#449682" variant="text" type="submit" @click="reset">
                     Create
                   </v-btn>
                   <v-btn color="black" variant="text" @click="dialog = false">
@@ -68,8 +68,8 @@
         :key="item.uid"
         cols="12"
         sm="3" >
-        <router-link :to="{ name: 'flashcards', params: {setId: item.uid}}">
-        <v-card class="pa-5 ma-3"> 
+        <router-link class="title" :to="{ name: 'flashcards', params: {setId: item.uid}}">
+        <v-card class="pa-5 ma-3" color="#d3ebe5"> 
           <v-card-title class="pa-15 text-center">
             {{item.name}} 
           </v-card-title>
@@ -105,6 +105,7 @@ export default {
         name: this.setName,
       });
       this.dialog = false;
+      this.setName = "";
     },
   },
   created() {
@@ -122,4 +123,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.title {
+text-decoration: none;
+}
+</style>

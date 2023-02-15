@@ -12,7 +12,9 @@
       <v-container>
         <v-row>
           <v-col cols="2">
-            <v-btn rounded="lg"> Back to Sets </v-btn>
+            <router-link class="title" to="Flashcards">
+              <v-btn rounded="lg"> Back to Sets </v-btn>
+            </router-link>
           </v-col>
           <v-col cols="2">
             <v-dialog v-model="dialog" persistent>
@@ -36,6 +38,7 @@
                             variant="underlined"
                           ></v-text-field>
                           <v-textarea
+                            no-resize
                             clearable
                             label="Answer*"
                             variant="solo"
@@ -66,13 +69,44 @@
         </v-row>
       </v-container>
       <v-row>
-        <div v-for="flashcard in flashcards" :key="flashcard.uid">
-          <v-card class="pa-5 ma-3">
-            <v-card-text class="pa-10">
+        <v-col
+          class="pt-4 pl-5 ma-4"
+          v-for="flashcard in flashcards"
+          :key="flashcard.uid"
+          cols="3"
+          style="height: 100%; overflow: auto;"
+        >
+          <v-card color="#d3ebe5">
+            <v-card-text class="pa-5" :ref="flashcard.uid">
               {{ flashcard.question }}</v-card-text
             >
+            <v-card-actions>
+              <v-btn
+                variant="text"
+                :ref="flashcard.uid + '-button'"
+                @click="reveal(flashcard)"
+              >
+                Reveal Answer
+              </v-btn>
+            </v-card-actions>
+            <!-- Answer Card -->
+            <!-- <v-expand-transition>
+              <v-card
+                v-if="reveal"
+                class="transition-fast-in-fast-out vreveal"
+                style="height: 100%; overflow: auto;"
+                color="#d3ebe5"
+              >
+                <v-card-text class="pa-5"> {{ flashcard.answer }}</v-card-text>
+                <v-card-actions>
+                  <v-btn variant="text" 
+                  
+                  > Close </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-expand-transition> -->
           </v-card>
-        </div>
+        </v-col>
       </v-row>
     </v-container>
   </v-card>
@@ -89,15 +123,16 @@ export default {
   },
   data: () => ({
     dialog: false,
+    //reveal: false,
     setQ: "",
     setAns: "",
     flashcards: [],
   }),
   // Needed so then methods can access setID
-  computed:{
-    setID(){
+  computed: {
+    setID() {
       return this.setId;
-    }
+    },
   },
   created() {
     const currentUser = getAuth().currentUser;
@@ -111,7 +146,7 @@ export default {
         "flashcards"
       ),
       (querySnapshot) => {
-        this.flashcards= [];
+        this.flashcards = [];
         querySnapshot.forEach((doc) => {
           this.flashcards.push({
             uid: doc.id,
@@ -126,12 +161,46 @@ export default {
   methods: {
     async addFlashcard() {
       const currentUser = getAuth().currentUser;
-      await addDoc(collection(db, "users", currentUser.uid, "flashcard-sets", this.setID, "flashcards"), {
-        question: this.setQ,
-        answer: this.setAns,
-      });
-        this.dialog = false;
+      await addDoc(
+        collection(
+          db,
+          "users",
+          currentUser.uid,
+          "flashcard-sets",
+          this.setID,
+          "flashcards"
+        ),
+        {
+          question: this.setQ,
+          answer: this.setAns,
+        }
+      );
+      this.dialog = false;
+      this.setQ = "";
+      this.setAns = "";
+    },
+    reveal(flashcard) {
+      if (this.$refs[flashcard.uid][0].$el.innerHTML == flashcard.answer) {
+        this.$refs[flashcard.uid][0].$el.innerHTML = flashcard.question;
+        this.$refs[flashcard.uid + "-button"][0].$el.innerHTML = "Reveal";
+      } else {
+        this.$refs[flashcard.uid][0].$el.innerHTML = flashcard.answer;
+        this.$refs[flashcard.uid + "-button"][0].$el.innerHTML = "Hide";
+      }
     },
   },
 };
 </script>
+
+<style scoped>
+.title {
+  text-decoration: none;
+  color: black;
+}
+.vreveal {
+  bottom: 0;
+  opacity: 1 !important;
+  position: absolute;
+  width: 100%;
+}
+</style>

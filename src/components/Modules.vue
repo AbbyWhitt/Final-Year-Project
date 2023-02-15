@@ -25,6 +25,7 @@
                 Create a Module
               </v-btn>
             </template>
+            <!-- Create Module Form -->
             <v-card class="w-50 center">
               <v-form @submit.prevent="addModule">
                 <v-card-title>
@@ -86,6 +87,7 @@
               </v-form>
             </v-card>
           </v-dialog>
+          <!-- End of Form -->
         </v-col>
         <v-btn
           rounded="lg"
