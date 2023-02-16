@@ -70,41 +70,41 @@
       </v-container>
       <v-row>
         <v-col
-          class="pt-4 pl-5 ma-4"
           v-for="flashcard in flashcards"
           :key="flashcard.uid"
           cols="3"
-          style="height: 100%; overflow: auto;"
+          style="height: 100%;"
         >
-          <v-card color="#d3ebe5">
-            <v-card-text class="pa-5" :ref="flashcard.uid">
+          <v-card color="#d3ebe5" class="mt-3 ml-4">
+            <v-card-title class="font-weight-light"> Question </v-card-title>
+            <v-card-text class="pa-5 text-center">
               {{ flashcard.question }}</v-card-text
             >
             <v-card-actions>
               <v-btn
                 variant="text"
-                :ref="flashcard.uid + '-button'"
-                @click="reveal(flashcard)"
+                @click="toggle(flashcard)"
               >
                 Reveal Answer
               </v-btn>
             </v-card-actions>
             <!-- Answer Card -->
-            <!-- <v-expand-transition>
+            <v-expand-transition>
               <v-card
-                v-if="reveal"
+                v-if="flashcard.showAnswer"
                 class="transition-fast-in-fast-out vreveal"
                 style="height: 100%; overflow: auto;"
                 color="#d3ebe5"
               >
+              <v-card-title class="font-weight-light"> Answer </v-card-title>
                 <v-card-text class="pa-5"> {{ flashcard.answer }}</v-card-text>
                 <v-card-actions>
                   <v-btn variant="text" 
-                  
+                  @click="toggle(flashcard)"
                   > Close </v-btn>
                 </v-card-actions>
               </v-card>
-            </v-expand-transition> -->
+            </v-expand-transition>
           </v-card>
         </v-col>
       </v-row>
@@ -153,6 +153,7 @@ export default {
             name: doc.data().name,
             question: doc.data().question,
             answer: doc.data().answer,
+            showAnswer: false
           });
         });
       }
@@ -179,14 +180,8 @@ export default {
       this.setQ = "";
       this.setAns = "";
     },
-    reveal(flashcard) {
-      if (this.$refs[flashcard.uid][0].$el.innerHTML == flashcard.answer) {
-        this.$refs[flashcard.uid][0].$el.innerHTML = flashcard.question;
-        this.$refs[flashcard.uid + "-button"][0].$el.innerHTML = "Reveal";
-      } else {
-        this.$refs[flashcard.uid][0].$el.innerHTML = flashcard.answer;
-        this.$refs[flashcard.uid + "-button"][0].$el.innerHTML = "Hide";
-      }
+    toggle(flashcard) {
+      flashcard.showAnswer = !flashcard.showAnswer;
     },
   },
 };
