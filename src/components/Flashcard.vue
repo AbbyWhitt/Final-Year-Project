@@ -64,7 +64,7 @@
           </v-col>
           <!-- End of form -->
           <v-col cols="2">
-            <v-btn rounded="lg"> Edit Flashcards </v-btn>
+            <v-btn rounded="lg" @click="edit = !edit"> {{ btnText }} </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -73,35 +73,37 @@
           v-for="flashcard in flashcards"
           :key="flashcard.uid"
           cols="3"
-          style="height: 100%;"
+          style="height: 100%"
         >
           <v-card color="#d3ebe5" class="mt-3 ml-4">
-            <v-card-title class="font-weight-light"> Question </v-card-title>
+            <v-card-title class="font-weight-light">
+              Question          
+              <v-btn v-if="edit" variant="plain" @click="deleteFlash(flashcard)">
+                <v-icon size="30" color="#1c3d35">
+                  mdi-delete-circle-outline
+                </v-icon>
+              </v-btn>
+            </v-card-title>
             <v-card-text class="pa-5 text-center">
               {{ flashcard.question }}</v-card-text
             >
             <v-card-actions>
-              <v-btn
-                variant="text"
-                @click="toggle(flashcard)"
-              >
-                Reveal Answer
-              </v-btn>
+              <v-btn variant="text" @click="toggle(flashcard)"> Reveal </v-btn>
             </v-card-actions>
             <!-- Answer Card -->
             <v-expand-transition>
               <v-card
                 v-if="flashcard.showAnswer"
                 class="transition-fast-in-fast-out vreveal"
-                style="height: 100%; overflow: auto;"
+                style="height: 100%; overflow: auto"
                 color="#d3ebe5"
               >
-              <v-card-title class="font-weight-light"> Answer </v-card-title>
+                <v-card-title class="font-weight-light"> Answer </v-card-title>
                 <v-card-text class="pa-5"> {{ flashcard.answer }}</v-card-text>
                 <v-card-actions>
-                  <v-btn variant="text" 
-                  @click="toggle(flashcard)"
-                  > Close </v-btn>
+                  <v-btn variant="text" @click="toggle(flashcard)">
+                    Close
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-expand-transition>
@@ -113,16 +115,18 @@
 </template>
 <script>
 import { db } from "@/main";
-import { collection, onSnapshot, addDoc } from "firebase/firestore";
+import { collection, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 export default {
   name: "Flashcard",
+
   props: {
     setId: String,
   },
   data: () => ({
     dialog: false,
+    edit: false,
     //reveal: false,
     setQ: "",
     setAns: "",
@@ -132,6 +136,9 @@ export default {
   computed: {
     setID() {
       return this.setId;
+    },
+    btnText() {
+      return this.edit ? "Cancel Editing" : "Edit Modules";
     },
   },
   created() {
@@ -153,7 +160,7 @@ export default {
             name: doc.data().name,
             question: doc.data().question,
             answer: doc.data().answer,
-            showAnswer: false
+            showAnswer: false,
           });
         });
       }
@@ -182,6 +189,16 @@ export default {
     },
     toggle(flashcard) {
       flashcard.showAnswer = !flashcard.showAnswer;
+    },
+    async deleteFlash(flashcard) {
+      const currentUser = getAuth().currentUser;
+      await deleteDoc(doc(db,
+          "users",
+          currentUser.uid,
+          "flashcard-sets",
+          this.setID,
+          "flashcards", 
+          flashcard.uid));
     },
   },
 };

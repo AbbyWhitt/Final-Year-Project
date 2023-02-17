@@ -50,7 +50,7 @@
 
                 <v-divider />
 
-                <router-link to="createAccount">
+                <router-link to="/CreateAccount">
                   <v-btn
                     class="create my-3"
                     prepend-icon="mdi-account-box"

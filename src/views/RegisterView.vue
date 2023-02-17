@@ -15,7 +15,7 @@ import Register from "../components/Register.vue";
 import AppBar from "../components/AppBar.vue";
 
 export default defineComponent({
-  name: "Register",
+  name: "RegisterView",
 
   components: {
     AppBar,

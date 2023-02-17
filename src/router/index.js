@@ -31,7 +31,7 @@ const routes = [
   }, 
   {
     path: "/CreateAccount",
-    name: "register",
+    name: "Register",
     component: RegisterView,
   },
   {

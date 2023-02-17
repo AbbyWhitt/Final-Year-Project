@@ -20,7 +20,7 @@
               <v-text-field
                 type="text"
                 label="Name"
-                placeholder="John"
+                placeholder="Charlie"
                 outlined
                 v-model="name"
                 variant="underlined"

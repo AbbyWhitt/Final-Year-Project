@@ -12,13 +12,15 @@
             <v-card-title class="text-h5 ml-n3"> Modules </v-card-title>
           </v-card>
         </v-col>
-
+      </v-row>
+    </v-container>
+    <v-row>
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
               <v-btn
                 rounded="lg"
-                class="mt-1 text"
+                class="mt-1 ml-6 text"
                 color="#449682"
                 v-bind="props"
               >
@@ -51,7 +53,6 @@
                         ></v-text-field>
                       </v-col>
                     </v-row>
-
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-autocomplete
@@ -98,7 +99,6 @@
           {{ btnText }}
         </v-btn>
       </v-row>
-    </v-container>
 
     <v-container>
       <v-row>
@@ -196,8 +196,9 @@ export default {
       });
       this.dialog = false;
     },
-    deleteModule(module) {
-      deleteDoc(doc(db, "modules", module.Id));
+    async deleteModule(module) {
+      const currentUser = getAuth().currentUser;
+      deleteDoc(doc(db, "users", currentUser.uid, "modules", module.Id));
     },
   },
 
