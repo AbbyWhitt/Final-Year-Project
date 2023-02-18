@@ -6,6 +6,7 @@ import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import AccountView from "../views/AccountView.vue";
 import FlashcardsView from "../views/FlashcardsView.vue";
+import AssignmentView from "../views/AssignmentView.vue";
 // import Modules from "../views/"
 
 const routes = [
@@ -47,6 +48,14 @@ const routes = [
     },
     props: { default: true }
   },
+  {
+    path: "/:modId",
+    name: "assignments",
+    components: {
+      default: AssignmentView
+  },
+  props: { default: true}
+},
 ];
 
 const router = createRouter({

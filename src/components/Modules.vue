@@ -15,90 +15,90 @@
       </v-row>
     </v-container>
     <v-row>
-        <v-col cols="2">
-          <v-dialog v-model="dialog" persistent>
-            <template v-slot:activator="{ props }">
-              <v-btn
-                rounded="lg"
-                class="mt-1 ml-6 text"
-                color="#449682"
-                v-bind="props"
-              >
-                Create a Module
-              </v-btn>
-            </template>
-            <!-- Create Module Form -->
-            <v-card class="w-50 center">
-              <v-form @submit.prevent="addModule">
-                <v-card-title>
-                  <span class="text-h5">New Module</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          label="Module Code*"
-                          v-model="modContent.modCode"
-                          required
-                          variant="underlined"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          label="Module Name*"
-                          v-model="modContent.modName"
-                          required
-                          variant="underlined"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-autocomplete
-                          label="Module Semester"
-                          v-model="modContent.semester"
-                          :items="semesters"
-                          variant="underlined"
-                          item-title="title"
-                          item-value="value"
-                        ></v-autocomplete>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          variant="underlined"
-                          label="Last Assignment Due Date"
-                          v-model="modContent.lastAssignDue"
-                          type="date"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <small style="color: red">*indicates required field</small>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="#449682" variant="text" type="submit">
-                    Create
-                  </v-btn>
-                  <v-btn color="black" variant="text" @click="dialog = false">
-                    Cancel
-                  </v-btn>
-                </v-card-actions>
-              </v-form>
-            </v-card>
-          </v-dialog>
-          <!-- End of Form -->
-        </v-col>
-        <v-btn
-          rounded="lg"
-          class="mt-4 text"
-          color="#449682"
-          @click="edit = !edit"
-        >
-          {{ btnText }}
-        </v-btn>
-      </v-row>
+      <v-col cols="2">
+        <v-dialog v-model="dialog" persistent>
+          <template v-slot:activator="{ props }">
+            <v-btn
+              rounded="lg"
+              class="mt-1 ml-6 text"
+              color="#449682"
+              v-bind="props"
+            >
+              Create a Module
+            </v-btn>
+          </template>
+          <!-- Create Module Form -->
+          <v-card class="w-50 center">
+            <v-form @submit.prevent="addModule">
+              <v-card-title>
+                <span class="text-h5">New Module</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Module Code*"
+                        v-model="modContent.modCode"
+                        required
+                        variant="underlined"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Module Name*"
+                        v-model="modContent.modName"
+                        required
+                        variant="underlined"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-autocomplete
+                        label="Module Semester"
+                        v-model="modContent.semester"
+                        :items="semesters"
+                        variant="underlined"
+                        item-title="title"
+                        item-value="value"
+                      ></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        variant="underlined"
+                        label="Last Assignment Due Date"
+                        v-model="modContent.lastAssignDue"
+                        type="date"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small style="color: red">*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="#449682" variant="text" type="submit">
+                  Create
+                </v-btn>
+                <v-btn color="black" variant="text" @click="dialog = false">
+                  Cancel
+                </v-btn>
+              </v-card-actions>
+            </v-form>
+          </v-card>
+        </v-dialog>
+        <!-- End of Form -->
+      </v-col>
+      <v-btn
+        rounded="lg"
+        class="mt-4 text"
+        color="#449682"
+        @click="edit = !edit"
+      >
+        {{ btnText }}
+      </v-btn>
+    </v-row>
 
     <v-container>
       <v-row>
@@ -114,8 +114,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="mod in mods" :key="mod.modCode">
-              <td>{{ mod.modCode }}</td>
+            <tr v-for="mod in mods" :key="mod.Id">
+              <router-link
+                class="textTable"
+                :to="{ name: 'assignments', params: { modId: mod.Id } }"
+              >
+                <td>{{ mod.modCode }}</td>
+              </router-link>
               <td>{{ mod.modName }}</td>
               <td>{{ mod.semester }}</td>
               <td>
@@ -127,6 +132,7 @@
                   })
                 }}
               </td>
+
               <td>
                 <v-btn
                   v-if="edit"
@@ -195,6 +201,10 @@ export default {
         lastAssignDue: new Date(this.modContent.lastAssignDue),
       });
       this.dialog = false;
+      this.modContent.modName = "";
+      this.modContent.modCode = "";
+      this.modContent.semester = "";
+      this.modContent.lastAssignDue = "";
     },
     async deleteModule(module) {
       const currentUser = getAuth().currentUser;
@@ -204,24 +214,27 @@ export default {
 
   mounted() {
     const currentUser = getAuth().currentUser;
-    onSnapshot(collection(db, "users", currentUser.uid, "modules"), (querySnapshot) => {
-      const fbMod = [];
-      querySnapshot.forEach((doc) => {
-        const mod = {
-          modCode: doc.data().modCode,
-          modName: doc.data().modName,
-          semester: doc.data().semester,
-          lastAssignmentDue: doc.data().lastAssignDue,
-          Id: doc.id,
-        };
-        fbMod.push(mod);
-      });
+    onSnapshot(
+      collection(db, "users", currentUser.uid, "modules"),
+      (querySnapshot) => {
+        const fbMod = [];
+        querySnapshot.forEach((doc) => {
+          const mod = {
+            modCode: doc.data().modCode,
+            modName: doc.data().modName,
+            semester: doc.data().semester,
+            lastAssignmentDue: doc.data().lastAssignDue,
+            Id: doc.id,
+          };
+          fbMod.push(mod);
+        });
 
-      fbMod.sort((a, b) =>
-        a.modCode > b.modCode ? 1 : b.modCode > a.modCode ? -1 : 0
-      );
-      this.mods = fbMod;
-    });
+        fbMod.sort((a, b) =>
+          a.modCode > b.modCode ? 1 : b.modCode > a.modCode ? -1 : 0
+        );
+        this.mods = fbMod;
+      }
+    );
   },
 
   unmounted() {},
@@ -234,5 +247,9 @@ export default {
 }
 .center {
   left: 28%;
+}
+.textTable {
+  text-decoration: none;
+  color: black;
 }
 </style>

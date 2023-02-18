@@ -12,7 +12,7 @@
       <v-container>
         <v-row>
           <v-col cols="2">
-            <router-link class="title" to="Flashcards">
+            <router-link class="linkText" to="Flashcards">
               <v-btn rounded="lg"> Back to Sets </v-btn>
             </router-link>
           </v-col>
@@ -204,8 +204,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.title {
+<style>
+.linkText {
   text-decoration: none;
   color: black;
 }

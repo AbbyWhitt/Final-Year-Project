@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .title {
   color: white;
   padding: 2.5em;
