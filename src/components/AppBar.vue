@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="w-screen" :elevation="0" app color="#449682">
+  <v-app-bar :elevation="0" app color="#449682" density="comfortable">
     <template v-slot:prepend>
       <div class="text-h5 title font-weight-light">StudyBuddy</div>
     </template>
@@ -12,7 +12,7 @@
       <router-link to="/Profile">
       <v-btn>
       <v-avatar>
-        <v-icon dark size="40" style="color: white"> mdi-account-circle </v-icon>
+        <v-icon dark size="40" style="color: white" > mdi-account-circle </v-icon>
       </v-avatar>
       </v-btn>
       </router-link>

@@ -98,7 +98,6 @@ const handleSignOut = () => {
   signOut(auth).then(() => {
     router.push("/"); //this handles where the user should go when logged out
 
-    console.log("Successfully Logged Out!");
   });
 };
 </script>

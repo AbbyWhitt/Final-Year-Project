@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class="h-auto" color="#58B39D">
+  <v-navigation-drawer class="h-auto" color="#58B39D" :width="210">
     <v-divider></v-divider>
 
     <v-list nav>
@@ -76,7 +76,6 @@ const handleSignOut = () => {
   signOut(auth).then(() => {
     router.push('/'); //this handles where the user should go when logged out
 
-    console.log("Successfully Logged Out!");
 
   });
 
@@ -88,7 +87,7 @@ const handleSignOut = () => {
 .logout {
   position: fixed;
   bottom: 1%;
-  width: 95%;
+  width: 92%;
   color: white;
 }
 .items {
@@ -96,7 +95,7 @@ const handleSignOut = () => {
   color: white;
 }
 .itemsTitle {
-  font-size: 0.95rem;
+  font-size: 0.90rem;
   font-weight: 400;
 }
 </style>

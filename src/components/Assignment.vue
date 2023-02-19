@@ -37,7 +37,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="Assignment Name*"
-                        v-model="assign.Name"
+                        v-model="assign.name"
                         required
                         variant="underlined"
                       ></v-text-field>
@@ -45,7 +45,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="Weighting*"
-                        v-model="assign.Weight"
+                        v-model="assign.weight"
                         required
                         variant="underlined"
                       ></v-text-field>
@@ -55,7 +55,7 @@
                     <v-col cols="12" sm="6" md="4">
                       <v-autocomplete
                         label="Assessment Type"
-                        v-model="assign.Type"
+                        v-model="assign.type"
                         :items="type"
                         variant="underlined"
                         item-title="title"
@@ -66,13 +66,13 @@
                       <v-text-field
                         variant="underlined"
                         label="Assignment Due Date"
-                        v-model="assign.DueDate"
+                        v-model="assign.dueDate"
                         type="date"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-textarea
-                        v-model="assign.Brief"
+                        v-model="assign.brief"
                         label="Assignment Brief/Notes"
                         variant="solo"
                       ></v-textarea>
@@ -100,8 +100,45 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <v-card> Placement Text!</v-card>
+      <v-col v-for="assignment in assignments" :key="assignment.uid" cols="4">
+        <v-card color="#d3ebe5" class="ma-4">
+          <v-card-title class="text-center">
+            {{ assignment.name }}
+          </v-card-title>
+          <v-spacer />
+          <v-card-text>
+            <span class="text-subtitle-1 font-weight-medium">
+              Weighting of Assignment:
+            </span>
+            <span class="text-subtitle-1">
+              {{ assignment.weight }}
+            </span>
+            <v-spacer />
+            <span class="text-subtitle-1 font-weight-medium"> Type: </span>
+            <span class="text-subtitle-1">
+              {{ assignment.type }}
+            </span>
+            <v-spacer />
+            <span class="text-subtitle-1 font-weight-medium"> Due Date: </span>
+            <span class="text-subtitle-1">
+              {{
+                assignment.dueDate.toDate().toLocaleDateString({
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+              }}
+            </span>
+          </v-card-text>
+          <v-card class="ma-3">
+            <v-card-title class="miniTitle">
+              Assignment Brief Notes
+            </v-card-title>
+            <v-card-text class="font-weight-light" style="white-space: pre-line;">
+              {{ assignment.brief }}
+            </v-card-text>
+          </v-card>
+        </v-card>
       </v-col>
     </v-row>
   </v-card>
@@ -109,7 +146,13 @@
 
 <script>
 import { db } from "@/main";
-import { collection, onSnapshot, addDoc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  query,
+  QuerySnapshot,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 export default {
@@ -121,12 +164,13 @@ export default {
 
   data: () => ({
     dialog: false,
+    assignments: [],
     assign: {
-      Name: null,
-      Weight: null,
-      Type: null,
-      DueDate: null,
-      Brief: null,
+      name: null,
+      weight: null,
+      type: null,
+      dueDate: null,
+      brief: null,
     },
     type: [
       { title: "Exam - Online", value: "Online Exam" },
@@ -134,8 +178,45 @@ export default {
       { title: "Practical assessment", value: "Practical Assessment" },
       { title: "Written Eassy", value: "Essay" },
       { title: "Presentation", value: "Presentation" },
+      { title: "Other", value: "Other" },
     ],
   }),
+
+  computed: {
+    modID() {
+      return this.modId;
+    },
+  },
+
+  created() {
+    const currentUser = getAuth().currentUser;
+    onSnapshot(
+      collection(
+        db,
+        "users",
+        currentUser.uid,
+        "modules",
+        this.modId,
+        "assignments"
+      ),
+      (QuerySnapshot) => {
+        this.assignments = [];
+        QuerySnapshot.forEach((doc) => {
+          this.assignments.push({
+            uid: doc.id,
+            name: doc.data().name,
+            weight: doc.data().weight,
+            type: doc.data().type,
+            dueDate: doc.data().due,
+            brief: doc.data().notes,
+          });
+        });
+        this.assignments.sort((a, b) =>
+          a.dueDate > b.dueDate ? 1 : b.dueDate > a.dueDate ? -1 : 0
+        );
+      }
+    );
+  },
 
   methods: {
     async addAssignment() {
@@ -150,22 +231,26 @@ export default {
           "assignments"
         ),
         {
-          name: this.assign.Name,
-          weight: this.assign.Weight,
-          type: this.assign.Type,
-          due: new Date(this.assign.DueDate), 
-          notes: this.assign.Brief,
+          name: this.assign.name,
+          weight: this.assign.weight,
+          type: this.assign.type,
+          due: new Date(this.assign.dueDate),
+          notes: this.assign.brief,
         }
       );
       this.dialog = false;
-      this.assign.Name = "";
-      this.assign.Weight = "";
-      this.assign.Type = "";
-      this.assign.DueDate = "";
-      this.assign.Brief = "";
+      this.assign.name = "";
+      this.assign.weight = "";
+      this.assign.type = "";
+      this.assign.dueDate = "";
+      this.assign.brief = "";
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+.miniTitle {
+  font-size: 1em;
+}
+</style>

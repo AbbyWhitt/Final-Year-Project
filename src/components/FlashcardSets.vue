@@ -2,17 +2,14 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="9">
           <v-card class="d-flex" flat rounded="0">
             <v-icon icon="mdi-card-text" size="large" class="pa-6"></v-icon>
-            <v-card-title class="text-h5 ml-n3"> FlashcardSets </v-card-title>
+            <v-card-title class="text-h5 ml-n3 font-weight-light"> FlashcardSets </v-card-title>
           </v-card>
         </v-col>
-      </v-row>
-    </v-container>
-    <v-row>
-      <v-col cols="2">
-        <v-btn class="text ml-7 mt-1" rounded="lg" color="#449682" @click="edit = !edit"> {{ btnText }} </v-btn>
+      <v-col cols="1">
+        <v-btn class="text mt-1" rounded="lg" color="#449682" @click="edit = !edit"> {{ btnText }} </v-btn>
       </v-col>
       <v-col cols="2">
         <v-dialog v-model="dialog" persistent>
@@ -66,6 +63,7 @@
           <!-- End of Form -->
         </v-dialog>
       </v-col>
+      <v-divider thickness="2"></v-divider>
     </v-row>
 
     <v-container>
@@ -75,14 +73,15 @@
             class="title"
             :to="{ name: 'flashcards', params: { setId: item.uid } }"
           >
-            <v-card class="pt-4 pb-4 ma-3" color="#d3ebe5">
-              <v-card-title class="pa-15 text-center">
+            <v-card class="pt-3 pb-3 ma-3" color="#d3ebe5">
+              <v-card-title class="pa-15 text-center font-weight-light">
                 {{ item.name }}
               </v-card-title>
             </v-card>
           </router-link>
         </v-col>
       </v-row>
+    </v-container>
     </v-container>
   </v-card>
 </template>
@@ -102,7 +101,7 @@ export default {
   }),
   computed: {
     btnText() {
-      return this.edit ? "Cancel Editing" : "Edit Modules";
+      return this.edit ? "Cancel Sets" : "Edit Sets";
     },
   },
   methods: {
