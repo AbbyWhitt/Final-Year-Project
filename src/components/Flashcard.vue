@@ -2,15 +2,12 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
             <v-icon icon="mdi-card-text" size="large" class="pa-6"></v-icon>
-            <v-card-title class="text-h5 ml-n3"> Flashcards </v-card-title>
+            <v-card-title class="text-h5 ml-n3 font-weight-light"> Flashcards </v-card-title>
           </v-card>
         </v-col>
-      </v-row>
-      <v-container>
-        <v-row>
           <v-col cols="2">
             <router-link class="linkText" to="Flashcards">
               <v-btn rounded="lg"> Back to Sets </v-btn>
@@ -66,8 +63,8 @@
           <v-col cols="2">
             <v-btn rounded="lg" @click="edit = !edit"> {{ btnText }} </v-btn>
           </v-col>
+          <v-divider thickness="2"></v-divider>
         </v-row>
-      </v-container>
       <v-row>
         <v-col
           v-for="flashcard in flashcards"

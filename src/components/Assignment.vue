@@ -2,19 +2,16 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="8">
+        <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
             <v-icon
               icon="mdi-book-open-variant"
               size="large"
               class="pa-6"
             ></v-icon>
-            <v-card-title class="text-h5 ml-n3"> Module </v-card-title>
+            <v-card-title class="text-h5 ml-n3 font-weight-light"> Assignments </v-card-title>
           </v-card>
         </v-col>
-      </v-row>
-    </v-container>
-    <v-row>
       <v-col cols="2">
         <router-link class="linkText" to="Modules">
           <v-btn class="ml-7" rounded="lg"> Back to Modules </v-btn>
@@ -95,9 +92,10 @@
         </v-dialog>
         <!-- End of form -->
       </v-col>
-      <v-col cols="2">
-        <v-btn rounded="lg"> Edit Assignments </v-btn>
-      </v-col>
+                <v-col cols="2">
+          <v-btn rounded="lg"> Edit Assignments </v-btn>
+          </v-col>
+      <v-divider thickness="2"></v-divider>
     </v-row>
     <v-row>
       <v-col v-for="assignment in assignments" :key="assignment.uid" cols="4">
@@ -141,6 +139,7 @@
         </v-card>
       </v-col>
     </v-row>
+    </v-container>
   </v-card>
 </template>
 
