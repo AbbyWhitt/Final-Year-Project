@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="9">
           <v-card class="d-flex" flat rounded="0">
-            <v-icon icon="mdi-card-text" size="large" class="pa-6"></v-icon>
+            <v-icon icon="mdi-card-text" size="large" class="mt-2 mr-2"></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light"> FlashcardSets </v-card-title>
           </v-card>
         </v-col>

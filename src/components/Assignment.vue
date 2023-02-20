@@ -148,8 +148,10 @@ import { db } from "@/main";
 import {
   collection,
   onSnapshot,
+  getDoc,
   addDoc,
   query,
+  doc,
   QuerySnapshot,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
@@ -171,6 +173,7 @@ export default {
       dueDate: null,
       brief: null,
     },
+    module: {},
     type: [
       { title: "Exam - Online", value: "Online Exam" },
       { title: "Exam - In Person", value: "In Person Exam" },
@@ -187,15 +190,18 @@ export default {
     },
   },
 
-  created() {
+  async created() {
     const currentUser = getAuth().currentUser;
+    const docRef = doc(db, "users", currentUser.uid, "modules", this.modID);
+    const docSnap =  await getDoc(docRef);
+    this.module = docSnap.data();
     onSnapshot(
       collection(
         db,
         "users",
         currentUser.uid,
         "modules",
-        this.modId,
+        this.modID,
         "assignments"
       ),
       (QuerySnapshot) => {
@@ -208,6 +214,7 @@ export default {
             type: doc.data().type,
             dueDate: doc.data().due,
             brief: doc.data().notes,
+            modCode: this.module.modCode,
           });
         });
         this.assignments.sort((a, b) =>
@@ -235,6 +242,8 @@ export default {
           type: this.assign.type,
           due: new Date(this.assign.dueDate),
           notes: this.assign.brief,
+          modCode: this.module.modCode,
+          userId: currentUser.uid,
         }
       );
       this.dialog = false;

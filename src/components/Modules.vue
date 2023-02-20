@@ -99,7 +99,7 @@
           </v-dialog>
           <!-- End of Form -->
         </v-col>
-        <v-col cols="2">
+        <v-col cols="1.5">
           <v-btn
             rounded="lg"
             class="text"
@@ -251,6 +251,7 @@ export default {
             semester: doc.data().semester,
             modLectName: doc.data().modLectName,
             lastAssignmentDue: doc.data().lastAssignDue,
+            userId: currentUser.uid,
             Id: doc.id,
           };
           fbMod.push(mod);

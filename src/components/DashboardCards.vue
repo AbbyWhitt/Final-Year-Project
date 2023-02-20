@@ -4,31 +4,34 @@
       <v-container>
         <v-col cols="4">
           <v-card>
-            <v-table fixed-header height="760px">
+            <v-card-title> Assignments: </v-card-title>
+            <v-table fixed-header class="pa-1">
               <thead>
                 <tr>
-                  <th class="text-left">Module Name</th>
+                  <th class="text-left">Module Code</th>
 
-                  <th class="text-left">Assignment</th>
+                  <th class="text-left">Assignment Name</th>
 
                   <th class="text-left">Due Date</th>
 
-                  <th class="text-left">Progress</th>
+                  <th class="text-left">Type</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr v-for="mod in mods" :key="mod.modCode">
-                  <td>{{ mod.modName }}</td>
+                <tr v-for="assignment in assignments" :key="assignment.uid">
+                  <td>{{ assignment.modCode }}</td>
+                  <td>{{ assignment.name }}</td>
                   <td>
-                {{
-                  mod.lastAssignmentDue.toDate().toLocaleDateString({
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                }}
-                </td>
+                    {{
+                      assignment.due.toDate().toLocaleDateString({
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })
+                    }}
+                  </td>
+                  <td>{{ assignment.type }}</td>
                 </tr>
               </tbody>
             </v-table>
@@ -41,30 +44,47 @@
 
 <script>
 import { db } from "@/main";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collectionGroup,
+  getDocs,
+  onSnapshot,
+  where,
+  query,
+  QuerySnapshot,
+  doc,
+} from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export default {
+  name: "home",
+  props: {
+    modId: String,
+  },
+
   data: () => ({
-    mods: [],
-    modContent: {
-      modName: null,
-      lastAssignDue: null,
-    },
+    assignments: [],
   }),
 
-  mounted() {
-    onSnapshot(collection(db, "modules"), (querySnapshot) => {
-      const fbMod = [];
+  computed: {
+    modID() {
+      return this.modId;
+    },
+  },
+
+  async mounted() {
+    const currentUser = getAuth().currentUser;
+    const q = query(
+      collectionGroup(db, "assignments"),
+      where("userId", "==", currentUser.uid)
+    );
+    onSnapshot(q, (querySnapshot) => {
+      this.assignments = [];
       querySnapshot.forEach((doc) => {
-        const mod = {
-          modName: doc.data().modName,
-          lastAssignmentDue: doc.data().lastAssignDue,
-          Id: doc.id,
-        };
-        fbMod.push(mod);
+        this.assignments.push(doc.data());
       });
-      
-      this.mods = fbMod;
+      this.assignments.sort((a, b) =>
+        a.due > b.due ? 1 : b.due > a.due ? -1 : 0
+      );
     });
   },
 
