@@ -21,7 +21,7 @@
               <tbody>
                 <tr v-for="assignment in assignments" :key="assignment.uid">
                   <td>{{ assignment.modCode }}</td>
-                  <td>{{ assignment.name }}</td>
+                  <td>{{ assignment.name }} </td>
                   <td>
                     {{
                       assignment.due.toDate().toLocaleDateString({

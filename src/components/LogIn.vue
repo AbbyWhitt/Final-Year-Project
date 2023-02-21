@@ -86,7 +86,7 @@ const login = () => {
 
         console.log(auth.currentUser) //this is for cached signin
 
-      router.push("/"); //once logged in this sends to home
+      router.push("/Dashboard"); //once logged in this sends to home
     })
 
     .catch((error) => {
