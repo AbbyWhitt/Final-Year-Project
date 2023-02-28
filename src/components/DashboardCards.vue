@@ -1,45 +1,59 @@
 <template>
-  <v-card class="ma-5">
-    <v-card color="grey-lighten-3" flat rounded="1">
-      <v-container>
-        <v-col cols="4">
-          <v-card>
-            <v-card-title> Assignments: </v-card-title>
-            <v-table fixed-header class="pa-1">
-              <thead>
-                <tr>
-                  <th class="text-left">Module Code</th>
+  <v-container>
+    <v-row>
+      <v-col cols="4">
+        <v-card class="rounded-xl">
+          <v-card-title> Assignments: </v-card-title>
+          <v-table fixed-header class="pa-1">
+            <thead>
+              <tr>
+                <th class="text-left">Module Code</th>
 
-                  <th class="text-left">Assignment Name</th>
+                <th class="text-left">Assignment Name</th>
 
-                  <th class="text-left">Due Date</th>
+                <th class="text-left">Due Date</th>
 
-                  <th class="text-left">Type</th>
-                </tr>
-              </thead>
+                <th class="text-left">Type</th>
+              </tr>
+            </thead>
 
-              <tbody>
-                <tr v-for="assignment in assignments" :key="assignment.uid">
-                  <td>{{ assignment.modCode }}</td>
-                  <td>{{ assignment.name }} </td>
-                  <td>
-                    {{
-                      assignment.due.toDate().toLocaleDateString({
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })
-                    }}
-                  </td>
-                  <td>{{ assignment.type }}</td>
-                </tr>
-              </tbody>
-            </v-table>
-          </v-card>
-        </v-col>
-      </v-container>
-    </v-card>
-  </v-card>
+            <tbody>
+              <tr v-for="assignment in assignments" :key="assignment.uid">
+                <td>{{ assignment.modCode }}</td>
+                <td>{{ assignment.name }}</td>
+                <td>
+                  {{
+                    assignment.due.toDate().toLocaleDateString({
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  }}
+                </td>
+                <td>{{ assignment.type }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-card>
+      </v-col>
+      <!-- Next Card -->
+      <v-col cols="3">
+        <v-card class="rounded-xl">
+          <v-card-title class="text-center">
+            Days Until Next Assignment
+            <v-tooltip v-model="show" location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind="props" icon="mdi-help-circle-outline" size="20">
+                </v-icon>
+              </template>
+              <span>Placeholder with hardcoded value</span>
+            </v-tooltip></v-card-title
+          >
+          <v-card-text class="text-center cardText"> 25 Days </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -63,6 +77,7 @@ export default {
 
   data: () => ({
     assignments: [],
+    show: false,
   }),
 
   computed: {
@@ -92,11 +107,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .v-card--reveal {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
   width: 100%;
+}
+.cardText {
+  padding: 10%;
+  font-size: 1.8em;
 }
 </style>

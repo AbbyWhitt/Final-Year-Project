@@ -106,7 +106,7 @@ const register = async () => {
   }
   await setDoc(doc(db, "users", cred.user.uid), userData );
   
-  console.log(auth.currentUser); //this is for cached signin
+  // console.log(auth.currentUser); //this is for cached signin
 
   router.push("/Dashboard"); //once logged in this sends to home
   }
