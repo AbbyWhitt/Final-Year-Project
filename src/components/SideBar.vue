@@ -1,5 +1,12 @@
 <template>
-  <v-navigation-drawer class="h-auto" color="#58B39D" :width="210">
+  <v-navigation-drawer
+    color="#58B39D"
+    :width="210"
+    
+    :rail="rail"
+    permanent
+    @click="rail = false"
+  >
     <v-divider></v-divider>
 
     <v-list nav>
@@ -40,25 +47,41 @@
       <v-divider style="color: white"></v-divider>
       <v-spacer></v-spacer>
 
-      
-      <v-btn class="logout"
-      prepend-icon="mdi-logout-variant" 
-      @click="handleSignOut" 
-      v-if="isLoggedIn"
-      color="#449682"
-      > Logout 
-      </v-btn>
+      <v-btn
+        v-if="rail"
+        class="mt-5 items"
+        variant="plain"
+        icon="mdi-chevron-right"
+        @click.stop="rail = !rail"
+      ></v-btn>
 
+      <v-btn
+        v-if="!rail"
+        class="mt-5 items"
+        variant="plain"
+        icon="mdi-chevron-left"
+        @click.stop="($event) => (rail = !rail)"
+      ></v-btn>
+
+      <v-btn
+        class="logout"
+        prepend-icon="mdi-logout-variant"
+        @click="handleSignOut"
+        v-if="isLoggedIn"
+        color="#449682"
+      >
+        Logout
+      </v-btn>
     </v-list>
   </v-navigation-drawer>
 </template>
 
-<script setup>
+<script>
 import { onMounted, ref } from "vue";
-import {getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from "../router";
 
-const isLoggedIn= ref(false);
+let isLoggedIn = ref(false);
 
 let auth;
 onMounted(() => {
@@ -67,20 +90,23 @@ onMounted(() => {
     if (user) {
       isLoggedIn.value = true;
     } else {
-        isLoggedIn.value = false;
-      }
+      isLoggedIn.value = false;
+    }
   });
 });
 
 const handleSignOut = () => {
   signOut(auth).then(() => {
-    router.push('/'); //this handles where the user should go when logged out
-
-
+    router.push("/"); //this handles where the user should go when logged out
   });
-
 };
 
+export default {
+  data: () => ({
+    rail: true,
+    drawer: true,
+  }),
+};
 </script>
 
 <style scoped>
@@ -95,7 +121,7 @@ const handleSignOut = () => {
   color: white;
 }
 .itemsTitle {
-  font-size: 0.90rem;
+  font-size: 0.9rem;
   font-weight: 400;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="h-screen">
-    <v-card class="h-screen pa-16" color="#449682" flat rounded="1" border="">
+    <v-card class="h-screen pa-15" color="#449682" flat rounded="1">
       <v-container>
         <v-row rows="1">
           <v-spacer></v-spacer>
@@ -50,7 +50,7 @@
 
                 <v-divider />
 
-                <router-link to="/CreateAccount">
+                <router-link to="/CreateAccount" class="title">
                   <v-btn
                     class="create my-3"
                     prepend-icon="mdi-account-box"

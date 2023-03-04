@@ -4,7 +4,7 @@
       <v-col cols="4">
         <v-card class="rounded-xl">
           <v-card-title> Assignments: </v-card-title>
-          <v-table fixed-header class="pa-1">
+          <v-table fixed-header class="pa-1 overflow-auto">
             <thead>
               <tr>
                 <th class="text-left">Module Code</th>

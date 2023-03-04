@@ -1,7 +1,9 @@
 <template>
   <v-app-bar :elevation="0" app color="#449682" density="comfortable">
     <template v-slot:prepend>
-      <div class="text-h5 title font-weight-light">StudyBuddy</div>
+      <router-link to="/Dashboard" class="title">
+      <div class="text-h5 font-weight-light">StudyBuddy</div>
+    </router-link>
     </template>
 
     <div class="pr-16 mr-16" id="clock" style="color: white; font-size: 20px;">
@@ -9,7 +11,7 @@
     </div>
 
     <template v-slot:append>
-      <router-link to="/Profile">
+      <router-link to="/Profile" style="text-decoration: none;">
       <v-btn>
       <v-avatar>
         <v-icon dark size="40" style="color: white" > mdi-account-circle </v-icon>
@@ -54,5 +56,6 @@ export default {
 .title {
   color: white;
   padding: 2.5em;
+  text-decoration: none;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="h-screen">
-    <v-card class="h-screen pa-16" color="#449682" flat rounded="1" border="">
+    <v-card class="h-screen pa-16" color="#449682" flat rounded="1">
       <v-container>
         <v-row rows="1">
           <v-spacer></v-spacer>
@@ -55,7 +55,7 @@
                   @click="register"
                   color="#449682"
                   elevation="3"
-                  >Create Account</v-btn
+                  >Create Account </v-btn
                 >
 
                 <v-divider />
