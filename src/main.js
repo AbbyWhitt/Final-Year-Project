@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import store from "./store";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,7 +22,7 @@ const firebaseConfig = {
   storageBucket: "ci601fyp.appspot.com",
   messagingSenderId: "767724466178",
   appId: "1:767724466178:web:8a27947ae99261742a371b",
-  measurementId: "G-LF6XYQQ6YR"
+  measurementId: "G-LF6XYQQ6YR",
 };
 
 // Initialize Firebase
@@ -32,8 +33,6 @@ const db = getFirestore(app);
 
 loadFonts();
 
-createApp(App).use(router).use(vuetify).mount("#app");
+createApp(App).use(store).use(router).use(vuetify).mount("#app");
 
-export {
-  db
-}
+export { db };

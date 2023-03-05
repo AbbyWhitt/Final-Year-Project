@@ -5,66 +5,68 @@
         <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
             <v-icon icon="mdi-card-text" size="large" class="pa-6"></v-icon>
-            <v-card-title class="text-h5 ml-n3 font-weight-light"> Flashcards </v-card-title>
+            <v-card-title class="text-h5 ml-n3 font-weight-light">
+              Flashcards
+            </v-card-title>
           </v-card>
         </v-col>
-          <v-col cols="2">
-            <router-link class="linkText" to="Flashcards">
-              <v-btn rounded="lg"> Back to Sets </v-btn>
-            </router-link>
-          </v-col>
-          <v-col cols="2">
-            <v-dialog v-model="dialog" persistent>
-              <template v-slot:activator="{ props }">
-                <v-btn rounded="lg" v-bind="props"> Create a Flashcard </v-btn>
-              </template>
-              <!-- Create Flashcard Form -->
-              <v-card class="w-50 center">
-                <v-form @submit.prevent="addFlashcard">
-                  <v-card-title>
-                    <span class="text-h5">New Flashcard</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-col cols="12">
-                          <v-text-field
-                            label="Question*"
-                            required
-                            v-model="setQ"
-                            variant="underlined"
-                          ></v-text-field>
-                          <v-textarea
-                            no-resize
-                            clearable
-                            label="Answer*"
-                            variant="solo"
-                            v-model="setAns"
-                          ></v-textarea>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                    <small style="color: red">*indicates required field</small>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="#449682" variant="text" type="submit">
-                      Create
-                    </v-btn>
-                    <v-btn color="black" variant="text" @click="dialog = false">
-                      Cancel
-                    </v-btn>
-                  </v-card-actions>
-                </v-form>
-              </v-card>
-            </v-dialog>
-          </v-col>
-          <!-- End of form -->
-          <v-col cols="2">
-            <v-btn rounded="lg" @click="edit = !edit"> {{ btnText }} </v-btn>
-          </v-col>
-          <v-divider thickness="2"></v-divider>
-        </v-row>
+        <v-col cols="2">
+          <router-link class="linkText" to="Flashcards">
+            <v-btn rounded="lg"> Back to Sets </v-btn>
+          </router-link>
+        </v-col>
+        <v-col cols="2">
+          <v-dialog v-model="dialog" persistent>
+            <template v-slot:activator="{ props }">
+              <v-btn rounded="lg" v-bind="props"> Create a Flashcard </v-btn>
+            </template>
+            <!-- Create Flashcard Form -->
+            <v-card class="w-50 center">
+              <v-form @submit.prevent="addFlashcard">
+                <v-card-title>
+                  <span class="text-h5">New Flashcard</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          label="Question*"
+                          required
+                          v-model="setQ"
+                          variant="underlined"
+                        ></v-text-field>
+                        <v-textarea
+                          no-resize
+                          clearable
+                          label="Answer*"
+                          variant="solo"
+                          v-model="setAns"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                  <small style="color: red">*indicates required field</small>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="#449682" variant="text" type="submit">
+                    Create
+                  </v-btn>
+                  <v-btn color="black" variant="text" @click="dialog = false">
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-form>
+            </v-card>
+          </v-dialog>
+        </v-col>
+        <!-- End of form -->
+        <v-col cols="2">
+          <v-btn rounded="lg" @click="edit = !edit"> {{ btnText }} </v-btn>
+        </v-col>
+        <v-divider thickness="2"></v-divider>
+      </v-row>
       <v-row>
         <v-col
           v-for="flashcard in flashcards"
@@ -74,8 +76,12 @@
         >
           <v-card color="#d3ebe5" class="mt-3 ml-4">
             <v-card-title class="font-weight-light">
-              Question          
-              <v-btn v-if="edit" variant="plain" @click="deleteFlash(flashcard)">
+              Question
+              <v-btn
+                v-if="edit"
+                variant="plain"
+                @click="deleteFlash(flashcard)"
+              >
                 <v-icon size="30" color="#1c3d35">
                   mdi-delete-circle-outline
                 </v-icon>
@@ -112,12 +118,20 @@
 </template>
 <script>
 import { db } from "@/main";
-import { collection, onSnapshot, addDoc, doc, deleteDoc } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-
+import {
+  collection,
+  onSnapshot,
+  addDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { useStore } from "vuex";
 export default {
   name: "Flashcard",
-
+  setup() {
+    const store = useStore();
+    return { store };
+  },
   props: {
     setId: String,
   },
@@ -135,11 +149,11 @@ export default {
       return this.setId;
     },
     btnText() {
-      return this.edit ? "Cancel Editing" : "Edit Modules";
+      return this.edit ? "Cancel Editing" : "Edit Flashcards";
     },
   },
   created() {
-    const currentUser = getAuth().currentUser;
+    const currentUser = this.$store.state.user;
     onSnapshot(
       collection(
         db,
@@ -165,7 +179,7 @@ export default {
   },
   methods: {
     async addFlashcard() {
-      const currentUser = getAuth().currentUser;
+      const currentUser = this.$store.state.user;
       await addDoc(
         collection(
           db,
@@ -188,14 +202,18 @@ export default {
       flashcard.showAnswer = !flashcard.showAnswer;
     },
     async deleteFlash(flashcard) {
-      const currentUser = getAuth().currentUser;
-      await deleteDoc(doc(db,
+      const currentUser = this.$store.state.user;
+      await deleteDoc(
+        doc(
+          db,
           "users",
           currentUser.uid,
           "flashcard-sets",
           this.setID,
-          "flashcards", 
-          flashcard.uid));
+          "flashcards",
+          flashcard.uid
+        )
+      );
     },
   },
 };

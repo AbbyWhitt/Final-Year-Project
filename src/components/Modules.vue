@@ -188,10 +188,13 @@ import {
   addDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-
+import { useStore } from 'vuex';
 export default {
   name: "Module",
+  setup() {
+    const store = useStore();
+    return { store };
+  },
   data: () => ({
     dialog: false,
     edit: false,
@@ -217,7 +220,7 @@ export default {
   },
   methods: {
     async addModule() {
-      const currentUser = getAuth().currentUser;
+      const currentUser = this.$store.state.user;
       await addDoc(collection(db, "users", currentUser.uid, "modules"), {
         modName: this.modContent.modName,
         modCode: this.modContent.modCode,
@@ -233,13 +236,13 @@ export default {
       this.modContent.modLectName = "";
     },
     async deleteModule(module) {
-      const currentUser = getAuth().currentUser;
+      const currentUser = this.$store.state.user;
       deleteDoc(doc(db, "users", currentUser.uid, "modules", module.Id));
     },
   },
 
   mounted() {
-    const currentUser = getAuth().currentUser;
+    const currentUser = this.$store.state.user;
     onSnapshot(
       collection(db, "users", currentUser.uid, "modules"),
       (querySnapshot) => {

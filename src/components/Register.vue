@@ -55,8 +55,8 @@
                   @click="register"
                   color="#449682"
                   elevation="3"
-                  >Create Account </v-btn
-                >
+                  >Create Account
+                </v-btn>
 
                 <v-divider />
 
@@ -88,46 +88,19 @@
 <script setup>
 import { ref } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/main";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
 const email = ref("");
 const password = ref("");
 const router = useRouter();
-const name = ref("")
+const name = ref("");
+const store = useStore();
 
 const register = async () => {
-  try{
-  const auth = getAuth(); //This allows the user sigin to be cached in local storage to stay logged in even in new tabs
-  const cred = await createUserWithEmailAndPassword(auth, email.value, password.value)
-  const userData = {
-    name: name.value,
-    email: email.value,
-  }
-  await setDoc(doc(db, "users", cred.user.uid), userData );
-  
-  // console.log(auth.currentUser); //this is for cached signin
-
-  router.push("/Dashboard"); //once logged in this sends to home
-  }
-    catch(error){
-      console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errorMsg.value = "Invalid Email Address";
-          break;
-        case "auth/wrong-password":
-          errorMsg.value = "Password must have at least 6 characters";
-          break;
-        case "auth/uid-already-exists":
-          errorMsg.value = "A User with this email already exsits"
-          break;
-        default:
-          errorMsg.value = "Unable to create user, please check Email is vaild";
-          break;
-          
-      }
-    };
+  store.dispatch('register', {email: email.value, password: password.value});
 };
 
 const signInWithGoogle = () => {};

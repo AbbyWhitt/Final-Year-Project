@@ -2,7 +2,6 @@
   <v-navigation-drawer
     color="#58B39D"
     :width="210"
-    
     :rail="rail"
     permanent
     @click="rail = false"
@@ -66,8 +65,7 @@
       <v-btn
         class="logout"
         prepend-icon="mdi-logout-variant"
-        @click="handleSignOut"
-        v-if="isLoggedIn"
+        @click="$store.dispatch('logout')"
         color="#449682"
       >
         Logout
@@ -80,7 +78,8 @@
 import { onMounted, ref } from "vue";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import router from "../router";
-
+import { useStore } from "vuex";
+const store = useStore();
 let isLoggedIn = ref(false);
 
 let auth;
@@ -111,7 +110,7 @@ export default {
 
 <style scoped>
 .logout {
-  position: fixed;
+  position: relative;
   bottom: 1%;
   width: 92%;
   color: white;

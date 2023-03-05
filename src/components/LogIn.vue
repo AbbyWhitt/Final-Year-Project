@@ -71,42 +71,16 @@
 
 <script setup>
 import { ref } from "vue";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 const email = ref("");
 const password = ref("");
 const errorMsg = ref();
 const router = useRouter();
+const store = useStore();
 
 const login = () => {
-  const auth = getAuth(); //This allows the user sigin to be cached in local storage to stay logged in even in new tabs
-  signInWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
-      console.log("Successfully Signed In!");
-
-        // console.log(auth.currentUser) //this is for cached signin
-
-      router.push("/Dashboard"); //once logged in this sends to home
-    })
-
-    .catch((error) => {
-      console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errorMsg.value = "Invalid Email Address";
-          break;
-        case "auth/user-not-found":
-          errorMsg.value = "An Account with this email was not found";
-          break;
-        case "auth/wrong-password":
-          errorMsg.value = "Incorrect password";
-          break;
-        default:
-          errorMsg.value = "Email or Password was incorrect";
-          break;
-          
-      }
-    });
+  store.dispatch('login', {email: email.value, password: password.value})
 };
 
 const signInWithGoogle = () => {};

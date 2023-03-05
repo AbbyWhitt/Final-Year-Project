@@ -117,10 +117,13 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-
+import { useStore } from 'vuex';
 export default {
   name: "FlashcardSets",
+  setup() {
+    const store = useStore();
+    return { store };
+  },
   data: () => ({
     dialog: false,
     edit: false,
@@ -134,7 +137,7 @@ export default {
   },
   methods: {
     async addFlashSet() {
-      const currentUser = getAuth().currentUser;
+      const currentUser = this.$store.state.user;
       await addDoc(collection(db, "users", currentUser.uid, "flashcard-sets"), {
         name: this.setName,
       });
@@ -142,14 +145,14 @@ export default {
       this.setName = "";
     },
     async deleteFlashSet(flashcardSet) {
-      const currentUser = getAuth().currentUser;
+      const currentUser = this.$store.state.user;
       await deleteDoc(
         doc(db, "users", currentUser.uid, "flashcard-sets", flashcardSet.uid)
       );
     },
   },
   created() {
-    const currentUser = getAuth().currentUser;
+    const currentUser = this.$store.state.user;
     onSnapshot(
       collection(db, "users", currentUser.uid, "flashcard-sets"),
       (querySnapshot) => {

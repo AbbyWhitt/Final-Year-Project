@@ -58,19 +58,15 @@
 
 <script>
 import { db } from "@/main";
-import {
-  collectionGroup,
-  getDocs,
-  onSnapshot,
-  where,
-  query,
-  QuerySnapshot,
-  doc,
-} from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { collectionGroup, onSnapshot, where, query } from "firebase/firestore";
+import { useStore } from "vuex";
 
 export default {
   name: "home",
+  setup() {
+    const store = useStore();
+    return { store };
+  },
   props: {
     modId: String,
   },
@@ -87,7 +83,7 @@ export default {
   },
 
   async mounted() {
-    const currentUser = getAuth().currentUser;
+    const currentUser = this.$store.state.user;
     const q = query(
       collectionGroup(db, "assignments"),
       where("userId", "==", currentUser.uid)
