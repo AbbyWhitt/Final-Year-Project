@@ -22,7 +22,7 @@
             </template>
             <!-- Create Flashcard Form -->
             <v-card class="w-50 center">
-              <v-form @submit.prevent="addFlashcard">
+              <v-form validate-on="submit" @submit.prevent="addFlashcard">
                 <v-card-title>
                   <span class="text-h5">New Flashcard</span>
                 </v-card-title>
@@ -34,6 +34,7 @@
                           label="Question*"
                           required
                           v-model="setQ"
+                          :rules="qRules"
                           variant="underlined"
                         ></v-text-field>
                         <v-textarea
@@ -42,6 +43,7 @@
                           label="Answer*"
                           variant="solo"
                           v-model="setAns"
+                          :rules="aRules"
                         ></v-textarea>
                       </v-col>
                     </v-row>
@@ -142,6 +144,20 @@ export default {
     setQ: "",
     setAns: "",
     flashcards: [],
+    qRules: [
+        value => {
+          if (value) return true
+
+          return 'You must enter a question.'
+        },
+      ],
+    aRules: [
+        value => {
+          if (value) return true
+
+          return 'You must enter an answer.'
+        },
+      ],
   }),
   // Needed so then methods can access setID
   computed: {

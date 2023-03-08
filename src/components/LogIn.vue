@@ -42,10 +42,10 @@
 
                 <v-btn
                   class="my-3"
-                  prepend-icon="mdi-google"
+                  prepend-icon="mdi-lock-reset"
                   @click="signInWithGoogle"
                   elevation="3"
-                  >Login with Google</v-btn
+                  >Forgotten Password?</v-btn
                 >
 
                 <v-divider />

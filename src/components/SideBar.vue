@@ -48,7 +48,7 @@
 
       <v-btn
         v-if="rail"
-        class="mt-5 items"
+        class="mt-5 items d-lg-none"
         variant="plain"
         icon="mdi-chevron-right"
         @click.stop="rail = !rail"
@@ -56,7 +56,7 @@
 
       <v-btn
         v-if="!rail"
-        class="mt-5 items"
+        class="mt-5 items d-lg-none"
         variant="plain"
         icon="mdi-chevron-left"
         @click.stop="($event) => (rail = !rail)"
@@ -102,16 +102,13 @@ const handleSignOut = () => {
 
 export default {
   data: () => ({
-    rail: true,
-    drawer: true,
+    rail: false,
   }),
 };
 </script>
 
 <style scoped>
 .logout {
-  position: relative;
-  bottom: 1%;
   width: 92%;
   color: white;
 }
@@ -120,7 +117,7 @@ export default {
   color: white;
 }
 .itemsTitle {
-  font-size: 0.9rem;
+  font-size: 0.93rem;
   font-weight: 400;
 }
 </style>

@@ -128,11 +128,11 @@
               }}
             </span>
           </v-card-text>
-          <v-card class="ma-3">
+          <v-card class="ma-3 overflow-auto" height="150">
             <v-card-title class="miniTitle">
               Assignment Brief Notes
             </v-card-title>
-            <v-card-text class="font-weight-light overflow-auto" style="white-space: pre-line;">
+            <v-card-text class="font-weight-light" style="white-space: pre-line;">
               {{ assignment.brief }}
             </v-card-text>
           </v-card>
