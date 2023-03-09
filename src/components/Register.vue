@@ -27,7 +27,7 @@
               ></v-text-field>
 
               <v-text-field
-                type="text"
+                type="email"
                 label="Email"
                 placeholder="example@email.com"
                 outlined

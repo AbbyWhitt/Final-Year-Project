@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 export default createStore({
@@ -60,19 +61,19 @@ export default createStore({
         await createUserWithEmailAndPassword(auth, email, password);
       } catch (error) {
         switch (error.code) {
-              case "auth/invalid-email":
-                alert("Invalid Email Address");
-                break;
-              case "auth/wrong-password":
-                alert("Password must have at least 6 characters");
-                break;
-              case "auth/uid-already-exists":
-                alert("A User with this email already exsits");
-                break;
-              default:
-                alert("Unable to create user, please check Email is vaild");
-                break;
-              }
+          case "auth/invalid-email":
+            alert("Invalid Email Address");
+            break;
+          case "auth/wrong-password":
+            alert("Password must have at least 6 characters");
+            break;
+          case "auth/uid-already-exists":
+            alert("A User with this email already exsits");
+            break;
+          default:
+            alert("Unable to create user, please check Email is vaild");
+            break;
+        }
         return;
       }
       commit("SET_USER", auth.currentUser);
@@ -91,6 +92,16 @@ export default createStore({
           router.push("/");
         }
       });
+    },
+    async resetPassword({ commit }, email) {
+      const auth = getAuth();
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("Email Sent!");
+        })
+        .catch((error) => {
+          alert(error.code + ": " + error.message);
+        });
     },
   },
 });

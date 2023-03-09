@@ -43,10 +43,23 @@
                 <v-btn
                   class="my-3"
                   prepend-icon="mdi-lock-reset"
-                  @click="signInWithGoogle"
+                  @click="resettingPassword = true"
                   elevation="3"
                   >Forgotten Password?</v-btn
                 >
+
+                <div v-if="resettingPassword">
+                  <v-text-field
+                    label="Email"
+                    variant="underlined"
+                    type="email"
+                    v-model="emailForPassReset"
+                  >
+                  </v-text-field>
+                  <v-btn type="button" @click="resetPassword"
+                    >Send Reset Email</v-btn
+                  >
+                </div>
 
                 <v-divider />
 
@@ -59,7 +72,6 @@
                   >
                 </router-link>
 
-                <!-- TODO: Add a forgotten password link  -->
               </div>
             </v-card>
           </v-col>
@@ -76,14 +88,20 @@ import { useStore } from "vuex";
 const email = ref("");
 const password = ref("");
 const errorMsg = ref();
+const emailForPassReset = ref("");
+const resettingPassword = ref(false);
 const router = useRouter();
 const store = useStore();
 
 const login = () => {
-  store.dispatch('login', {email: email.value, password: password.value})
+  store.dispatch("login", { email: email.value, password: password.value });
 };
 
-const signInWithGoogle = () => {};
+const resetPassword = () => {
+  store.dispatch("resetPassword", emailForPassReset.value);
+  emailForPassReset.value = "";
+  resettingPassword.value = false;
+};
 </script>
 
 <style scoped>

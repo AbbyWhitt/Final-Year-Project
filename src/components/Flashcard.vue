@@ -22,7 +22,7 @@
             </template>
             <!-- Create Flashcard Form -->
             <v-card class="w-50 center">
-              <v-form validate-on="submit" @submit.prevent="addFlashcard">
+              <v-form @submit.prevent="addFlashcard">
                 <v-card-title>
                   <span class="text-h5">New Flashcard</span>
                 </v-card-title>
@@ -145,19 +145,19 @@ export default {
     setAns: "",
     flashcards: [],
     qRules: [
-        value => {
-          if (value) return true
+      (value) => {
+        if (value) return true;
 
-          return 'You must enter a question.'
-        },
-      ],
+        return "You must enter a question.";
+      },
+    ],
     aRules: [
-        value => {
-          if (value) return true
+      (value) => {
+        if (value) return true;
 
-          return 'You must enter an answer.'
-        },
-      ],
+        return "You must enter an answer.";
+      },
+    ],
   }),
   // Needed so then methods can access setID
   computed: {
@@ -195,24 +195,26 @@ export default {
   },
   methods: {
     async addFlashcard() {
-      const currentUser = this.$store.state.user;
-      await addDoc(
-        collection(
-          db,
-          "users",
-          currentUser.uid,
-          "flashcard-sets",
-          this.setID,
-          "flashcards"
-        ),
-        {
-          question: this.setQ,
-          answer: this.setAns,
-        }
-      );
-      this.dialog = false;
-      this.setQ = "";
-      this.setAns = "";
+      if (this.setQ && this.setAns) {
+        const currentUser = this.$store.state.user;
+        await addDoc(
+          collection(
+            db,
+            "users",
+            currentUser.uid,
+            "flashcard-sets",
+            this.setID,
+            "flashcards"
+          ),
+          {
+            question: this.setQ,
+            answer: this.setAns,
+          }
+        );
+        this.dialog = false;
+        this.setQ = "";
+        this.setAns = "";
+      }
     },
     toggle(flashcard) {
       flashcard.showAnswer = !flashcard.showAnswer;

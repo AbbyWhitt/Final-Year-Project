@@ -42,10 +42,12 @@
           </v-list-item-title>
         </v-list-item>
       </router-link>
+    </v-list>
 
       <v-divider style="color: white"></v-divider>
-      <v-spacer></v-spacer>
+      <v-spacer />
 
+      <v-list nav>
       <v-btn
         v-if="rail"
         class="mt-5 items d-lg-none"
@@ -109,7 +111,7 @@ export default {
 
 <style scoped>
 .logout {
-  width: 92%;
+  width: 98%;
   color: white;
 }
 .items {
