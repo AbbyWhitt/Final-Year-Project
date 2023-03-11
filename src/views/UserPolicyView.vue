@@ -17,7 +17,7 @@ import UserPolicy from "../components/UserPolicy.vue";
 import AppBar from "../components/AppBar.vue";
 
 export default defineComponent({
-  name: "RegisterView",
+  name: "UserPolicyView",
 
   components: {
     AppBar,

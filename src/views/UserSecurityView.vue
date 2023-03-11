@@ -17,7 +17,7 @@ import UserSecurity from "../components/UserSecurity.vue";
 import AppBar from "../components/AppBar.vue";
 
 export default defineComponent({
-  name: "RegisterView",
+  name: "UserSecurityView",
 
   components: {
     AppBar,

@@ -45,29 +45,22 @@
 
               <v-checkbox
                 label="*Tick here to agree to the StudyBuddy T&Cs"
+                v-model="isTicked"
               ></v-checkbox>
-              <!-- TODO: Make T&Cs page and link it back here and make create button disabled until ticked.  -->
+              <router-link class="link" to="/termsandconditions"
+                >Click here to view T&Cs</router-link
+              >
 
               <p v-if="errorMsg">{{ errorMsg }}</p>
               <div style="text-align: center">
                 <v-btn
+                :disabled="!isTicked"
                   class="btn my-3"
                   @click="register"
                   color="#449682"
                   elevation="3"
                   >Create Account
                 </v-btn>
-
-                <v-divider />
-
-                <v-btn
-                  class="my-3"
-                  prepend-icon="mdi-google"
-                  @click="signInWithGoogle"
-                  elevation="3"
-                  type="submit"
-                  >Login with Google</v-btn
-                >
 
                 <v-divider />
 
@@ -87,8 +80,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
 import { db } from "@/main";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -98,9 +89,10 @@ const password = ref("");
 const router = useRouter();
 const name = ref("");
 const store = useStore();
+const isTicked = ref(false);
 
 const register = async () => {
-  store.dispatch('register', {email: email.value, password: password.value});
+  store.dispatch("register", { email: email.value, password: password.value });
 };
 
 const signInWithGoogle = () => {};
@@ -113,5 +105,9 @@ const signInWithGoogle = () => {};
 .h-screen {
   background: radial-gradient(circle, #7bc3b2 15%, #58b39d 25%, #3d8674 83%);
   display: grid;
+}
+.link {
+  text-decoration: none;
+  color: #3d8674;
 }
 </style>

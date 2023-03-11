@@ -10,7 +10,7 @@
               class="pa-6"
             ></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light">
-              Assignments // {{module.modCode}}
+              Assignments // {{ module.modCode }}
             </v-card-title>
           </v-card>
         </v-col>
@@ -101,8 +101,7 @@
             {{ btnText }}
           </v-btn>
         </v-col>
-        <div class="ml-12"> 
-        </div>
+        <div class="ml-12"></div>
         <v-divider thickness="2"></v-divider>
       </v-row>
       <v-row>
@@ -147,6 +146,11 @@
                   })
                 }}
               </span>
+              <!-- <v-checkbox v-model="checkbox">
+                <template v-slot:prepend>
+                  <div>Assignment Completed</div>
+                </template>
+              </v-checkbox> -->
             </v-card-text>
             <v-card class="ma-3 overflow-auto" height="150">
               <v-card-title class="miniTitle">
@@ -191,6 +195,7 @@ export default {
   data: () => ({
     dialog: false,
     edit: false,
+    checkbox: false,
     assignments: [],
     assign: {
       name: null,

@@ -49,7 +49,9 @@
               <span>Placeholder with hardcoded value</span>
             </v-tooltip></v-card-title
           >
-          <v-card-text class="text-center cardText"> 25 Days </v-card-text>
+          <v-card-text class="text-center cardText">
+            {{ diffInDays }}
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -96,7 +98,19 @@ export default {
       this.assignments.sort((a, b) =>
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
-    });
+
+    const today = new Date();
+    const sortedDates = this.assignments.sort((a, b) =>
+      a.due > b.due ? 1 : b.due > a.due ? -1 : 0
+    );
+    // console.log(sortedDates);
+    const nearestTargetDate = sortedDates.find(
+      (targetDate) => targetDate >= today
+    );
+    console.log(nearestTargetDate);
+    const diffInMs = nearestTargetDate.getTime() - today.getTime();
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+      });
   },
 
   unmounted() {},

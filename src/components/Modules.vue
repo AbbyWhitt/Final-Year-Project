@@ -19,8 +19,7 @@
             <template v-slot:activator="{ props }">
               <v-btn
                 rounded="lg"
-                class="ml-6 text"
-                color="#449682"
+                class="ml-6"
                 v-bind="props"
               >
                 Create a Module
@@ -105,8 +104,6 @@
         <v-col cols="1.5">
           <v-btn
             rounded="lg"
-            class="text"
-            color="#449682"
             @click="edit = !edit"
           >
             {{ btnText }}

@@ -14,23 +14,13 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="1">
-          <v-btn
-            class="text mt-1"
-            rounded="lg"
-            color="#449682"
-            @click="edit = !edit"
-          >
-            {{ btnText }}
-          </v-btn>
-        </v-col>
+       
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
               <v-btn
                 rounded="lg"
-                class="mt-1 text"
-                color="#449682"
+                class="mt-1"
                 v-bind="props"
               >
                 Create a Flashcard Set
@@ -76,6 +66,15 @@
             </v-card>
             <!-- End of Form -->
           </v-dialog>
+        </v-col>
+         <v-col cols="1">
+          <v-btn
+            class="mt-1"
+            rounded="lg"
+            @click="edit = !edit"
+          >
+            {{ btnText }}
+          </v-btn>
         </v-col>
         <v-divider thickness="2"></v-divider>
       </v-row>

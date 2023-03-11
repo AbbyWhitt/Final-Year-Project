@@ -10,6 +10,7 @@ import AssignmentView from "../views/AssignmentView.vue";
 import SettingsView from "../views/SettingsView.vue";
 import UserPolicyView from "../views/UserPolicyView.vue";
 import UserSecurityView from "../views/UserSecurityView.vue";
+import TermsView from "../views/TermsView.vue";
 
 const routes = [
   {
@@ -89,6 +90,11 @@ const routes = [
   meta:{
     requiresAuth: true
   }
+},
+{
+  path: "/termsandconditions",
+  name: "Terms",
+  component: TermsView,
 },
 ];
 
