@@ -6,7 +6,7 @@
           <v-card class="d-flex" flat rounded="0">
             <v-icon icon="mdi-card-text" size="large" class="pa-6"></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light">
-              Flashcards
+              Flashcards // {{ flashcardSet.name }}
             </v-card-title>
           </v-card>
         </v-col>
@@ -89,7 +89,7 @@
                 </v-icon>
               </v-btn>
             </v-card-title>
-            <v-card-text class="pa-5 text-center">
+            <v-card-text class="pa-5 text-center" style="font-size: 1rem">
               {{ flashcard.question }}</v-card-text
             >
             <v-card-actions>
@@ -104,7 +104,9 @@
                 color="#d3ebe5"
               >
                 <v-card-title class="font-weight-light"> Answer </v-card-title>
-                <v-card-text class="pa-5"> {{ flashcard.answer }}</v-card-text>
+                <v-card-text class="pa-5" style="font-size: 1rem">
+                  {{ flashcard.answer }}</v-card-text
+                >
                 <v-card-actions>
                   <v-btn variant="text" @click="toggle(flashcard)">
                     Close
@@ -126,8 +128,10 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { useStore } from "vuex";
+
 export default {
   name: "Flashcard",
   setup() {
@@ -144,6 +148,7 @@ export default {
     setQ: "",
     setAns: "",
     flashcards: [],
+    flashcardSet: {},
     qRules: [
       (value) => {
         if (value) return true;
@@ -168,8 +173,17 @@ export default {
       return this.edit ? "Cancel Editing" : "Edit Flashcards";
     },
   },
-  created() {
+  async created() {
     const currentUser = this.$store.state.user;
+    const docRef = doc(
+      db,
+      "users",
+      currentUser.uid,
+      "flashcard-sets",
+      this.setId
+    );
+    const docSnap = await getDoc(docRef);
+    this.flashcardSet = docSnap.data();
     onSnapshot(
       collection(
         db,

@@ -51,6 +51,7 @@
                           required
                           v-model="setName"
                           variant="underlined"
+                          :rules="nameR"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -129,6 +130,13 @@ export default {
     edit: false,
     setName: "",
     flashcardSets: [],
+    nameR: [
+      (value) => {
+        if (value) return true;
+
+        return "You must enter a name.";
+      },
+    ],
   }),
   computed: {
     btnText() {
@@ -137,12 +145,14 @@ export default {
   },
   methods: {
     async addFlashSet() {
+      if (this.setName) {
       const currentUser = this.$store.state.user;
       await addDoc(collection(db, "users", currentUser.uid, "flashcard-sets"), {
         name: this.setName,
       });
       this.dialog = false;
       this.setName = "";
+    }
     },
     async deleteFlashSet(flashcardSet) {
       const currentUser = this.$store.state.user;

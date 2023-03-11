@@ -11,68 +11,72 @@
         <v-row rows="2">
           <v-col md="4" offset-md="4" class="mt-auto">
             <v-card class="pa-10">
-              <h1>Sign Into StudyBuddy</h1>
-              <v-text-field
-                label="Email"
-                placeholder="example@email.com"
-                outlined
-                v-model="email"
-                variant="underlined"
-              ></v-text-field>
+              <v-container>
+                <div style="text-align: center">
+                  <v-form @submit.prevent="login">
+                    <h1>Sign Into StudyBuddy</h1>
+                    <v-text-field
+                      label="Email"
+                      placeholder="example@email.com"
+                      outlined
+                      v-model="email"
+                      variant="underlined"
+                    ></v-text-field>
 
-              <v-text-field
-                label="Password"
-                outlined
-                v-model="password"
-                variant="underlined"
-                type="password"
-              ></v-text-field>
+                    <v-text-field
+                      label="Password"
+                      outlined
+                      v-model="password"
+                      variant="underlined"
+                      type="password"
+                    ></v-text-field>
 
-              <p v-if="errorMsg">{{ errorMsg }}</p>
-              <div style="text-align: center">
-                <v-btn
-                  class="btn my-3"
-                  @click="login"
-                  color="#449682"
-                  elevation="3"
-                  >Login</v-btn
-                >
+                    <p v-if="errorMsg">{{ errorMsg }}</p>
 
-                <v-divider></v-divider>
+                    <v-btn
+                      class="btn my-3"
+                      color="#449682"
+                      elevation="3"
+                      type='submit'
+                      >Login</v-btn
+                    >
+                  </v-form>
+                  <v-divider></v-divider>
 
-                <v-btn
-                  class="my-3"
-                  prepend-icon="mdi-lock-reset"
-                  @click="resettingPassword = true"
-                  elevation="3"
-                  >Forgotten Password?</v-btn
-                >
-
-                <div v-if="resettingPassword">
-                  Please enter the email used for the account.
-                  <v-text-field
-                    label="Email"
-                    variant="underlined"
-                    type="email"
-                    v-model="emailForPassReset"
-                  >
-                  </v-text-field>
-                  <v-btn type="button" @click="resetPassword"
-                    >Send Reset Email</v-btn
-                  >
-                </div>
-
-                <v-divider> </v-divider>
-
-                <router-link to="/CreateAccount" class="title">
                   <v-btn
-                    class="create my-3"
-                    prepend-icon="mdi-account-box"
+                    class="my-3"
+                    prepend-icon="mdi-lock-reset"
+                    @click="resettingPassword = true"
                     elevation="3"
-                    >Create an Account</v-btn
+                    >Forgotten Password?</v-btn
                   >
-                </router-link>
-              </div>
+
+                  <div v-if="resettingPassword">
+                    Please enter the email used for the account.
+                    <v-text-field
+                      label="Email"
+                      variant="underlined"
+                      type="email"
+                      v-model="emailForPassReset"
+                    >
+                    </v-text-field>
+                    <v-btn type="button" @click="resetPassword"
+                      >Send Reset Email</v-btn
+                    >
+                  </div>
+
+                  <v-divider> </v-divider>
+
+                  <router-link to="/CreateAccount" class="title">
+                    <v-btn
+                      class="create my-3"
+                      prepend-icon="mdi-account-box"
+                      elevation="3"
+                      >Create an Account</v-btn
+                    >
+                  </router-link>
+                </div>
+              </v-container>
             </v-card>
           </v-col>
         </v-row>

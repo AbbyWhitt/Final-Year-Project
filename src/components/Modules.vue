@@ -39,6 +39,7 @@
                         <v-text-field
                           label="Module Code*"
                           v-model="modContent.modCode"
+                          :rules="codeR"
                           required
                           variant="underlined"
                         ></v-text-field>
@@ -47,6 +48,7 @@
                         <v-text-field
                           label="Module Name*"
                           v-model="modContent.modName"
+                          :rules="nameR"
                           required
                           variant="underlined"
                         ></v-text-field>
@@ -55,7 +57,7 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          label="Module Lecturer Name*"
+                          label="Module Lecturer Name"
                           v-model="modContent.modLectName"
                           required
                           variant="underlined"
@@ -76,8 +78,9 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           variant="underlined"
-                          label="Last Assignment Due Date"
+                          label="Last Assignment Due Date*"
                           v-model="modContent.lastAssignDue"
+                          :rules="dateR"
                           type="date"
                         ></v-text-field>
                       </v-col>
@@ -212,6 +215,27 @@ export default {
       { title: "Sem 1 & 2", value: "Both" },
     ],
     unsubscribe: null,
+    codeR: [
+      (value) => {
+        if (value) return true;
+
+        return "You must enter a Module Code.";
+      },
+    ],
+    nameR: [
+      (value) => {
+        if (value) return true;
+
+        return "You must enter a Module Name.";
+      },
+    ],
+    dateR: [
+      (value) => {
+        if (value) return true;
+
+        return "You must enter an Assignment Date.";
+      },
+    ],
   }),
   computed: {
     btnText() {
@@ -220,6 +244,7 @@ export default {
   },
   methods: {
     async addModule() {
+      if (this.modContent.modCode && this.modContent.modName && this.modContent.lastAssignDue) {
       const currentUser = this.$store.state.user;
       await addDoc(collection(db, "users", currentUser.uid, "modules"), {
         modName: this.modContent.modName,
@@ -234,6 +259,7 @@ export default {
       this.modContent.semester = "";
       this.modContent.lastAssignDue = "";
       this.modContent.modLectName = "";
+      }
     },
     async deleteModule(module) {
       const currentUser = this.$store.state.user;

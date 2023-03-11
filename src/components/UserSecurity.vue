@@ -24,8 +24,7 @@
       </v-sheet>
       <!-- New Sheet -->
       <v-sheet class="pa-4">
-        <v-card-title class="font-weight-bold">Delete Account</v-card-title>
-        Delete Account:
+        <v-card-title class="font-weight-bold">Delete User Account</v-card-title>
         <v-spacer />
         <v-dialog v-model="dialog" persistent>
           <template v-slot:activator="{ props }">
@@ -34,6 +33,7 @@
           <v-card class="w-50 center">
             <v-container>
               <v-form>
+                This action will permanently delete the user account. ALL DATA WILL BE LOST.
                 In order to delete account please log in again with user
                 details:
                 <v-text-field
