@@ -27,35 +27,56 @@
         <v-card-title class="font-weight-bold">Delete Account</v-card-title>
         Delete Account:
         <v-spacer />
-        <v-btn class="mt-3" type="button" color="error"
-          >Delete Account
-          <v-dialog v-model="dialog" activator="parent">
-            <v-card class="w-50 center">
-              <v-card-text>
-                Doing this will permanently delete all data connected with this
-                account. ALL DATA WILL BE LOST. Your account will no longer be
-                active and no data will be stored related to this account. You
-                will be asked to log in again before you can continue.
-              </v-card-text>
-              <v-card-actions>
-                <v-btn color="error">Confirm</v-btn>
-                <v-btn color="449682" @click="dialog = false">Cancel</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-btn>
+        <v-dialog v-model="dialog" persistent>
+          <template v-slot:activator="{ props }">
+            <v-btn color="error" v-bind="props">Delete Account </v-btn>
+          </template>
+          <v-card class="w-50 center">
+            <v-container>
+              <v-form>
+                In order to delete account please log in again with user
+                details:
+                <v-text-field
+                  label="Email"
+                  placeholder="example@email.com"
+                  outlined
+                  v-model="email"
+                  variant="underlined"
+                ></v-text-field>
+
+                <v-text-field
+                  label="Password"
+                  outlined
+                  v-model="password"
+                  variant="underlined"
+                  type="password"
+                ></v-text-field>
+                <v-btn
+                  color="error"
+                  variant="flat"
+                  style="font-size: 1.1rem"
+                  @click="delUser()"
+                  >Confirm Deletion</v-btn
+                >
+                <v-btn class="ml-3" color="#449682" @click="dialog = false">Cancel</v-btn>
+              </v-form>
+            </v-container>
+          </v-card>
+        </v-dialog>
       </v-sheet>
     </v-container>
   </v-card>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
+const email = ref("");
 const password = ref("");
 const emailForPassSet = ref("");
 const settingPassword = ref(false);
+const dialog = ref(false);
 
 const setPassword = () => {
   store.dispatch("setPassword", emailForPassSet.value);
@@ -63,12 +84,10 @@ const setPassword = () => {
   settingPassword.value = false;
 };
 
-export default {
-  data() {
-    return {
-      dialog: false,
-    };
-  },
+const delUser = () => {
+  store.dispatch("delUser", { email: email.value, password: password.value });
+  email.value = "";
+  password.value = "";
 };
 </script>
 

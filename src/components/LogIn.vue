@@ -49,7 +49,7 @@
                 >
 
                 <div v-if="resettingPassword">
-                  Please enter the email used for the account. 
+                  Please enter the email used for the account.
                   <v-text-field
                     label="Email"
                     variant="underlined"
@@ -72,7 +72,6 @@
                     >Create an Account</v-btn
                   >
                 </router-link>
-
               </div>
             </v-card>
           </v-col>

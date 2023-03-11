@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import router from "../router";
+import { db } from "@/main";
 
 import {
   getAuth,
@@ -7,8 +8,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
-  updatePassword
+  updatePassword,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from "firebase/auth";
+import { deleteDoc, doc } from "firebase/firestore";
 
 export default createStore({
   state: {
@@ -94,6 +99,7 @@ export default createStore({
         }
       });
     },
+
     async resetPassword({ commit }, email) {
       const auth = getAuth();
       sendPasswordResetEmail(auth, email)
@@ -104,6 +110,7 @@ export default createStore({
           alert(error.code + ": " + error.message);
         });
     },
+
     async setPassword({ commit }, newPassword) {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -115,6 +122,24 @@ export default createStore({
         .catch((error) => {
           alert(error.code + ":" + error.message);
         });
+    },
+
+    async delUser({ commit }, userDetails) {
+      try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const credential = EmailAuthProvider.credential(
+          userDetails.email,
+          userDetails.password
+        );
+        await reauthenticateWithCredential(user, credential);
+        await deleteDoc(doc(db, "users", user.uid));
+        await deleteUser(user);
+        alert("Account has been deleted");
+        router.push("/");
+      } catch (error) {
+        alert(error.code + ":" + error.message);
+      }
     },
   },
 });
