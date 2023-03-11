@@ -19,27 +19,27 @@
         </v-list-item>
       </router-link>
 
-      <!-- <router-link class="items" to="Flashcards"> -->
+      <router-link class="items" to="/UserSettings">
       <v-list-item
         class="py-5"
-        prepend-icon="mdi-card-text-outline"
+        prepend-icon="mdi-account-cog"
         value="flashcard sets"
       >
         <v-list-item-title class="itemsTitle">
           User Settings
         </v-list-item-title>
       </v-list-item>
-      <!-- </router-link> -->
+      </router-link>
 
-      <!-- <router-link class="items" to="Modules"> -->
+      <router-link class="items" to="/usersecurity">
       <v-list-item
         class="py-5"
-        prepend-icon="mdi-book-open-blank-variant"
+        prepend-icon="mdi-shield-account"
         value="Module"
       >
-        <v-list-item-title class="itemsTitle"> Secuirty </v-list-item-title>
+        <v-list-item-title class="itemsTitle"> Security </v-list-item-title>
       </v-list-item>
-      <!-- </router-link> -->
+      </router-link>
 
       <!-- <router-link class="items" to="Flashcards"> -->
       <v-list-item
@@ -51,21 +51,23 @@
       </v-list-item>
       <!-- </router-link> -->
 
-      <!-- <router-link class="items" to="Flashcards"> -->
+      <router-link class="items" to="/PrivacyPolicy">
       <v-list-item
         class="py-5"
-        prepend-icon="mdi-card-text-outline"
+        prepend-icon="mdi-file-document"
         value="flashcard sets"
       >
         <v-list-item-title class="itemsTitle">
           Privacy Policy
         </v-list-item-title>
       </v-list-item>
-      <!-- </router-link> -->
+      </router-link>
+    </v-list>
 
       <v-divider style="color: white"></v-divider>
       <v-spacer></v-spacer>
 
+    <v-list nav>
       <v-btn
         v-if="rail"
         class="mt-5 items d-lg-none"
@@ -129,9 +131,7 @@ export default {
 
 <style scoped>
 .logout {
-  position: fixed;
-  bottom: 1%;
-  width: 95%;
+  width: 98%;
   color: white;
 }
 .items {

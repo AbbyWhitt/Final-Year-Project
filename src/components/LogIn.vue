@@ -49,6 +49,7 @@
                 >
 
                 <div v-if="resettingPassword">
+                  Please enter the email used for the account. 
                   <v-text-field
                     label="Email"
                     variant="underlined"
@@ -61,7 +62,7 @@
                   >
                 </div>
 
-                <v-divider />
+                <v-divider> </v-divider>
 
                 <router-link to="/CreateAccount" class="title">
                   <v-btn

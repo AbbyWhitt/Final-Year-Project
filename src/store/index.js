@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  updatePassword
 } from "firebase/auth";
 
 export default createStore({
@@ -101,6 +102,18 @@ export default createStore({
         })
         .catch((error) => {
           alert(error.code + ": " + error.message);
+        });
+    },
+    async setPassword({ commit }, newPassword) {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      // const newPassword = getASecureRandomPassword();
+      updatePassword(user, newPassword)
+        .then(() => {
+          alert("Update successful!");
+        })
+        .catch((error) => {
+          alert(error.code + ":" + error.message);
         });
     },
   },

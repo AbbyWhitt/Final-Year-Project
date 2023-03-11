@@ -11,7 +11,7 @@
     </div>
 
     <template v-slot:append>
-      <router-link to="/Profile" style="text-decoration: none;">
+      <router-link to="/UserSettings" style="text-decoration: none;">
       <v-btn>
       <v-avatar>
         <v-icon dark size="40" style="color: white" > mdi-account-circle </v-icon>

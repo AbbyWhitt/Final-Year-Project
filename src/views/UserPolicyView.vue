@@ -3,7 +3,7 @@
     <AppBar />
     <SideBarUser />
     <v-main>
-      <UserProfile />
+      <UserPolicy />
     </v-main>
   </v-app>
 </template>
@@ -12,17 +12,17 @@
 import { defineComponent } from "vue";
 
 // Components
-import UserProfile from "../components/UserProfile.vue";
 import SideBarUser from "../components/SideBarUser.vue";
+import UserPolicy from "../components/UserPolicy.vue";
 import AppBar from "../components/AppBar.vue";
 
 export default defineComponent({
-  name: "FlashcardSet",
+  name: "RegisterView",
 
   components: {
     AppBar,
-    UserProfile,
     SideBarUser,
+    UserPolicy,
   },
 });
 </script>

@@ -5,10 +5,11 @@ import FlashcardSetView from "../views/FlashcardSetView.vue";
 import ModuleView from "../views/ModuleView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import AccountView from "../views/AccountView.vue";
 import FlashcardsView from "../views/FlashcardsView.vue";
 import AssignmentView from "../views/AssignmentView.vue";
-// import Modules from "../views/"
+import SettingsView from "../views/SettingsView.vue";
+import UserPolicyView from "../views/UserPolicyView.vue";
+import UserSecurityView from "../views/UserSecurityView.vue";
 
 const routes = [
   {
@@ -45,14 +46,7 @@ const routes = [
     name: "Register",
     component: RegisterView,
   },
-  {
-    path: "/Profile",
-    name: "profile",
-    component: AccountView,
-    meta:{
-      requiresAuth: true
-    }
-  },
+
   {
     path: "/:setId",
     name: "flashcards",
@@ -71,6 +65,27 @@ const routes = [
       default: AssignmentView
   },
   props: { default: true},
+  meta:{
+    requiresAuth: true
+  }
+},
+{
+  path: "/UserSettings",
+  name: "Settings",
+  component: SettingsView,
+  meta:{
+    requiresAuth: true
+  }
+},
+{
+  path: "/PrivacyPolicy",
+  name: "UserPolicy",
+  component: UserPolicyView,
+},
+{
+  path: "/usersecurity",
+  name: "UserSecurity",
+  component: UserSecurityView,
   meta:{
     requiresAuth: true
   }
