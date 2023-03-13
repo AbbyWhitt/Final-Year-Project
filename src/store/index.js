@@ -12,6 +12,7 @@ import {
   deleteUser,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  updateProfile
 } from "firebase/auth";
 import { deleteDoc, doc } from "firebase/firestore";
 
@@ -61,10 +62,13 @@ export default createStore({
     },
 
     async register({ commit }, userDetails) {
-      const { email, password } = userDetails;
+      const { email, password, name } = userDetails;
       const auth = getAuth();
       try {
         await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(auth.currentUser, {
+          displayName: name,
+        });
       } catch (error) {
         switch (error.code) {
           case "auth/invalid-email":
@@ -82,6 +86,7 @@ export default createStore({
         }
         return;
       }
+      
       commit("SET_USER", auth.currentUser);
       router.push("/Dashboard");
     },
