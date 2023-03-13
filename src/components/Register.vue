@@ -15,65 +15,71 @@
       <v-container>
         <v-row rows="2">
           <v-col md="4" offset-md="4" class="mt-auto">
-            <v-card class="pa-10">
-              <h1>Create a StudyBuddy Account</h1>
-              <v-text-field
-                type="text"
-                label="Name"
-                placeholder="Charlie"
-                outlined
-                v-model="name"
-                variant="underlined"
-              ></v-text-field>
+            <v-card>
+              <v-container>
+                <div style="text-align: center">
+                  <v-form @submit.prevent="register">
+                    <h1>Create a StudyBuddy Account</h1>
+                    <v-text-field
+                      type="text"
+                      label="Name"
+                      placeholder="Charlie"
+                      outlined
+                      v-model="name"
+                      variant="underlined"
+                    ></v-text-field>
 
-              <v-text-field
-                type="email"
-                label="Email"
-                placeholder="example@email.com"
-                outlined
-                v-model="email"
-                variant="underlined"
-              ></v-text-field>
+                    <v-text-field
+                      type="email"
+                      label="Email"
+                      placeholder="example@email.com"
+                      outlined
+                      v-model="email"
+                      variant="underlined"
+                    ></v-text-field>
 
-              <v-text-field
-                label="Password"
-                outlined
-                v-model="password"
-                variant="underlined"
-                type="password"
-              ></v-text-field>
+                    <v-text-field
+                      label="Password"
+                      outlined
+                      v-model="password"
+                      variant="underlined"
+                      type="password"
+                    ></v-text-field>
 
-              <v-checkbox
-                label="*Tick here to agree to the StudyBuddy T&Cs"
-                v-model="isTicked"
-              ></v-checkbox>
-              <div class="link">
-                You must be 18 or over to create a Study Buddy account.
-              </div>
-              <v-spacer />
-              <router-link class="link" to="/termsandconditions"
-                >Click here to view T&Cs</router-link
-              >
+                    <v-checkbox
+                      label="*Tick here to agree to the StudyBuddy T&Cs"
+                      v-model="isTicked"
+                    ></v-checkbox>
+                    <div class="link">
+                      You must be 18 or over to create a Study Buddy account.
+                    </div>
+                    <v-spacer />
+                    <router-link class="link" to="/termsandconditions"
+                      >Click here to view T&Cs</router-link
+                    >
 
-              <p v-if="errorMsg">{{ errorMsg }}</p>
-              <div style="text-align: center">
-                <v-btn
-                  :disabled="!isTicked"
-                  class="btn my-3"
-                  @click="register"
-                  color="#449682"
-                  elevation="3"
-                  >Create Account
-                </v-btn>
+                    <p v-if="errorMsg">{{ errorMsg }}</p>
+                    <div style="text-align: center">
+                      <v-btn
+                        :disabled="!isTicked"
+                        class="btn my-3"
+                        @click="register"
+                        color="#449682"
+                        elevation="3"
+                        >Create Account
+                      </v-btn>
 
-                <v-divider />
+                      <v-divider />
 
-                <router-link to="/">
-                  <v-btn style="color: #3d8674" variant="plain"
-                    >Back to Login</v-btn
-                  >
-                </router-link>
-              </div>
+                      <router-link to="/" class="link">
+                        <v-btn style="color: #3d8674" variant="plain"
+                          >Back to Login</v-btn
+                        >
+                      </router-link>
+                    </div>
+                  </v-form>
+                </div>
+              </v-container>
             </v-card>
           </v-col>
         </v-row>
@@ -96,7 +102,11 @@ const store = useStore();
 const isTicked = ref(false);
 
 const register = async () => {
-  store.dispatch("register", { email: email.value, password: password.value, name: name.value });
+  store.dispatch("register", {
+    email: email.value,
+    password: password.value,
+    name: name.value,
+  });
 };
 
 const signInWithGoogle = () => {};

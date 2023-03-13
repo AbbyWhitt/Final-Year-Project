@@ -1,6 +1,6 @@
 <template>
   <v-card class="h-screen">
-    <v-card class="h-screen pa-15" color="#449682" flat rounded="1">
+    <v-card class="h-screen" color="#449682" flat rounded="1">
       <v-container>
         <v-row rows="1">
           <v-spacer></v-spacer>
@@ -10,7 +10,7 @@
       <v-container>
         <v-row rows="2">
           <v-col md="4" offset-md="4" class="mt-auto">
-            <v-card class="pa-10">
+            <v-card>
               <v-container>
                 <div style="text-align: center">
                   <v-form @submit.prevent="login">
