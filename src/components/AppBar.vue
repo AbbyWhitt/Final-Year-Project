@@ -6,7 +6,7 @@
     </router-link>
     </template>
 
-    <div class="pr-16 mr-16" id="clock" style="color: white; font-size: 20px;">
+    <div class="pr-16 mr-16 d-none d-sm-flex" id="clock" style="color: white; font-size: 20px;">
       <v-icon dark size="25" class="mb-1"> mdi-clock </v-icon> {{ time }}
     </div>
 
