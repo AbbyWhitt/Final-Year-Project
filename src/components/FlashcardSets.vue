@@ -2,7 +2,7 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="9">
+        <v-col cols="7">
           <v-card class="d-flex" flat rounded="0">
             <v-icon
               icon="mdi-card-text"
@@ -15,11 +15,11 @@
           </v-card>
         </v-col>
 
-        <v-col cols="2">
+        <v-col cols="3">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
               <v-btn rounded="lg" class="mt-1" v-bind="props">
-                Create a Flashcard Set
+                Create Flashcard Set
               </v-btn>
             </template>
             <!-- Flashcard creation form  -->
@@ -63,7 +63,7 @@
             <!-- End of Form -->
           </v-dialog>
         </v-col>
-        <v-col cols="1">
+        <v-col cols="2">
           <v-btn class="mt-1" rounded="lg" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
@@ -73,8 +73,8 @@
 
       <v-container>
         <v-row>
-          <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="3">
-            <v-card class="pt-3 pb-3 ma-3" color="#d3ebe5">
+          <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="4">
+            <v-card class="pt-3 pb-3 ma-3" height="150px" width="250px" color="#d3ebe5" style="text-align: center">
               <template v-slot:append>
                 <v-btn v-if="edit" variant="plain" @click="deleteFlashSet(item)"
                   ><v-icon size="35" color="#1c3d35">
@@ -141,7 +141,7 @@
                 :to="{ name: 'flashcards', params: { setId: item.uid } }"
               >
                 <v-card-title
-                  class="linkText pa-13 te font-weight-light overflow-auto"
+                  class="linkText mt-5 font-weight-light overflow-auto"
                 >
                   {{ item.name }}
                 </v-card-title>

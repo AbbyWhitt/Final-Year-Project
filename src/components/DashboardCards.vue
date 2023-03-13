@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="4">
+      <v-col cols="5">
         <v-card class="rounded-xl">
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
@@ -37,7 +37,7 @@
         </v-card>
       </v-col>
       <!-- Next Card -->
-      <v-col cols="3">
+      <v-col cols="4">
         <v-card class="rounded-xl">
           <v-card-title class="text-center">
             Next Assignment due in
