@@ -14,14 +14,10 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="3" offset="3">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn
-                rounded="lg"
-                class="ml-6"
-                v-bind="props"
-              >
+              <v-btn rounded="lg" class="ml-6" v-bind="props">
                 Create a Module
               </v-btn>
             </template>
@@ -77,9 +73,8 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           variant="underlined"
-                          label="Last Assignment Due Date*"
+                          label="Last Assignment Due Date"
                           v-model="modContent.lastAssignDue"
-                          :rules="dateR"
                           type="date"
                         ></v-text-field>
                       </v-col>
@@ -100,12 +95,7 @@
             </v-card>
           </v-dialog>
           <!-- End of Form -->
-        </v-col>
-        <v-col cols="1.5">
-          <v-btn
-            rounded="lg"
-            @click="edit = !edit"
-          >
+          <v-btn rounded="lg" @click="edit = !edit" class="mt-1 ml-3">
             {{ btnText }}
           </v-btn>
         </v-col>
@@ -146,15 +136,15 @@
               <td>{{ mod.semester }}</td>
               <td>
                 {{
-                  mod.lastAssignmentDue.toDate().toLocaleDateString({
+                  new Date(mod.lastAssignDue).toLocaleDateString({
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })
                 }}
               </td>
-              <td>{{mod.modLectName}}</td>
-
+              <td>{{ mod.modLectName }}</td>
+              <!-- buttons -->
               <td>
                 <v-btn
                   v-if="edit"
@@ -166,11 +156,99 @@
                 >
               </td>
               <td>
-                <v-btn v-if="edit" rounded="pill" size="small" color="info"
-                  >Update</v-btn
-                >
+                <v-dialog v-model="mod.editing" persistent>
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      v-if="edit"
+                      rounded="pill"
+                      size="small"
+                      color="info"
+                      v-bind="props"
+                      @click="Object.assign(temporarySet, mod)"
+                      >Update</v-btn
+                    >
+                  </template>
+                  <!-- Update form -->
+                  <v-card class="w-50 center">
+                    <v-form @submit.prevent="updateModule(temporarySet)">
+                      <v-card-title>
+                        <span class="text-h5">Update Module</span>
+                      </v-card-title>
+                      <v-card-text>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                label="Module Code*"
+                                v-model="temporarySet.modCode"
+                                :rules="codeR"
+                                required
+                                variant="underlined"
+                              ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                label="Module Name*"
+                                v-model="temporarySet.modName"
+                                :rules="nameR"
+                                required
+                                variant="underlined"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                label="Module Lecturer Name"
+                                v-model="temporarySet.modLectName"
+                                required
+                                variant="underlined"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-autocomplete
+                                label="Module Semester"
+                                v-model="temporarySet.semester"
+                                :items="semesters"
+                                variant="underlined"
+                                item-title="title"
+                                item-value="value"
+                              ></v-autocomplete>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                              <v-text-field
+                                variant="underlined"
+                                label="Last Assignment Due Date"
+                                v-model="temporarySet.lastAssignDue"
+                                type="date"
+                              ></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                        <small style="color: red"
+                          >*indicates required field</small
+                        >
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="#449682" variant="text" type="submit">
+                          Create
+                        </v-btn>
+                        <v-btn
+                          color="black"
+                          variant="text"
+                          @click="mod.editing = false"
+                        >
+                          Cancel
+                        </v-btn>
+                      </v-card-actions>
+                    </v-form>
+                  </v-card>
+                </v-dialog>
               </td>
-              <!-- icon="mdi-trash-can-outline" color="error" -->
+              <!-- end of buttons -->
             </tr>
           </tbody>
         </v-table>
@@ -187,8 +265,13 @@ import {
   doc,
   addDoc,
   deleteDoc,
+  updateDoc,
+  collectionGroup,
+  where,
+  query,
+  getDocs,
 } from "firebase/firestore";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 export default {
   name: "Module",
   setup() {
@@ -199,6 +282,7 @@ export default {
     dialog: false,
     edit: false,
     mods: [],
+    temporarySet: {},
     modContent: {
       modCode: null,
       modName: null,
@@ -226,13 +310,6 @@ export default {
         return "You must enter a Module Name.";
       },
     ],
-    dateR: [
-      (value) => {
-        if (value) return true;
-
-        return "You must enter an Assignment Date.";
-      },
-    ],
   }),
   computed: {
     btnText() {
@@ -241,26 +318,63 @@ export default {
   },
   methods: {
     async addModule() {
-      if (this.modContent.modCode && this.modContent.modName && this.modContent.lastAssignDue) {
-      const currentUser = this.$store.state.user;
-      await addDoc(collection(db, "users", currentUser.uid, "modules"), {
-        modName: this.modContent.modName,
-        modCode: this.modContent.modCode,
-        semester: this.modContent.semester,
-        modLectName: this.modContent.modLectName,
-        lastAssignDue: new Date(this.modContent.lastAssignDue),
-      });
-      this.dialog = false;
-      this.modContent.modName = "";
-      this.modContent.modCode = "";
-      this.modContent.semester = "";
-      this.modContent.lastAssignDue = "";
-      this.modContent.modLectName = "";
+      if (
+        this.modContent.modCode &&
+        this.modContent.modName &&
+        this.modContent.lastAssignDue
+      ) {
+        const currentUser = this.$store.state.user;
+        console.log(this.modContent);
+        await addDoc(collection(db, "users", currentUser.uid, "modules"), {
+          modName: this.modContent.modName,
+          modCode: this.modContent.modCode,
+          semester: this.modContent.semester,
+          modLectName: this.modContent.modLectName,
+          lastAssignDue: this.modContent.lastAssignDue,
+        });
+        this.dialog = false;
+        this.modContent.modName = "";
+        this.modContent.modCode = "";
+        this.modContent.semester = "";
+        this.modContent.lastAssignDue = "";
+        this.modContent.modLectName = "";
       }
     },
     async deleteModule(module) {
       const currentUser = this.$store.state.user;
+      const q = query(
+        collectionGroup(db, "assignments"),
+        where("userId", "==", currentUser.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (document) => {
+        await deleteDoc(
+          doc(
+            db,
+            "users",
+            currentUser.uid,
+            "modules",
+            module.Id,
+            "assignments",
+            document.id
+          )
+        );
+      });
       deleteDoc(doc(db, "users", currentUser.uid, "modules", module.Id));
+    },
+    async updateModule(modUpdate) {
+      console.log(modUpdate);
+      const currentUser = this.$store.state.user;
+      const docRef = doc(db, "users", currentUser.uid, "modules", modUpdate.Id);
+      await updateDoc(docRef, {
+        modName: modUpdate.modName,
+        modCode: modUpdate.modCode,
+        semester: modUpdate.semester,
+        modLectName: modUpdate.modLectName,
+        lastAssignDue: modUpdate.lastAssignDue,
+      });
+      this.temporarySet = {};
+      modUpdate.editing = false;
     },
   },
 
@@ -276,7 +390,7 @@ export default {
             modName: doc.data().modName,
             semester: doc.data().semester,
             modLectName: doc.data().modLectName,
-            lastAssignmentDue: doc.data().lastAssignDue,
+            lastAssignDue: doc.data().lastAssignDue,
             userId: currentUser.uid,
             Id: doc.id,
           };
