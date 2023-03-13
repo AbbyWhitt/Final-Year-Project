@@ -47,6 +47,10 @@
                 label="*Tick here to agree to the StudyBuddy T&Cs"
                 v-model="isTicked"
               ></v-checkbox>
+              <div class="link">
+                You must be 18 or over to create a Study Buddy account.
+              </div>
+              <v-spacer />
               <router-link class="link" to="/termsandconditions"
                 >Click here to view T&Cs</router-link
               >
@@ -54,7 +58,7 @@
               <p v-if="errorMsg">{{ errorMsg }}</p>
               <div style="text-align: center">
                 <v-btn
-                :disabled="!isTicked"
+                  :disabled="!isTicked"
                   class="btn my-3"
                   @click="register"
                   color="#449682"
@@ -92,7 +96,7 @@ const store = useStore();
 const isTicked = ref(false);
 
 const register = async () => {
-  store.dispatch("register", { email: email.value, password: password.value });
+  store.dispatch("register", { email: email.value, password: password.value, name: name.value });
 };
 
 const signInWithGoogle = () => {};
