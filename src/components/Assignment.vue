@@ -44,11 +44,11 @@
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          label="Weighting"
+                          label="Weighting %"
                           v-model="assign.weight"
                           required
                           variant="underlined"
-                        ></v-text-field>
+                        ></v-text-field> 
                       </v-col>
                     </v-row>
                     <v-row>
@@ -126,7 +126,7 @@
                 Weighting of Assignment:
               </span>
               <span class="text-subtitle-1">
-                {{ assignment.weight }}
+                {{ assignment.weight }} %
               </span>
               <v-spacer />
               <span class="text-subtitle-1 font-weight-medium"> Type: </span>

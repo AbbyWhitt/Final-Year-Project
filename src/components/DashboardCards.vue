@@ -40,17 +40,10 @@
       <v-col cols="3">
         <v-card class="rounded-xl">
           <v-card-title class="text-center">
-            Days Until Next Assignment
-            <v-tooltip v-model="show" location="top">
-              <template v-slot:activator="{ props }">
-                <v-icon v-bind="props" icon="mdi-help-circle-outline" size="20">
-                </v-icon>
-              </template>
-              <span>Placeholder with hardcoded value</span>
-            </v-tooltip></v-card-title
-          >
+            Next Assignment due in
+          </v-card-title>
           <v-card-text class="text-center cardText">
-            {{ diffInDays }}
+            {{ diffInDays }} days
           </v-card-text>
         </v-card>
       </v-col>
@@ -76,6 +69,7 @@ export default {
   data: () => ({
     assignments: [],
     show: false,
+    diffInDays: 0,
   }),
 
   computed: {
@@ -99,18 +93,14 @@ export default {
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
 
-    const today = new Date();
-    const sortedDates = this.assignments.sort((a, b) =>
-      a.due > b.due ? 1 : b.due > a.due ? -1 : 0
-    );
-    // console.log(sortedDates);
-    const nearestTargetDate = sortedDates.find(
-      (targetDate) => targetDate >= today
-    );
-    console.log(nearestTargetDate);
-    const diffInMs = nearestTargetDate.getTime() - today.getTime();
-    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-      });
+      const nearestDueAssignment = this.assignments.find(
+        (assignment) => assignment.due.toDate() >= new Date()
+      );
+
+      const diffInMs =
+        nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
+      this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
+    });
   },
 
   unmounted() {},
@@ -125,7 +115,7 @@ export default {
   width: 100%;
 }
 .cardText {
-  padding: 10%;
+  padding: 7%;
   font-size: 1.8em;
 }
 </style>
