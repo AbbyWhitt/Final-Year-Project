@@ -73,8 +73,8 @@
 
       <v-container>
         <v-row>
-          <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="4">
-            <v-card class="pt-3 pb-3 ma-3" height="150px" width="250px" color="#d3ebe5" style="text-align: center">
+          <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="3">
+            <v-card class="pt-3 pb-3 ma-3" height="11rem" width="22rem" color="#d3ebe5" style="text-align: center">
               <template v-slot:append>
                 <v-btn v-if="edit" variant="plain" @click="deleteFlashSet(item)"
                   ><v-icon size="35" color="#1c3d35">

@@ -1,6 +1,6 @@
 <template>
   <v-card class="h-screen">
-    <v-card class="h-screen" color="#449682" flat rounded="1">
+    <v-card class="h-screen" color="#449682" >
       <v-container>
         <v-row rows="1">
           <v-spacer></v-spacer>
