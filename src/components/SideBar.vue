@@ -65,12 +65,20 @@
       ></v-btn>
 
       <v-btn
+      v-if="!rail"
         class="logout"
         prepend-icon="mdi-logout-variant"
         @click="$store.dispatch('logout')"
         color="#449682"
       >
         Logout
+      </v-btn>
+      <v-btn
+        v-if="rail"
+        icon="mdi-logout-variant"
+        variant="plain"
+        color="white"
+        @click="$event => $store.dispatch('logout')">
       </v-btn>
     </v-list>
   </v-navigation-drawer>
