@@ -14,15 +14,11 @@
             </v-card-title>
           </v-card>
         </v-col>
-       
+
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn
-                rounded="lg"
-                class="mt-1"
-                v-bind="props"
-              >
+              <v-btn rounded="lg" class="mt-1" v-bind="props">
                 Create a Flashcard Set
               </v-btn>
             </template>
@@ -67,12 +63,8 @@
             <!-- End of Form -->
           </v-dialog>
         </v-col>
-         <v-col cols="1">
-          <v-btn
-            class="mt-1"
-            rounded="lg"
-            @click="edit = !edit"
-          >
+        <v-col cols="1">
+          <v-btn class="mt-1" rounded="lg" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
         </v-col>
@@ -89,13 +81,67 @@
                     mdi-delete-circle-outline
                   </v-icon></v-btn
                 >
+                <!-- Update Form  -->
+                <v-dialog v-model="item.editing" persistent>
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      v-bind="props"
+                      v-if="edit"
+                      variant="plain"
+                      @click="Object.assign(temporarySet, item)"
+                      ><v-icon size="35" color="#1c3d35">
+                        mdi-pencil-circle-outline
+                      </v-icon></v-btn
+                    ></template
+                  >
+                  <v-card class="w-50 center">
+                    <v-container>
+                      <v-form @submit.prevent="updateFlashSet(temporarySet)">
+                        <v-card-title>
+                          <span class="text-h5">Update Flashcard Set</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container>
+                            <v-row>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  required
+                                  v-model="temporarySet.name"
+                                  variant="underlined"
+                                  :rules="nameR"
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                          <small style="color: red"
+                            >*indicates required field</small
+                          >
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="#449682" variant="text" type="submit">
+                            Update
+                          </v-btn>
+                          <v-btn
+                            color="black"
+                            variant="text"
+                            @click="item.editing = false"
+                          >
+                            Cancel
+                          </v-btn>
+                        </v-card-actions>
+                      </v-form>
+                    </v-container>
+                  </v-card>
+                </v-dialog>
               </template>
+              <!-- End of Update Form -->
               <router-link
                 class="title"
                 :to="{ name: 'flashcards', params: { setId: item.uid } }"
               >
                 <v-card-title
-                  class="linkText pa-13 text-center font-weight-light"
+                  class="linkText pa-13 te font-weight-light overflow-auto"
                 >
                   {{ item.name }}
                 </v-card-title>
@@ -116,8 +162,9 @@ import {
   onSnapshot,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
-import { useStore } from 'vuex';
+import { useStore } from "vuex";
 export default {
   name: "FlashcardSets",
   setup() {
@@ -126,8 +173,10 @@ export default {
   },
   data: () => ({
     dialog: false,
+    dialogU: false,
     edit: false,
     setName: "",
+    temporarySet: {},
     flashcardSets: [],
     nameR: [
       (value) => {
@@ -145,19 +194,37 @@ export default {
   methods: {
     async addFlashSet() {
       if (this.setName) {
-      const currentUser = this.$store.state.user;
-      await addDoc(collection(db, "users", currentUser.uid, "flashcard-sets"), {
-        name: this.setName,
-      });
-      this.dialog = false;
-      this.setName = "";
-    }
+        const currentUser = this.$store.state.user;
+        await addDoc(
+          collection(db, "users", currentUser.uid, "flashcard-sets"),
+          {
+            name: this.setName,
+          }
+        );
+        this.dialog = false;
+        this.setName = "";
+      }
     },
     async deleteFlashSet(flashcardSet) {
       const currentUser = this.$store.state.user;
       await deleteDoc(
         doc(db, "users", currentUser.uid, "flashcard-sets", flashcardSet.uid)
       );
+    },
+    async updateFlashSet(set) {
+      const currentUser = this.$store.state.user;
+      const docRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "flashcard-sets",
+        set.uid
+      );
+      await updateDoc(docRef, {
+        name: set.name,
+      });
+      this.temporarySet = {};
+      set.editing = false;
     },
   },
   created() {
@@ -170,6 +237,7 @@ export default {
           this.flashcardSets.push({
             uid: doc.id,
             name: doc.data().name,
+            editing: false,
           });
         });
       }
