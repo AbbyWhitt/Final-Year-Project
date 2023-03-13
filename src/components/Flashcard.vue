@@ -79,6 +79,7 @@
           <v-card color="#d3ebe5" class="mt-3 ml-4">
             <v-card-title class="font-weight-light">
               Question
+              <!-- buttons -->
               <v-btn
                 v-if="edit"
                 variant="plain"
@@ -88,6 +89,68 @@
                   mdi-delete-circle-outline
                 </v-icon>
               </v-btn>
+              <v-dialog v-model="flashcard.editing" persistent>
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    v-if="edit"
+                    variant="plain"
+                    @click="Object.assign(temporarySet, flashcard)"
+                    ><v-icon size="30" color="#1c3d35">
+                      mdi-pencil-circle-outline
+                    </v-icon></v-btn
+                  ></template
+                >
+                <!-- End of buttons -->
+                <!-- Update Form -->
+                <v-card class="w-50 center">
+                  <v-form @submit.prevent="updateFlashcard(temporarySet)">
+                    <v-card-title>
+                      <span class="text-h5">Update Flashcard</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12">
+                            <v-text-field
+                              label="Question*"
+                              required
+                              v-model="temporarySet.question"
+                              :rules="qRules"
+                              variant="underlined"
+                            ></v-text-field>
+                            <v-textarea
+                              no-resize
+                              clearable
+                              label="Answer*"
+                              variant="solo"
+                              v-model="temporarySet.answer"
+                              :rules="aRules"
+                            ></v-textarea>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small style="color: red"
+                        >*indicates required field</small
+                      >
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="#449682" variant="text" type="submit">
+                        Create
+                      </v-btn>
+                      <v-btn
+                        color="black"
+                        variant="text"
+                        @click="flashcard.editing = false"
+                      >
+                        Cancel
+                      </v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-dialog>
+              <!-- End of update form -->
             </v-card-title>
             <v-card-text class="pa-5 text-center" style="font-size: 1rem">
               {{ flashcard.question }}</v-card-text
@@ -129,6 +192,7 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { useStore } from "vuex";
 
@@ -147,6 +211,7 @@ export default {
     //reveal: false,
     setQ: "",
     setAns: "",
+    temporarySet: {},
     flashcards: [],
     flashcardSet: {},
     qRules: [
@@ -246,6 +311,24 @@ export default {
           flashcard.uid
         )
       );
+    },
+    async updateFlashcard(card) {
+      const currentUser = this.$store.state.user;
+      const docRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "flashcard-sets",
+        this.setID,
+        "flashcards",
+        card.uid
+      );
+      await updateDoc(docRef, {
+        question: card.question,
+        answer: card.answer,
+      });
+      this.temporarySet = {};
+      card.editing = false;
     },
   },
 };

@@ -15,7 +15,7 @@
           </v-card>
         </v-col>
 
-        <v-col cols="3">
+        <v-col cols="3" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
               <v-btn rounded="lg" class="mt-1" v-bind="props">
@@ -62,9 +62,7 @@
             </v-card>
             <!-- End of Form -->
           </v-dialog>
-        </v-col>
-        <v-col cols="2">
-          <v-btn class="mt-1" rounded="lg" @click="edit = !edit">
+          <v-btn class="mt-1 ml-3" rounded="lg" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
         </v-col>
@@ -78,83 +76,80 @@
               class="pt-3 pb-3 ma-3"
               color="#d3ebe5"
               style="text-align: center"
+              height="170px"
             >
-              <v-responsive height="140px">
-                <template v-slot:append>
-                  <v-btn
-                    v-if="edit"
-                    variant="plain"
-                    @click="deleteFlashSet(item)"
-                    ><v-icon size="35" color="#1c3d35">
-                      mdi-delete-circle-outline
-                    </v-icon></v-btn
-                  >
-                  <!-- Update Form  -->
-                  <v-dialog v-model="item.editing" persistent>
-                    <template v-slot:activator="{ props }">
-                      <v-btn
-                        v-bind="props"
-                        v-if="edit"
-                        variant="plain"
-                        @click="Object.assign(temporarySet, item)"
-                        ><v-icon size="35" color="#1c3d35">
-                          mdi-pencil-circle-outline
-                        </v-icon></v-btn
-                      ></template
-                    >
-                    <v-card class="w-50 center">
-                      <v-container>
-                        <v-form @submit.prevent="updateFlashSet(temporarySet)">
-                          <v-card-title>
-                            <span class="text-h5">Update Flashcard Set</span>
-                          </v-card-title>
-                          <v-card-text>
-                            <v-container>
-                              <v-row>
-                                <v-col cols="12" sm="6" md="4">
-                                  <v-text-field
-                                    required
-                                    v-model="temporarySet.name"
-                                    variant="underlined"
-                                    :rules="nameR"
-                                  ></v-text-field>
-                                </v-col>
-                              </v-row>
-                            </v-container>
-                            <small style="color: red"
-                              >*indicates required field</small
-                            >
-                          </v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="#449682" variant="text" type="submit">
-                              Update
-                            </v-btn>
-                            <v-btn
-                              color="black"
-                              variant="text"
-                              @click="item.editing = false"
-                            >
-                              Cancel
-                            </v-btn>
-                          </v-card-actions>
-                        </v-form>
-                      </v-container>
-                    </v-card>
-                  </v-dialog>
-                </template>
-                <!-- End of Update Form -->
-                <router-link
-                  class="title"
-                  :to="{ name: 'flashcards', params: { setId: item.uid } }"
+            <!-- Buttons -->
+              <template v-slot:append>
+                <v-btn v-if="edit" variant="plain" @click="deleteFlashSet(item)"
+                  ><v-icon size="35" color="#1c3d35">
+                    mdi-delete-circle-outline
+                  </v-icon></v-btn
                 >
-                  <v-card-title
-                    class="linkText mt-12 font-weight-light overflow-auto"
+                <v-dialog v-model="item.editing" persistent>
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      v-bind="props"
+                      v-if="edit"
+                      variant="plain"
+                      @click="Object.assign(temporarySet, item)"
+                      ><v-icon size="35" color="#1c3d35">
+                        mdi-pencil-circle-outline
+                      </v-icon></v-btn
+                    ></template
                   >
-                    {{ item.name }}
-                  </v-card-title>
-                </router-link>
-              </v-responsive>
+                  <!-- Update Form -->
+                  <v-card class="w-50 center">
+                    <v-container>
+                      <v-form @submit.prevent="updateFlashSet(temporarySet)">
+                        <v-card-title>
+                          <span class="text-h5">Update Flashcard Set</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container>
+                            <v-row>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  required
+                                  v-model="temporarySet.name"
+                                  variant="underlined"
+                                  :rules="nameR"
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                          <small style="color: red"
+                            >*indicates required field</small
+                          >
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="#449682" variant="text" type="submit">
+                            Update
+                          </v-btn>
+                          <v-btn
+                            color="black"
+                            variant="text"
+                            @click="item.editing = false"
+                          >
+                            Cancel
+                          </v-btn>
+                        </v-card-actions>
+                      </v-form>
+                    </v-container>
+                  </v-card>
+                </v-dialog>
+              </template>
+              <!-- End of Update Form -->
+              <router-link
+                class="title overflow-auto"
+                :to="{ name: 'flashcards', params: { setId: item.uid } }"
+              >
+                <v-card-title
+                  class="linkText mt-6 font-weight-light overflow-auto"
+                >
+                  {{ item.name }}
+                </v-card-title>
+              </router-link>
             </v-card>
           </v-col>
         </v-row>
@@ -182,7 +177,6 @@ export default {
   },
   data: () => ({
     dialog: false,
-    dialogU: false,
     edit: false,
     setName: "",
     temporarySet: {},
