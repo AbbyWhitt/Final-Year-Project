@@ -2,7 +2,7 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="5">
           <v-card class="d-flex" flat rounded="0">
             <v-icon
               icon="mdi-book-open-variant"
@@ -14,15 +14,25 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="3">
           <router-link class="linkText" to="Modules">
-            <v-btn class="ml-7" rounded="lg"> Back to Modules </v-btn>
+            <v-btn class="ml-7 d-none d-lg-flex" rounded="lg"> Back to Modules </v-btn>
+            <v-btn class="d-flex d-lg-none" icon="mdi-arrow-left" variant="text"></v-btn>
           </router-link>
         </v-col>
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" v-bind="props"> Create an Assignment </v-btn>
+              <v-btn class="d-none d-lg-flex" rounded="lg" v-bind="props">
+                Create an Assignment
+              </v-btn>
+              <v-btn
+                class="d-flex d-lg-none ml-10"
+                icon="mdi-plus-circle-outline"
+                v-bind="props"
+                variant="text"
+              >
+              </v-btn>
             </template>
             <!-- Assignment Form -->
             <v-card class="w-50 center">
@@ -48,7 +58,7 @@
                           v-model="assign.weight"
                           required
                           variant="underlined"
-                        ></v-text-field> 
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -94,14 +104,18 @@
               </v-form>
             </v-card>
           </v-dialog>
-          <!-- End of form -->
         </v-col>
+        <!-- End of form -->
         <v-col cols="2">
-          <v-btn rounded="lg" @click="edit = !edit">
+          <v-btn rounded="lg" class="d-none d-lg-flex" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
+          <v-btn
+            class="d-flex d-lg-none mr-10"
+            icon="mdi-pencil-circle-outline"
+            variant="text"
+          ></v-btn>
         </v-col>
-        <div class="ml-12"></div>
         <v-divider thickness="2"></v-divider>
       </v-row>
       <v-row>
@@ -125,9 +139,7 @@
               <span class="text-subtitle-1 font-weight-medium">
                 Weighting of Assignment:
               </span>
-              <span class="text-subtitle-1">
-                {{ assignment.weight }} %
-              </span>
+              <span class="text-subtitle-1"> {{ assignment.weight }} % </span>
               <v-spacer />
               <span class="text-subtitle-1 font-weight-medium"> Type: </span>
               <span class="text-subtitle-1">
@@ -146,11 +158,6 @@
                   })
                 }}
               </span>
-              <!-- <v-checkbox v-model="checkbox">
-                <template v-slot:prepend>
-                  <div>Assignment Completed</div>
-                </template>
-              </v-checkbox> -->
             </v-card-text>
             <v-card class="ma-3 overflow-auto" height="150">
               <v-card-title class="miniTitle">

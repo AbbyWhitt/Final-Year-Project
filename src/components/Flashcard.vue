@@ -12,13 +12,26 @@
         </v-col>
         <v-col cols="2">
           <router-link class="linkText" to="Flashcards">
-            <v-btn rounded="lg"> Back to Sets </v-btn>
+            <v-btn rounded="lg" class="d-none d-lg-flex"> Back to Sets </v-btn>
+            <v-btn
+              class="d-flex d-lg-none"
+              variant="text"
+              icon="mdi-arrow-left"
+            ></v-btn>
           </router-link>
         </v-col>
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" v-bind="props"> Create a Flashcard </v-btn>
+              <v-btn class="d-none d-lg-flex" rounded="lg" v-bind="props">
+                Create a Flashcard
+              </v-btn>
+              <v-btn
+                class="d-flex d-lg-none"
+                variant="text"
+                icon="mdi-plus-circle-outline"
+                v-bind="props"
+              ></v-btn>
             </template>
             <!-- Create Flashcard Form -->
             <v-card class="w-50 center">
@@ -65,7 +78,15 @@
         </v-col>
         <!-- End of form -->
         <v-col cols="2">
-          <v-btn rounded="lg" @click="edit = !edit"> {{ btnText }} </v-btn>
+          <v-btn class="d-none d-lg-flex" rounded="lg" @click="edit = !edit">
+            {{ btnText }}
+          </v-btn>
+          <v-btn
+            class="d-flex d-lg-none"
+            variant="text"
+            icon="mdi-pencil-outline"
+            @click="edit = !edit"
+          ></v-btn>
         </v-col>
         <v-divider thickness="2"></v-divider>
       </v-row>
