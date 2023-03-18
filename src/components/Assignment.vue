@@ -8,6 +8,7 @@
               icon="mdi-book-open-variant"
               size="large"
               class="pa-6"
+              aria-label="icon of an open book"
             ></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light">
               Assignments // {{ module.modCode }}
@@ -16,8 +17,15 @@
         </v-col>
         <v-col cols="3">
           <router-link class="linkText" to="Modules">
-            <v-btn class="ml-7 d-none d-lg-flex" rounded="lg"> Back to Modules </v-btn>
-            <v-btn class="d-flex d-lg-none" icon="mdi-arrow-left" variant="text"></v-btn>
+            <v-btn class="ml-7 d-none d-lg-flex" rounded="lg">
+              Back to Modules
+            </v-btn>
+            <v-btn
+              aria-label="arrow icon - links back to modules"
+              class="d-flex d-lg-none"
+              icon="mdi-arrow-left"
+              variant="text"
+            ></v-btn>
           </router-link>
         </v-col>
         <v-col cols="2">
@@ -31,6 +39,7 @@
                 icon="mdi-plus-circle-outline"
                 v-bind="props"
                 variant="text"
+                aria-label="puls icon - creates a new assignment"
               >
               </v-btn>
             </template>
@@ -94,10 +103,20 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="#449682" variant="text" type="submit">
+                  <v-btn
+                    aria-label="create button"
+                    color="#449682"
+                    variant="text"
+                    type="submit"
+                  >
                     Create
                   </v-btn>
-                  <v-btn color="black" variant="text" @click="dialog = false">
+                  <v-btn
+                    aria-label="close form button"
+                    color="black"
+                    variant="text"
+                    @click="dialog = false"
+                  >
                     Cancel
                   </v-btn>
                 </v-card-actions>
@@ -107,13 +126,15 @@
         </v-col>
         <!-- End of form -->
         <v-col cols="2">
-          <v-btn rounded="lg" class="d-none d-lg-flex" @click="edit = !edit">
+          <v-btn aria-label="edit assignments - once clicked cancel assignments" rounded="lg" class="d-none d-lg-flex" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
           <v-btn
             class="d-flex d-lg-none mr-10"
             icon="mdi-pencil-circle-outline"
             variant="text"
+            aria-label="pencil icon - activates edit and delete assignment icons"
+            @click="edit = !edit"
           ></v-btn>
         </v-col>
         <v-divider thickness="2"></v-divider>
@@ -126,6 +147,7 @@
                 v-if="edit"
                 variant="plain"
                 @click="deleteAssignment(assignment)"
+                aria-label="delete assignment"
                 ><v-icon size="35" color="#1c3d35">
                   mdi-delete-circle-outline
                 </v-icon></v-btn

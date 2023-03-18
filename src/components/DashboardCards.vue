@@ -2,7 +2,11 @@
   <v-container>
     <v-row>
       <v-col cols="5">
-        <v-card class="rounded-xl">
+        <v-card
+          class="rounded-xl"
+          aria-label="assignments table"
+          aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
+        >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
             <thead>
@@ -38,7 +42,10 @@
       </v-col>
       <!-- Next Card -->
       <v-col cols="4">
-        <v-card class="rounded-xl">
+        <v-card
+          class="rounded-xl"
+          aria-description="Displays the number of days including current day until next assignment"
+        >
           <v-card-title class="text-center">
             Next Assignment due in
           </v-card-title>

@@ -3,7 +3,12 @@
     <v-container>
       <v-row>
         <v-col cols="7">
-          <v-card class="d-flex" flat rounded="0">
+          <v-card
+            class="d-flex"
+            flat
+            rounded="0"
+            aria-roledescription="FlashcardSets are a way of organising flashcards. They act as a folder to a collection of flashcards"
+          >
             <v-icon
               icon="mdi-card-text"
               size="large"
@@ -51,10 +56,16 @@
                     variant="text"
                     type="submit"
                     @click="reset"
+                    aria-label="create flashcardset"
                   >
                     Create
                   </v-btn>
-                  <v-btn color="black" variant="text" @click="dialog = false">
+                  <v-btn
+                    aria-label="close form"
+                    color="black"
+                    variant="text"
+                    @click="dialog = false"
+                  >
                     Cancel
                   </v-btn>
                 </v-card-actions>
@@ -62,7 +73,12 @@
             </v-card>
             <!-- End of Form -->
           </v-dialog>
-          <v-btn class="mt-1 ml-3" rounded="lg" @click="edit = !edit">
+          <v-btn
+            aria-label="Activates edit buttons and closes buttons"
+            class="mt-1 ml-3"
+            rounded="lg"
+            @click="edit = !edit"
+          >
             {{ btnText }}
           </v-btn>
         </v-col>
@@ -78,9 +94,13 @@
               style="text-align: center"
               height="170px"
             >
-            <!-- Buttons -->
+              <!-- Buttons -->
               <template v-slot:append>
-                <v-btn v-if="edit" variant="plain" @click="deleteFlashSet(item)"
+                <v-btn
+                  v-if="edit"
+                  variant="plain"
+                  @click="deleteFlashSet(item)"
+                  aria-label="delete flashcardset"
                   ><v-icon size="35" color="#1c3d35">
                     mdi-delete-circle-outline
                   </v-icon></v-btn
@@ -92,6 +112,7 @@
                       v-if="edit"
                       variant="plain"
                       @click="Object.assign(temporarySet, item)"
+                      aria-label="edit flashcardset"
                       ><v-icon size="35" color="#1c3d35">
                         mdi-pencil-circle-outline
                       </v-icon></v-btn
@@ -123,13 +144,14 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                          <v-btn color="#449682" variant="text" type="submit">
+                          <v-btn aria-label="update flashcardset" color="#449682" variant="text" type="submit">
                             Update
                           </v-btn>
                           <v-btn
                             color="black"
                             variant="text"
                             @click="item.editing = false"
+                            aria-label="close form"
                           >
                             Cancel
                           </v-btn>

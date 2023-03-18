@@ -17,6 +17,7 @@
               class="d-flex d-lg-none"
               variant="text"
               icon="mdi-arrow-left"
+              aria-label="Back to Sets"
             ></v-btn>
           </router-link>
         </v-col>
@@ -30,6 +31,7 @@
                 class="d-flex d-lg-none"
                 variant="text"
                 icon="mdi-plus-circle-outline"
+                aria-label="Create a Flashcard"
                 v-bind="props"
               ></v-btn>
             </template>
@@ -85,6 +87,7 @@
             class="d-flex d-lg-none"
             variant="text"
             icon="mdi-pencil-outline"
+            aria-label="Edit Flashcard"
             @click="edit = !edit"
           ></v-btn>
         </v-col>
@@ -105,6 +108,7 @@
                 v-if="edit"
                 variant="plain"
                 @click="deleteFlash(flashcard)"
+                aria-label="Delete Flashcard"
               >
                 <v-icon size="30" color="#1c3d35">
                   mdi-delete-circle-outline
@@ -117,6 +121,7 @@
                     v-if="edit"
                     variant="plain"
                     @click="Object.assign(temporarySet, flashcard)"
+                    aria-label="Update Flashcard"
                     ><v-icon size="30" color="#1c3d35">
                       mdi-pencil-circle-outline
                     </v-icon></v-btn
@@ -157,13 +162,19 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="#449682" variant="text" type="submit">
-                        Create
+                      <v-btn
+                        color="#449682"
+                        variant="text"
+                        type="submit"
+                        aria-label="update flashcard"
+                      >
+                        Update
                       </v-btn>
                       <v-btn
                         color="black"
                         variant="text"
                         @click="flashcard.editing = false"
+                        aria-label="close update window"
                       >
                         Cancel
                       </v-btn>
@@ -177,7 +188,13 @@
               {{ flashcard.question }}</v-card-text
             >
             <v-card-actions>
-              <v-btn variant="text" @click="toggle(flashcard)"> Reveal </v-btn>
+              <v-btn
+                variant="text"
+                @click="toggle(flashcard)"
+                aria-label="reveal flashcard answer"
+              >
+                Reveal
+              </v-btn>
             </v-card-actions>
             <!-- Answer Card -->
             <v-expand-transition>
@@ -192,7 +209,11 @@
                   {{ flashcard.answer }}</v-card-text
                 >
                 <v-card-actions>
-                  <v-btn variant="text" @click="toggle(flashcard)">
+                  <v-btn
+                    variant="text"
+                    @click="toggle(flashcard)"
+                    aria-label="close flashcard answer"
+                  >
                     Close
                   </v-btn>
                 </v-card-actions>
