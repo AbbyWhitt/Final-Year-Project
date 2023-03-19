@@ -86,7 +86,7 @@
           <v-btn
             class="d-flex d-lg-none"
             variant="text"
-            icon="mdi-pencil-outline"
+            icon="mdi-pencil-circle-outline"
             aria-label="Edit Flashcard"
             @click="edit = !edit"
           ></v-btn>
