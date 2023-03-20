@@ -3,9 +3,10 @@
     <v-row>
       <v-col cols="5">
         <v-card
-          class="rounded-xl"
+          class="rounded-xl overflow-auto"
           aria-label="assignments table"
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
+          height="35rem"
         >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
@@ -54,6 +55,19 @@
           </v-card-text>
         </v-card>
       </v-col>
+      <!-- Flashcard Card -->
+      <v-col>
+        <v-card class="rounded-xl overflow-auto" height="25rem">
+          <v-card-title> Favourite FlashcardSets: </v-card-title>
+          <v-table>
+            <tbody>
+              <tr v-for="item in flashcardSets" :key="item.uid">
+                <td>{{ item.name }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -75,6 +89,7 @@ export default {
 
   data: () => ({
     assignments: [],
+    flashcardSets: [],
     show: false,
     diffInDays: 0,
   }),
@@ -108,6 +123,19 @@ export default {
         nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
       this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     });
+
+    const f = query(
+      collectionGroup(db, "flashcard-sets"),
+      where("userId", "==", currentUser.uid)
+    );
+    onSnapshot(f, (querySnapshot) => {
+      this.flashcardSets = [];
+      querySnapshot.forEach((doc) => {
+        this.flashcardSets.push(doc.data());
+        console.log(doc.data());
+      });
+    });
+    console.log(this.flashcardSets);
   },
 
   unmounted() {},
