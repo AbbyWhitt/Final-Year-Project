@@ -126,7 +126,12 @@
         </v-col>
         <!-- End of form -->
         <v-col cols="2">
-          <v-btn aria-label="edit assignments - once clicked cancel assignments" rounded="lg" class="d-none d-lg-flex" @click="edit = !edit">
+          <v-btn
+            aria-label="edit assignments - once clicked cancel assignments"
+            rounded="lg"
+            class="d-none d-lg-flex"
+            @click="edit = !edit"
+          >
             {{ btnText }}
           </v-btn>
           <v-btn
@@ -142,6 +147,7 @@
       <v-row>
         <v-col v-for="assignment in assignments" :key="assignment.uid" cols="4">
           <v-card color="#d3ebe5" class="ma-4">
+            <!-- Delete button -->
             <template v-slot:append>
               <v-btn
                 v-if="edit"
@@ -152,7 +158,105 @@
                   mdi-delete-circle-outline
                 </v-icon></v-btn
               >
+              <!-- Update button -->
+              <v-dialog v-model="assignment.editing" persistent>
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    v-bind="props"
+                    v-if="edit"
+                    variant="plain"
+                    @click="Object.assign(temporarySet, assignment)"
+                    aria-label="edit flashcardset"
+                    ><v-icon size="35" color="#1c3d35">
+                      mdi-pencil-circle-outline
+                    </v-icon></v-btn
+                  >
+                </template>
+                <!-- Update form -->
+                <v-card class="w-50 center">
+                  <v-form @submit.prevent="updateAssignment(temporarySet)">
+                    <v-card-title>
+                      <span class="text-h5">New Assignment</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              label="Assignment Name*"
+                              v-model="temporarySet.name"
+                              :rules="nameR"
+                              required
+                              variant="underlined"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              label="Weighting %"
+                              v-model="temporarySet.weight"
+                              required
+                              variant="underlined"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                        <v-row>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-autocomplete
+                              label="Assessment Type"
+                              v-model="temporarySet.type"
+                              :items="type"
+                              variant="underlined"
+                              item-title="title"
+                              item-value="value"
+                            ></v-autocomplete>
+                          </v-col>
+                          <v-col cols="12" sm="6" md="4">
+                            <v-text-field
+                              variant="underlined"
+                              label="Assignment Due Date*"
+                              v-model="temporarySet.dueDate"
+                              :rules="dateR"
+                              type="date"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-textarea
+                              v-model="temporarySet.brief"
+                              label="Assignment Brief/Notes"
+                              variant="solo"
+                            ></v-textarea>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                      <small style="color: red"
+                        >*indicates required field</small
+                      >
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        aria-label="update button"
+                        color="#449682"
+                        variant="text"
+                        type="submit"
+                      >
+                        Update
+                      </v-btn>
+                      <v-btn
+                        aria-label="close form button"
+                        color="black"
+                        variant="text"
+                        @click="mod.editing = false"
+                      >
+                        Cancel
+                      </v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-dialog>
+              <!-- Update form end -->
             </template>
+            <!-- Button section end -->
             <v-card-title class="text-center">
               {{ assignment.name }}
             </v-card-title>
@@ -209,6 +313,7 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 export default {
@@ -226,6 +331,7 @@ export default {
     edit: false,
     checkbox: false,
     assignments: [],
+    temporarySet: {},
     assign: {
       name: null,
       weight: null,
@@ -346,6 +452,27 @@ export default {
           assignment.id
         )
       );
+    },
+    async updateAssignment(assignUpdate) {
+      const currentUser = this.$store.state.user;
+      const docRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "modules",
+        this.modId,
+        "assignments",
+        assignUpdate.id
+      );
+      await updateDoc(docRef, {
+        modName: assignUpdate.modName,
+        modCode: assignUpdate.modCode,
+        semester: assignUpdate.semester,
+        modLectName: assignUpdate.modLectName,
+        lastAssignDue: assignUpdate.lastAssignDue,
+      });
+      this.temporarySet = {};
+      assignUpdate.editing = false;
     },
   },
 };
