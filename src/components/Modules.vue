@@ -17,8 +17,16 @@
         <v-col cols="3" offset="3">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" class="ml-6" v-bind="props">
+              <v-btn rounded="lg" class="ml-6 d-none d-lg-flex" v-bind="props">
                 Create a Module
+              </v-btn>
+              <v-btn
+                class="d-flex d-lg-none ml-10"
+                icon="mdi-plus-circle-outline"
+                v-bind="props"
+                variant="text"
+                aria-label="puls icon - creates a new module"
+              >
               </v-btn>
             </template>
             <!-- Create Module Form -->

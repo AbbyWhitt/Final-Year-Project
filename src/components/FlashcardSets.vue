@@ -23,9 +23,16 @@
         <v-col cols="3" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" class="mt-1" v-bind="props">
+              <v-btn rounded="lg" class="mt-1 d-none d-lg-flex" v-bind="props">
                 Create Flashcard Set
               </v-btn>
+              <v-btn
+                class="d-flex d-lg-none"
+                variant="text"
+                icon="mdi-plus-circle-outline"
+                aria-label="Create a FlashcardSet"
+                v-bind="props"
+              ></v-btn>
             </template>
             <!-- Flashcard creation form  -->
             <v-card class="w-50 center">
@@ -144,7 +151,12 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-spacer></v-spacer>
-                          <v-btn aria-label="update flashcardset" color="#449682" variant="text" type="submit">
+                          <v-btn
+                            aria-label="update flashcardset"
+                            color="#449682"
+                            variant="text"
+                            type="submit"
+                          >
                             Update
                           </v-btn>
                           <v-btn
