@@ -4,6 +4,7 @@
     :width="210"
     :rail="rail"
     permanent
+    disable-route-watcher
     @click="rail = false"
   >
     <v-divider></v-divider>

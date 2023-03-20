@@ -14,10 +14,10 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="3" offset="3">
+        <v-col cols="2" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" class="ml-6 d-none d-lg-flex" v-bind="props">
+              <v-btn rounded="lg" class="d-none d-lg-flex" v-bind="props">
                 Create a Module
               </v-btn>
               <v-btn
@@ -103,7 +103,16 @@
             </v-card>
           </v-dialog>
           <!-- End of Form -->
-          <v-btn rounded="lg" @click="edit = !edit" class="mt-1 ml-3">
+        </v-col>
+        <v-col cols="2">
+          <v-btn
+            class="d-flex d-lg-none"
+            variant="text"
+            icon="mdi-pencil-circle-outline"
+            aria-label="Edit Modules"
+            @click="edit = !edit"
+          ></v-btn>
+          <v-btn rounded="lg" @click="edit = !edit" class="d-none d-lg-flex">
             {{ btnText }}
           </v-btn>
         </v-col>
@@ -371,7 +380,6 @@ export default {
       deleteDoc(doc(db, "users", currentUser.uid, "modules", module.Id));
     },
     async updateModule(modUpdate) {
-      console.log(modUpdate);
       const currentUser = this.$store.state.user;
       const docRef = doc(db, "users", currentUser.uid, "modules", modUpdate.Id);
       await updateDoc(docRef, {

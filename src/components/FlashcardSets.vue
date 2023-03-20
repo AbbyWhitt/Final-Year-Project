@@ -2,7 +2,7 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="7">
+        <v-col cols="6">
           <v-card
             class="d-flex"
             flat
@@ -20,10 +20,10 @@
           </v-card>
         </v-col>
 
-        <v-col cols="3" offset="2">
+        <v-col cols="2" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn rounded="lg" class="mt-1 d-none d-lg-flex" v-bind="props">
+              <v-btn rounded="lg" class="d-none d-lg-flex" v-bind="props">
                 Create Flashcard Set
               </v-btn>
               <v-btn
@@ -80,11 +80,20 @@
             </v-card>
             <!-- End of Form -->
           </v-dialog>
+        </v-col>
+        <v-col cols="2">
+          <v-btn
+            class="d-flex d-lg-none"
+            variant="text"
+            icon="mdi-pencil-circle-outline"
+            aria-label="Icon button that activates edit buttons and closes buttons on small screens"
+            @click="edit = !edit"
+          ></v-btn>
           <v-btn
             aria-label="Activates edit buttons and closes buttons"
-            class="mt-1 ml-3"
             rounded="lg"
             @click="edit = !edit"
+            class="d-none d-lg-flex"
           >
             {{ btnText }}
           </v-btn>

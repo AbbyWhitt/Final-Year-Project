@@ -176,7 +176,7 @@
                 <v-card class="w-50 center">
                   <v-form @submit.prevent="updateAssignment(temporarySet)">
                     <v-card-title>
-                      <span class="text-h5">New Assignment</span>
+                      <span class="text-h5">Update Assignment</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
