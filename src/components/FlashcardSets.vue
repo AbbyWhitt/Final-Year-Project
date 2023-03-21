@@ -193,6 +193,24 @@
                   {{ item.name }}
                 </v-card-title>
               </router-link>
+              <v-card-actions>
+                <v-btn
+                  v-if="item.fav"
+                  size="small"
+                  color="surface-variant"
+                  variant="text"
+                  icon="mdi-heart"
+                  @click="setFav(item.uid, false)"
+                ></v-btn>
+                <v-btn
+                  v-else
+                  size="small"
+                  color="surface-variant"
+                  variant="text"
+                  icon="mdi-heart-outline"
+                  @click="setFav(item.uid, true)"
+                ></v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -245,6 +263,7 @@ export default {
           collection(db, "users", currentUser.uid, "flashcard-sets"),
           {
             name: this.setName,
+            fav: false,
           }
         );
         this.dialog = false;
@@ -272,6 +291,20 @@ export default {
       this.temporarySet = {};
       set.editing = false;
     },
+
+    async setFav(itemId, isFav) {
+      const currentUser = this.$store.state.user;
+      const docRef = doc(
+        db,
+        "users",
+        currentUser.uid,
+        "flashcard-sets",
+        itemId
+      );
+      await updateDoc(docRef, {
+        fav: isFav,
+      });
+    },
   },
   created() {
     const currentUser = this.$store.state.user;
@@ -283,6 +316,7 @@ export default {
           this.flashcardSets.push({
             uid: doc.id,
             name: doc.data().name,
+            fav: doc.data().fav,
             editing: false,
           });
         });

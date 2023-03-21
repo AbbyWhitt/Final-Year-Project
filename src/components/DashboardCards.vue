@@ -122,7 +122,9 @@ export default {
       this.assignments.sort((a, b) =>
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
-      this.assignments = this.assignments.filter(assignment => assignment.due.toDate() >= new Date());
+      this.assignments = this.assignments.filter(
+        (assignment) => assignment.due.toDate() >= new Date()
+      );
 
       const nearestDueAssignment = this.assignments[0];
 
@@ -130,24 +132,22 @@ export default {
         nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
       this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     });
-  },
-  created() {
-    const currentUser = this.$store.state.user;
+
     onSnapshot(
       collection(db, "users", currentUser.uid, "flashcard-sets"),
       (querySnapshot) => {
         this.flashcardSets = []; // clear array before pushing more info otherwise it renders double
         querySnapshot.forEach((doc) => {
-          this.flashcardSets.push({
-            uid: doc.id,
-            name: doc.data().name,
-            editing: false,
-          });
+          if (doc.data().fav) {
+            this.flashcardSets.push({
+              uid: doc.id,
+              name: doc.data().name,
+            });
+          }
         });
       }
     );
   },
-
   unmounted() {},
 };
 </script>
