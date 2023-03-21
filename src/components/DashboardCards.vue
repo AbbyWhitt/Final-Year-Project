@@ -122,10 +122,9 @@ export default {
       this.assignments.sort((a, b) =>
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
+      this.assignments = this.assignments.filter(assignment => assignment.due.toDate() >= new Date());
 
-      const nearestDueAssignment = this.assignments.find(
-        (assignment) => assignment.due.toDate() >= new Date()
-      );
+      const nearestDueAssignment = this.assignments[0];
 
       const diffInMs =
         nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
