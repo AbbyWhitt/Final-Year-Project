@@ -74,7 +74,7 @@
 
 <script>
 import { db } from "@/main";
-import { collectionGroup, onSnapshot, where, query } from "firebase/firestore";
+import { collectionGroup, onSnapshot, where, query, collection, } from "firebase/firestore";
 import { useStore } from "vuex";
 
 export default {
@@ -123,19 +123,22 @@ export default {
         nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
       this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     });
-
-    const f = query(
-      collectionGroup(db, "flashcard-sets"),
-      where("userId", "==", currentUser.uid)
+  },
+  created() {
+    const currentUser = this.$store.state.user;
+    onSnapshot(
+      collection(db, "users", currentUser.uid, "flashcard-sets"),
+      (querySnapshot) => {
+        this.flashcardSets = []; // clear array before pushing more info otherwise it renders double
+        querySnapshot.forEach((doc) => {
+          this.flashcardSets.push({
+            uid: doc.id,
+            name: doc.data().name,
+            editing: false,
+          });
+        });
+      }
     );
-    onSnapshot(f, (querySnapshot) => {
-      this.flashcardSets = [];
-      querySnapshot.forEach((doc) => {
-        this.flashcardSets.push(doc.data());
-        console.log(doc.data());
-      });
-    });
-    console.log(this.flashcardSets);
   },
 
   unmounted() {},
