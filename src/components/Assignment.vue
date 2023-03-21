@@ -246,7 +246,7 @@
                         aria-label="close form button"
                         color="black"
                         variant="text"
-                        @click="mod.editing = false"
+                        @click="assignment.editing = false"
                       >
                         Cancel
                       </v-btn>
@@ -465,11 +465,13 @@ export default {
         assignUpdate.id
       );
       await updateDoc(docRef, {
-        modName: assignUpdate.modName,
-        modCode: assignUpdate.modCode,
-        semester: assignUpdate.semester,
-        modLectName: assignUpdate.modLectName,
-        lastAssignDue: assignUpdate.lastAssignDue,
+        name: assignUpdate.name,
+            weight: assignUpdate.weight,
+            type: assignUpdate.type,
+            due: assignUpdate.dueDate,
+            notes: assignUpdate.brief,
+            modCode: assignUpdate.modCode,
+            userId: currentUser.uid,
       });
       this.temporarySet = {};
       assignUpdate.editing = false;
