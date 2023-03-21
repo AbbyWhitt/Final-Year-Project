@@ -6,7 +6,7 @@
           class="rounded-xl overflow-auto"
           aria-label="assignments table"
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
-          height="35rem"
+          height="31rem"
         >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
@@ -55,9 +55,11 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <!-- Flashcard Card -->
-      <v-col>
-        <v-card class="rounded-xl overflow-auto" height="25rem">
+    </v-row>
+    <!-- Flashcard Card -->
+    <v-row>
+      <v-col cols="3" offset="9">
+        <v-card class="rounded-xl overflow-auto" height="20rem">
           <v-card-title> Favourite FlashcardSets: </v-card-title>
           <v-table>
             <tbody>
@@ -74,7 +76,13 @@
 
 <script>
 import { db } from "@/main";
-import { collectionGroup, onSnapshot, where, query, collection, } from "firebase/firestore";
+import {
+  collectionGroup,
+  onSnapshot,
+  where,
+  query,
+  collection,
+} from "firebase/firestore";
 import { useStore } from "vuex";
 
 export default {
