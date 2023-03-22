@@ -24,7 +24,7 @@
       >
         mdi-clock
       </v-icon>
-      {{ time }}
+      <span class="ml-2">{{ time }}</span>
     </div>
 
     <template v-slot:append>
