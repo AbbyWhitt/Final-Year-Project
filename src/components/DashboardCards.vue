@@ -87,7 +87,7 @@
               <v-list-item value="notifications">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -101,7 +101,7 @@
               <v-list-item value="sound">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -115,7 +115,7 @@
               <v-list-item value="widgets">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -161,7 +161,7 @@
       <v-col cols="7">
         <v-card class="rounded-xl" height="20rem">
           <v-timeline direction="horizontal">
-            <v-timeline-item>
+            <v-timeline-item dot-color="#ffcdd6">
               <template v-slot:opposite> Opposite content </template>
               <div>
                 <div class="text-h6">
@@ -185,7 +185,7 @@
               </div>
             </v-timeline-item>
 
-            <v-timeline-item>
+            <v-timeline-item dot-color="#ffcdd6">
               <template v-slot:opposite> Opposite content </template>
               <div>
                 <div class="text-h6">Content title</div>
@@ -196,7 +196,7 @@
               </div>
             </v-timeline-item>
 
-            <v-timeline-item>
+            <v-timeline-item dot-color="#ffcdd6">
               <template v-slot:opposite> Opposite content </template>
               <div>
                 <p>
@@ -317,4 +317,5 @@ export default {
   padding: 7%;
   font-size: 1.8em;
 }
+
 </style>
