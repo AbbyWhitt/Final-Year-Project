@@ -2,7 +2,7 @@
   <v-card class="ma-5">
     <v-container>
       <v-row>
-        <v-col cols="5">
+        <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
             <v-icon
               icon="mdi-book-open-variant"
@@ -15,7 +15,7 @@
             </v-card-title>
           </v-card>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="2">
           <router-link class="linkText" to="Modules">
             <v-btn class="ml-7 d-none d-lg-flex" rounded="lg">
               Back to Modules
@@ -145,6 +145,7 @@
         <v-divider thickness="2"></v-divider>
       </v-row>
       <v-row>
+        <!-- assignment cards -->
         <v-col v-for="assignment in assignments" :key="assignment.uid" cols="4">
           <v-card color="#d3ebe5" class="ma-4">
             <!-- Delete button -->
@@ -428,6 +429,7 @@ export default {
             due: new Date(this.assign.dueDate),
             notes: this.assign.brief,
             modCode: this.module.modCode,
+            modId: this.modId,
             userId: currentUser.uid,
           }
         );
