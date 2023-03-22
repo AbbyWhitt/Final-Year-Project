@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <v-row>
+      <!-- Assignment card -->
       <v-col cols="5">
         <v-card
           class="rounded-xl overflow-auto"
@@ -21,10 +22,19 @@
                 <th class="text-left">Type</th>
               </tr>
             </thead>
-
             <tbody>
               <tr v-for="assignment in assignments" :key="assignment.uid">
-                <td>{{ assignment.modCode }}</td>
+                <td>
+                  <router-link
+                    class="textTable"
+                    :to="{
+                      name: 'assignments',
+                      params: { modId: assignment.modId },
+                    }"
+                  >
+                    {{ assignment.modCode }}
+                  </router-link>
+                </td>
                 <td>{{ assignment.name }}</td>
                 <td>
                   {{
@@ -43,31 +53,174 @@
       </v-col>
       <!-- Next Card -->
       <v-col cols="4">
-        <v-card
-          class="rounded-xl"
-          aria-description="Displays the number of days including current day until next assignment"
-        >
-          <v-card-title class="text-center">
-            Next Assignment due in
-          </v-card-title>
-          <v-card-text class="text-center cardText">
-            {{ diffInDays }} days
-          </v-card-text>
-        </v-card>
+        <v-sheet>
+          <!-- Next assignment due card -->
+          <v-card
+            class="rounded-xl"
+            aria-description="Displays the number of days including current day until next assignment"
+            height="9.5rem"
+          >
+            <v-card-title class="text-center">
+              Next Assignment due in
+            </v-card-title>
+            <v-card-text class="text-center cardText">
+              {{ diffInDays }} days
+            </v-card-text>
+          </v-card>
+          <!-- Hardcoded Task card -->
+          <v-card class="rounded-xl mt-5" height="20.3rem">
+            <v-card-title class="text-center">
+              Tasks:
+              <v-tooltip v-model="show" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-icon
+                    v-bind="props"
+                    icon="mdi-help-circle-outline"
+                    size="20"
+                  >
+                  </v-icon>
+                </template>
+                <span>Placeholder with hardcoded values</span>
+              </v-tooltip>
+            </v-card-title>
+            <v-list lines="three" select-strategy="classic">
+              <v-list-item value="notifications">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+
+                <v-list-item-title>Revise for Data Mining</v-list-item-title>
+
+                <v-list-item-subtitle>
+                  Finish the flashcard set for classification.
+                </v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item value="sound">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+
+                <v-list-item-title>Group Project Work</v-list-item-title>
+
+                <v-list-item-subtitle>
+                  Arrange a catch-up meeting with others.
+                </v-list-item-subtitle>
+              </v-list-item>
+
+              <v-list-item value="widgets">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+
+                <v-list-item-title
+                  >Finish code for Final Year Project</v-list-item-title
+                >
+
+                <v-list-item-subtitle>
+                  Finish off the dashboard cards.
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-sheet>
       </v-col>
-    </v-row>
-    <!-- Flashcard Card -->
-    <v-row>
-      <v-col cols="3" offset="9">
-        <v-card class="rounded-xl overflow-auto" height="20rem">
+      <!-- Fav FlashcardSet Card -->
+      <v-col cols="3">
+        <v-card class="rounded-xl overflow-auto" height="31rem">
           <v-card-title> Favourite FlashcardSets: </v-card-title>
-          <v-table>
+          <v-table class="pa-1">
+            <thead>
+              <tr>
+                <th class="text-left">Name</th>
+              </tr>
+            </thead>
             <tbody>
               <tr v-for="item in flashcardSets" :key="item.uid">
-                <td>{{ item.name }}</td>
+                <td>
+                  <router-link
+                    class="textTable"
+                    :to="{ name: 'flashcards', params: { setId: item.uid } }"
+                    >{{ item.name }}</router-link
+                  >
+                </td>
               </tr>
             </tbody>
           </v-table>
+        </v-card>
+      </v-col>
+    </v-row>
+    <!-- New row of cards -->
+    <v-row>
+      <v-col cols="7">
+        <v-card class="rounded-xl" height="20rem">
+          <v-timeline direction="horizontal">
+            <v-timeline-item>
+              <template v-slot:opposite> Opposite content </template>
+              <div>
+                <div class="text-h6">
+                  Activity:
+                  <v-tooltip v-model="show" location="top">
+                    <template v-slot:activator="{ props }">
+                      <v-icon
+                        v-bind="props"
+                        icon="mdi-help-circle-outline"
+                        size="20"
+                      >
+                      </v-icon>
+                    </template>
+                    <span>Placeholder with hardcoded values</span>
+                  </v-tooltip>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+            </v-timeline-item>
+
+            <v-timeline-item>
+              <template v-slot:opposite> Opposite content </template>
+              <div>
+                <div class="text-h6">Content title</div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+            </v-timeline-item>
+
+            <v-timeline-item>
+              <template v-slot:opposite> Opposite content </template>
+              <div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+              </div>
+            </v-timeline-item>
+          </v-timeline>
+        </v-card>
+      </v-col>
+        <!-- Next placeholder card -->
+        <v-col>
+        <v-card class="rounded-xl" height="20rem">
+          <v-card-title class="text-center">Placeholder</v-card-title>
+          <v-card-text class="text-center">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+            </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -142,6 +295,7 @@ export default {
             this.flashcardSets.push({
               uid: doc.id,
               name: doc.data().name,
+              fav: doc.data().fav,
             });
           }
         });
