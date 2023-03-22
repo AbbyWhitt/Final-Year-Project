@@ -147,7 +147,7 @@
       <v-row>
         <!-- assignment cards -->
         <v-col v-for="assignment in assignments" :key="assignment.uid" cols="4">
-          <v-card color="#d3ebe5" class="ma-4">
+          <v-card color="#ffe9ed" class="ma-4">
             <!-- Delete button -->
             <template v-slot:append>
               <v-btn

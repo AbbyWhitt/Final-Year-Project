@@ -100,7 +100,7 @@
           cols="3"
           style="height: 100%"
         >
-          <v-card color="#d3ebe5" class="mt-3 ml-4">
+          <v-card color="#ffe9ed" class="mt-3 ml-4">
             <v-card-title class="font-weight-light">
               Question
               <!-- buttons -->

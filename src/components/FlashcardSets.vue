@@ -106,7 +106,7 @@
           <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="3">
             <v-card
               class="pt-3 pb-3 ma-3"
-              color="#d3ebe5"
+              color="#ffe9ed"
               style="text-align: center"
               height="170px"
             >
