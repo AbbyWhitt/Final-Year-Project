@@ -1,8 +1,97 @@
 <template>
   <v-sheet class="ma-2">
     <v-row>
+      <!-- Next Card -->
+      <v-col cols="3">
+        <v-sheet>
+          <!-- Next assignment due card -->
+          <v-card
+            class="rounded-xl border"
+            aria-description="Displays the number of days including current day until next assignment"
+            height="9.5rem"
+          >
+            <v-card-title class="text-center">
+              Next Assignment due in
+            </v-card-title>
+            <v-card-text class="text-center cardText">
+              {{ diffInDays }} days
+            </v-card-text>
+          </v-card>
+          <!-- Hardcoded Task card -->
+          <v-card class="rounded-xl mt-5 border" height="20.3rem">
+            <v-card-title class="text-center">
+              Tasks:
+              <v-tooltip v-model="show" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-icon
+                    v-bind="props"
+                    icon="mdi-help-circle-outline"
+                    size="20"
+                  >
+                </v-icon>
+                </template>
+                <span>Placeholder with hardcoded values</span>
+              </v-tooltip>
+            </v-card-title>
+            <v-list lines="three" select-strategy="classic">
+              <v-list-item value="notifications">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn
+                    :model-value="isActive"
+                    color="#ff96a8"
+                    ></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+                
+                <v-list-item-title>Revise for Data Mining</v-list-item-title>
+                
+                <v-list-item-subtitle>
+                  Finish the flashcard set for classification.
+                </v-list-item-subtitle>
+              </v-list-item>
+              
+              <v-list-item value="sound">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn
+                    :model-value="isActive"
+                    color="#ff96a8"
+                    ></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+                
+                <v-list-item-title>Group Project Work</v-list-item-title>
+                
+                <v-list-item-subtitle>
+                  Arrange a catch-up meeting with others.
+                </v-list-item-subtitle>
+              </v-list-item>
+              
+              <v-list-item value="widgets">
+                <template v-slot:prepend="{ isActive }">
+                  <v-list-item-action start>
+                    <v-checkbox-btn
+                    :model-value="isActive"
+                    color="#ff96a8"
+                    ></v-checkbox-btn>
+                  </v-list-item-action>
+                </template>
+                
+                <v-list-item-title
+                >Finish code for Final Year Project</v-list-item-title
+                >
+                
+                <v-list-item-subtitle>
+                  Finish off the dashboard cards.
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-sheet>
+      </v-col>
       <!-- Assignments Card -->
-      <v-col cols="5">
+      <v-col cols="6">
         <v-card
           class="rounded-xl overflow-auto border"
           aria-label="assignments table"
@@ -51,106 +140,17 @@
           </v-table>
         </v-card>
       </v-col>
-      <!-- Next Card -->
-      <v-col cols="4">
-        <v-sheet>
-          <!-- Next assignment due card -->
-          <v-card
-            class="rounded-xl border"
-            aria-description="Displays the number of days including current day until next assignment"
-            height="9.5rem"
-          >
-            <v-card-title class="text-center">
-              Next Assignment due in
-            </v-card-title>
-            <v-card-text class="text-center cardText">
-              {{ diffInDays }} days
-            </v-card-text>
-          </v-card>
-          <!-- Hardcoded Task card -->
-          <v-card class="rounded-xl mt-5 border" height="20.3rem">
-            <v-card-title class="text-center">
-              Tasks:
-              <v-tooltip v-model="show" location="top">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    v-bind="props"
-                    icon="mdi-help-circle-outline"
-                    size="20"
-                  >
-                  </v-icon>
-                </template>
-                <span>Placeholder with hardcoded values</span>
-              </v-tooltip>
-            </v-card-title>
-            <v-list lines="three" select-strategy="classic">
-              <v-list-item value="notifications">
-                <template v-slot:prepend="{ isActive }">
-                  <v-list-item-action start>
-                    <v-checkbox-btn
-                      :model-value="isActive"
-                      color="#ff96a8"
-                    ></v-checkbox-btn>
-                  </v-list-item-action>
-                </template>
-
-                <v-list-item-title>Revise for Data Mining</v-list-item-title>
-
-                <v-list-item-subtitle>
-                  Finish the flashcard set for classification.
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item value="sound">
-                <template v-slot:prepend="{ isActive }">
-                  <v-list-item-action start>
-                    <v-checkbox-btn
-                      :model-value="isActive"
-                      color="#ff96a8"
-                    ></v-checkbox-btn>
-                  </v-list-item-action>
-                </template>
-
-                <v-list-item-title>Group Project Work</v-list-item-title>
-
-                <v-list-item-subtitle>
-                  Arrange a catch-up meeting with others.
-                </v-list-item-subtitle>
-              </v-list-item>
-
-              <v-list-item value="widgets">
-                <template v-slot:prepend="{ isActive }">
-                  <v-list-item-action start>
-                    <v-checkbox-btn
-                      :model-value="isActive"
-                      color="#ff96a8"
-                    ></v-checkbox-btn>
-                  </v-list-item-action>
-                </template>
-
-                <v-list-item-title
-                  >Finish code for Final Year Project</v-list-item-title
-                >
-
-                <v-list-item-subtitle>
-                  Finish off the dashboard cards.
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-card>
-        </v-sheet>
-      </v-col>
       <!-- Fav FlashcardSet Card -->
       <v-col cols="3">
         <v-sheet>
-          <v-card class="rounded-xl overflow-auto border" height="31rem">
+          <v-card class="rounded-xl overflow-auto border" height="22rem">
             <v-card-title> Favourite FlashcardSets: </v-card-title>
             <v-table class="pa-1">
-              <thead>
+              <!-- <thead>
                 <tr>
                   <th class="text-left">Name</th>
                 </tr>
-              </thead>
+              </thead> -->
               <tbody>
                 <tr v-for="item in flashcardSets" :key="item.uid">
                   <td>
@@ -165,10 +165,10 @@
             </v-table>
           </v-card>
           <!-- New placeholder card -->
-          <!-- <v-card class="rounded-xl border mt-5" height="9.6rem">
+          <v-card class="rounded-xl border mt-5" height="7.8rem">
             <v-card-title class="text-center">Need to Work on:</v-card-title>
             <v-card-text class="text-center cardTextSm"> Data Mining </v-card-text>
-          </v-card> -->
+          </v-card>
         </v-sheet>
       </v-col>
     </v-row>
