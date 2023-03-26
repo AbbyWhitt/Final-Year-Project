@@ -102,7 +102,7 @@
         <v-divider thickness="2"></v-divider>
       </v-row>
 
-      <v-container>
+      <v-sheet class="ma-2">
         <v-row>
           <v-col v-for="item in flashcardSets" :key="item.uid" cols="12" sm="3">
             <v-card
@@ -215,7 +215,7 @@
             </v-card>
           </v-col>
         </v-row>
-      </v-container>
+      </v-sheet>
     </v-sheet>
   </v-card>
 </template>

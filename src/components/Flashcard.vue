@@ -93,6 +93,7 @@
         </v-col>
         <v-divider thickness="2"></v-divider>
       </v-row>
+      <!-- Flashcard show -->
       <v-row>
         <v-col
           v-for="flashcard in flashcards"
