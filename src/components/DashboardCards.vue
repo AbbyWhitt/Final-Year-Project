@@ -8,7 +8,7 @@
           aria-label="assignments table"
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
           height="31rem"
-          >
+        >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
             <thead>
@@ -18,7 +18,7 @@
                 <th class="text-left">Assignment Name</th>
 
                 <th class="text-left">Due Date</th>
-                
+
                 <th class="text-left">Type</th>
               </tr>
             </thead>
@@ -26,13 +26,13 @@
               <tr v-for="assignment in assignments" :key="assignment.uid">
                 <td>
                   <router-link
-                  class="textTable"
-                  :to="{
+                    class="textTable"
+                    :to="{
                       name: 'assignments',
                       params: { modId: assignment.modId },
                     }"
                   >
-                  {{ assignment.modCode }}
+                    {{ assignment.modCode }}
                   </router-link>
                 </td>
                 <td>{{ assignment.name }}</td>
@@ -205,7 +205,6 @@
             <v-timeline-item dot-color="#ffcdd6">
               <template v-slot:opposite> Opposite content </template>
               <div>
-                <div class="text-h6">Content title</div>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
