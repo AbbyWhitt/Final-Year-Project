@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-5">
-    <v-container>
+    <v-sheet class="ma-2">
       <v-card class="d-flex" flat rounded="0">
         <v-icon
           icon="mdi-shield-account"
@@ -64,7 +64,7 @@
           </v-card>
         </v-dialog>
       </v-sheet>
-    </v-container>
+    </v-sheet>
   </v-card>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-5">
-    <v-container>
+    <v-sheet class="ma-2">
       <v-row>
         <v-col cols="6">
           <v-card
@@ -19,12 +19,12 @@
             </v-card-title>
           </v-card>
         </v-col>
-
+      <!-- create a set buttons -->
         <v-col cols="2" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
               <v-btn rounded="lg" class="d-none d-lg-flex" v-bind="props">
-                Create Flashcard Set
+                Create a Set
               </v-btn>
               <v-btn
                 class="d-flex d-lg-none"
@@ -82,6 +82,7 @@
           </v-dialog>
         </v-col>
         <v-col cols="2">
+          <!-- edit buttons -->
           <v-btn
             class="d-flex d-lg-none"
             variant="text"
@@ -215,7 +216,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-container>
+    </v-sheet>
   </v-card>
 </template>
 

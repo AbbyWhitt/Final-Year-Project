@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-5">
-    <v-container>
+    <v-sheet class="ma-2">
       <v-row>
         <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
@@ -14,6 +14,7 @@
             </v-card-title>
           </v-card>
         </v-col>
+        <!-- Create buttons -->
         <v-col cols="2" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
@@ -104,6 +105,7 @@
           </v-dialog>
           <!-- End of Form -->
         </v-col>
+        <!-- edit buttons -->
         <v-col cols="2">
           <v-btn
             class="d-flex d-lg-none"
@@ -118,9 +120,8 @@
         </v-col>
         <v-divider thickness="2"></v-divider>
       </v-row>
-    </v-container>
-    <v-container>
       <v-row>
+        <v-sheet class="ma-2">
         <v-table fixed-header class="w-screen mt-5">
           <thead>
             <tr>
@@ -251,7 +252,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="#449682" variant="text" type="submit">
-                          Create
+                          Update
                         </v-btn>
                         <v-btn
                           color="black"
@@ -269,8 +270,9 @@
             </tr>
           </tbody>
         </v-table>
+        </v-sheet>
       </v-row>
-    </v-container>
+    </v-sheet>
   </v-card>
 </template>
 

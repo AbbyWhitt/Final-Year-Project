@@ -1,13 +1,14 @@
 <template>
-  <v-container>
+    <v-sheet class="ma-2">
     <v-row>
       <!-- Assignment card -->
       <v-col cols="5">
         <v-card
-          class="rounded-xl overflow-auto"
+          class="rounded-xl overflow-auto border"
           aria-label="assignments table"
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
           height="31rem"
+          
         >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
@@ -56,7 +57,7 @@
         <v-sheet>
           <!-- Next assignment due card -->
           <v-card
-            class="rounded-xl"
+            class="rounded-xl border"
             aria-description="Displays the number of days including current day until next assignment"
             height="9.5rem"
           >
@@ -68,7 +69,7 @@
             </v-card-text>
           </v-card>
           <!-- Hardcoded Task card -->
-          <v-card class="rounded-xl mt-5" height="20.3rem">
+          <v-card class="rounded-xl mt-5 border" height="20.3rem">
             <v-card-title class="text-center">
               Tasks:
               <v-tooltip v-model="show" location="top">
@@ -133,7 +134,7 @@
       </v-col>
       <!-- Fav FlashcardSet Card -->
       <v-col cols="3">
-        <v-card class="rounded-xl overflow-auto" height="31rem">
+        <v-card class="rounded-xl overflow-auto border" height="31rem">
           <v-card-title> Favourite FlashcardSets: </v-card-title>
           <v-table class="pa-1">
             <thead>
@@ -159,7 +160,8 @@
     <!-- New row of cards -->
     <v-row>
       <v-col cols="7">
-        <v-card class="rounded-xl" height="20rem">
+        <!-- placeholder line card -->
+        <v-card class="rounded-xl border" height="20rem">
           <v-timeline direction="horizontal">
             <v-timeline-item dot-color="#ffcdd6">
               <template v-slot:opposite> Opposite content </template>
@@ -210,7 +212,7 @@
       </v-col>
         <!-- Next placeholder card -->
         <v-col>
-        <v-card class="rounded-xl" height="20rem">
+        <v-card class="rounded-xl border" height="20rem">
           <v-card-title class="text-center">Placeholder</v-card-title>
           <v-card-text class="text-center">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -224,7 +226,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-container>
+    </v-sheet>
 </template>
 
 <script>
@@ -318,4 +320,8 @@ export default {
   font-size: 1.8em;
 }
 
+.border {
+  border: 10px solid #ffcdd6;
+
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-5">
-    <v-container>
+    <v-sheet class="ma-2">
       <v-card class="d-flex" flat rounded="0">
         <v-icon
           icon="mdi-file-document"
@@ -11,7 +11,7 @@
           Study Buddy Policies
         </v-card-title>
       </v-card>
-    </v-container>
+    </v-sheet>
     <v-divider thickness="2"></v-divider>
     <v-card class="pa-7">
       <v-expansion-panels v-model="panel" multiple>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-5">
-    <v-container>
+    <v-sheet class="ma-2">
       <v-row>
         <v-col cols="6">
           <v-card class="d-flex" flat rounded="0">
@@ -300,7 +300,7 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-container>
+    </v-sheet>
   </v-card>
 </template>
 
