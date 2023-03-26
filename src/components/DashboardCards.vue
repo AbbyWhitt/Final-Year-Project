@@ -1,15 +1,14 @@
 <template>
-    <v-sheet class="ma-2">
+  <v-sheet class="ma-2">
     <v-row>
-      <!-- Assignment card -->
+      <!-- Assignments Card -->
       <v-col cols="5">
         <v-card
           class="rounded-xl overflow-auto border"
           aria-label="assignments table"
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
           height="31rem"
-          
-        >
+          >
           <v-card-title> Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
             <thead>
@@ -19,7 +18,7 @@
                 <th class="text-left">Assignment Name</th>
 
                 <th class="text-left">Due Date</th>
-
+                
                 <th class="text-left">Type</th>
               </tr>
             </thead>
@@ -27,13 +26,13 @@
               <tr v-for="assignment in assignments" :key="assignment.uid">
                 <td>
                   <router-link
-                    class="textTable"
-                    :to="{
+                  class="textTable"
+                  :to="{
                       name: 'assignments',
                       params: { modId: assignment.modId },
                     }"
                   >
-                    {{ assignment.modCode }}
+                  {{ assignment.modCode }}
                   </router-link>
                 </td>
                 <td>{{ assignment.name }}</td>
@@ -88,7 +87,10 @@
               <v-list-item value="notifications">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
+                    <v-checkbox-btn
+                      :model-value="isActive"
+                      color="#ff96a8"
+                    ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -102,7 +104,10 @@
               <v-list-item value="sound">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
+                    <v-checkbox-btn
+                      :model-value="isActive"
+                      color="#ff96a8"
+                    ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -116,7 +121,10 @@
               <v-list-item value="widgets">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
-                    <v-checkbox-btn :model-value="isActive" color="#ff96a8"></v-checkbox-btn>
+                    <v-checkbox-btn
+                      :model-value="isActive"
+                      color="#ff96a8"
+                    ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
 
@@ -134,27 +142,34 @@
       </v-col>
       <!-- Fav FlashcardSet Card -->
       <v-col cols="3">
-        <v-card class="rounded-xl overflow-auto border" height="31rem">
-          <v-card-title> Favourite FlashcardSets: </v-card-title>
-          <v-table class="pa-1">
-            <thead>
-              <tr>
-                <th class="text-left">Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="item in flashcardSets" :key="item.uid">
-                <td>
-                  <router-link
-                    class="textTable"
-                    :to="{ name: 'flashcards', params: { setId: item.uid } }"
-                    >{{ item.name }}</router-link
-                  >
-                </td>
-              </tr>
-            </tbody>
-          </v-table>
-        </v-card>
+        <v-sheet>
+          <v-card class="rounded-xl overflow-auto border" height="31rem">
+            <v-card-title> Favourite FlashcardSets: </v-card-title>
+            <v-table class="pa-1">
+              <thead>
+                <tr>
+                  <th class="text-left">Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in flashcardSets" :key="item.uid">
+                  <td>
+                    <router-link
+                      class="textTable"
+                      :to="{ name: 'flashcards', params: { setId: item.uid } }"
+                      >{{ item.name }}</router-link
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </v-table>
+          </v-card>
+          <!-- New placeholder card -->
+          <!-- <v-card class="rounded-xl border mt-5" height="9.6rem">
+            <v-card-title class="text-center">Need to Work on:</v-card-title>
+            <v-card-text class="text-center cardTextSm"> Data Mining </v-card-text>
+          </v-card> -->
+        </v-sheet>
       </v-col>
     </v-row>
     <!-- New row of cards -->
@@ -210,23 +225,24 @@
           </v-timeline>
         </v-card>
       </v-col>
-        <!-- Next placeholder card -->
-        <v-col>
+      <!-- Next placeholder card -->
+      <v-col>
         <v-card class="rounded-xl border" height="20rem">
-          <v-card-title class="text-center">Placeholder</v-card-title>
-          <v-card-text class="text-center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-            </v-card-text>
+          <v-card-title class="text-center">Today's Notes:</v-card-title>
+          <v-sheet class="ma-3">
+            <v-textarea
+              label="Notes"
+              variant="solo"
+              clearable
+              model-value="You've got this!"
+              auto-grow
+              bg-color="#fff5f7"
+            ></v-textarea>
+          </v-sheet>
         </v-card>
       </v-col>
     </v-row>
-    </v-sheet>
+  </v-sheet>
 </template>
 
 <script>
@@ -322,6 +338,10 @@ export default {
 
 .border {
   border: 10px solid #ffcdd6;
-
+}
+.cardTextSm {
+  padding: 7%;
+  font-size: 1.3em;
+  color: #ffa2b3;
 }
 </style>
