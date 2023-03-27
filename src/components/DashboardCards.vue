@@ -28,7 +28,7 @@
                     icon="mdi-help-circle-outline"
                     size="20"
                   >
-                </v-icon>
+                  </v-icon>
                 </template>
                 <span>Placeholder with hardcoded values</span>
               </v-tooltip>
@@ -38,50 +38,50 @@
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title>Revise for Data Mining</v-list-item-title>
-                
+
                 <v-list-item-subtitle>
                   Finish the flashcard set for classification.
                 </v-list-item-subtitle>
               </v-list-item>
-              
+
               <v-list-item value="sound">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title>Group Project Work</v-list-item-title>
-                
+
                 <v-list-item-subtitle>
                   Arrange a catch-up meeting with others.
                 </v-list-item-subtitle>
               </v-list-item>
-              
+
               <v-list-item value="widgets">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title
-                >Finish code for Final Year Project</v-list-item-title
+                  >Finish code for Final Year Project</v-list-item-title
                 >
-                
+
                 <v-list-item-subtitle>
                   Finish off the dashboard cards.
                 </v-list-item-subtitle>
@@ -166,8 +166,23 @@
           </v-card>
           <!-- New placeholder card -->
           <v-card class="rounded-xl border mt-5" height="7.8rem">
-            <v-card-title class="text-center">Need to Work on:</v-card-title>
-            <v-card-text class="text-center cardTextSm"> Data Mining </v-card-text>
+            <v-card-title class="text-center"
+              >Need to Work on:
+              <v-tooltip v-model="show" location="top">
+                <template v-slot:activator="{ props }">
+                  <v-icon
+                    v-bind="props"
+                    icon="mdi-help-circle-outline"
+                    size="20"
+                  >
+                  </v-icon>
+                </template>
+                <span>Placeholder with hardcoded values</span>
+              </v-tooltip></v-card-title
+            >
+            <v-card-text class="text-center cardTextSm">
+              Data Mining
+            </v-card-text>
           </v-card>
         </v-sheet>
       </v-col>
@@ -227,7 +242,16 @@
       <!-- Next placeholder card -->
       <v-col>
         <v-card class="rounded-xl border" height="20rem">
-          <v-card-title class="text-center">Today's Notes:</v-card-title>
+          <v-card-title class="text-center"
+            >Today's Notes:
+            <v-tooltip v-model="show" location="top">
+              <template v-slot:activator="{ props }">
+                <v-icon v-bind="props" icon="mdi-help-circle-outline" size="20">
+                </v-icon>
+              </template>
+              <span>Placeholder with hardcoded values</span>
+            </v-tooltip></v-card-title
+          >
           <v-sheet class="ma-3">
             <v-textarea
               label="Notes"

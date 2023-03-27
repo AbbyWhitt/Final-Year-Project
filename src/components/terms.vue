@@ -1,7 +1,7 @@
 <template>
   <v-card class="screen">
     <v-row>
-      <v-sheet class="ma-2">
+      <v-container>
         <v-card class="d-flex" flat rounded="0">
           <v-icon
             icon="mdi-file-document"
@@ -15,7 +15,7 @@
           <v-btn class="mt-2">Back to account creation</v-btn>
           </router-link>
         </v-card>
-      </v-sheet>
+      </v-container>
     </v-row>
     <v-spacer />
     <v-row>
