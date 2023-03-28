@@ -31,11 +31,11 @@
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn class="d-none d-lg-flex" rounded="lg" v-bind="props">
+              <v-btn class="d-none d-xl-flex" rounded="lg" v-bind="props">
                 Create an Assignment
               </v-btn>
               <v-btn
-                class="d-flex d-lg-none ml-10"
+                class="d-flex d-xl-none ml-10"
                 icon="mdi-plus-circle-outline"
                 v-bind="props"
                 variant="text"
@@ -129,13 +129,13 @@
           <v-btn
             aria-label="edit assignments - once clicked cancel assignments"
             rounded="lg"
-            class="d-none d-lg-flex"
+            class="d-none d-xl-flex"
             @click="edit = !edit"
           >
             {{ btnText }}
           </v-btn>
           <v-btn
-            class="d-flex d-lg-none mr-10"
+            class="d-flex d-xl-none mr-10"
             icon="mdi-pencil-circle-outline"
             variant="text"
             aria-label="pencil icon - activates edit and delete assignment icons"
