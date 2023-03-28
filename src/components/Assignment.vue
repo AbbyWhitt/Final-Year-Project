@@ -278,11 +278,7 @@
               </span>
               <span class="text-subtitle-1">
                 {{
-                  assignment.dueDate.toDate().toLocaleDateString({
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
+                  new Date(assignment.dueDate).toLocaleDateString("en-GB")
                 }}
               </span>
             </v-card-text>
@@ -346,7 +342,7 @@ export default {
       { title: "Exam - Online", value: "Online Exam" },
       { title: "Exam - In Person", value: "In Person Exam" },
       { title: "Practical assessment", value: "Practical Assessment" },
-      { title: "Written Eassy", value: "Essay" },
+      { title: "Written Essay", value: "Essay" },
       { title: "Presentation", value: "Presentation" },
       { title: "Other", value: "Other" },
     ],
@@ -426,7 +422,7 @@ export default {
             name: this.assign.name,
             weight: this.assign.weight,
             type: this.assign.type,
-            due: new Date(this.assign.dueDate),
+            due: this.assign.dueDate,
             notes: this.assign.brief,
             modCode: this.module.modCode,
             modId: this.modId,

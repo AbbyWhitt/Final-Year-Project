@@ -154,11 +154,7 @@
               <td>{{ mod.semester }}</td>
               <td>
                 {{
-                  new Date(mod.lastAssignDue).toLocaleDateString({
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
+                  new Date(mod.lastAssignDue).toLocaleDateString("en-GB")
                 }}
               </td>
               <td>{{ mod.modLectName }}</td>

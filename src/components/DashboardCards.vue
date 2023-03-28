@@ -127,11 +127,7 @@
                 <td>{{ assignment.name }}</td>
                 <td>
                   {{
-                    assignment.due.toDate().toLocaleDateString({
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
+                    new Date(assignment.due).toLocaleDateString("en-GB")
                   }}
                 </td>
                 <td>{{ assignment.type }}</td>
@@ -317,13 +313,13 @@ export default {
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
       this.assignments = this.assignments.filter(
-        (assignment) => assignment.due.toDate() >= new Date()
+        (assignment) => new Date(assignment.due) >= new Date()
       );
 
       const nearestDueAssignment = this.assignments[0];
 
       const diffInMs =
-        nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
+        new Date(nearestDueAssignment.due).getTime() - new Date().getTime();
       this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     });
 
