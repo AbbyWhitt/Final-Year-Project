@@ -70,7 +70,11 @@
                   <v-btn color="#449682" variant="text" type="submit">
                     Create
                   </v-btn>
-                  <v-btn color="black" variant="text" @click="dialog = false">
+                  <v-btn
+                    color="black"
+                    variant="text"
+                    @click="cancelCreationFlash()"
+                  >
                     Cancel
                   </v-btn>
                 </v-card-actions>
@@ -372,6 +376,11 @@ export default {
       });
       this.temporarySet = {};
       card.editing = false;
+    },
+    cancelCreationFlash() {
+      this.dialog = false;
+      this.setQ = "";
+      this.setAns = "";
     },
   },
 };

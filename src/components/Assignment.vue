@@ -115,7 +115,7 @@
                     aria-label="close form button"
                     color="black"
                     variant="text"
-                    @click="dialog = false"
+                    @click="cancelCreationAssign()"
                   >
                     Cancel
                   </v-btn>
@@ -277,9 +277,7 @@
                 Due Date:
               </span>
               <span class="text-subtitle-1">
-                {{
-                  new Date(assignment.dueDate).toLocaleDateString("en-GB")
-                }}
+                {{ new Date(assignment.dueDate).toLocaleDateString("en-GB") }}
               </span>
             </v-card-text>
             <v-card class="ma-3 overflow-auto" height="150">
@@ -464,15 +462,23 @@ export default {
       );
       await updateDoc(docRef, {
         name: assignUpdate.name,
-            weight: assignUpdate.weight,
-            type: assignUpdate.type,
-            due: assignUpdate.dueDate,
-            notes: assignUpdate.brief,
-            modCode: assignUpdate.modCode,
-            userId: currentUser.uid,
+        weight: assignUpdate.weight,
+        type: assignUpdate.type,
+        due: assignUpdate.dueDate,
+        notes: assignUpdate.brief,
+        modCode: assignUpdate.modCode,
+        userId: currentUser.uid,
       });
       this.temporarySet = {};
       assignUpdate.editing = false;
+    },
+    cancelCreationAssign() {
+      this.dialog = false;
+      this.assign.name = "";
+      this.assign.weight = "";
+      this.assign.type = "";
+      this.assign.dueDate = "";
+      this.assign.brief = "";
     },
   },
 };
