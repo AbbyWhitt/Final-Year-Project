@@ -21,17 +21,13 @@
           <v-card class="rounded-xl mt-5 border" height="20.3rem">
             <v-card-title class="text-center">
               Tasks:
-              <v-tooltip v-model="show" location="top">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    v-bind="props"
-                    icon="mdi-help-circle-outline"
-                    size="20"
-                  >
-                  </v-icon>
-                </template>
-                <span>Placeholder with hardcoded values</span>
-              </v-tooltip>
+              <v-icon
+                v-bind="props"
+                icon="mdi-help-circle-outline"
+                size="20"
+                title="Placeholder with hardcoded values"
+              >
+              </v-icon>
             </v-card-title>
             <v-list lines="three" select-strategy="classic">
               <v-list-item value="notifications">
@@ -126,9 +122,7 @@
                 </td>
                 <td>{{ assignment.name }}</td>
                 <td>
-                  {{
-                    new Date(assignment.due).toLocaleDateString("en-GB")
-                  }}
+                  {{ new Date(assignment.due).toLocaleDateString("en-GB") }}
                 </td>
                 <td>{{ assignment.type }}</td>
               </tr>
@@ -164,18 +158,14 @@
           <v-card class="rounded-xl border mt-5" height="7.8rem">
             <v-card-title class="text-center"
               >Need to Work on:
-              <v-tooltip v-model="show" location="top">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    v-bind="props"
-                    icon="mdi-help-circle-outline"
-                    size="20"
-                  >
-                  </v-icon>
-                </template>
-                <span>Placeholder with hardcoded values</span>
-              </v-tooltip></v-card-title
-            >
+              <v-icon
+                v-bind="props"
+                icon="mdi-help-circle-outline"
+                size="20"
+                title="Placeholder with hardcoded values"
+              >
+              </v-icon>
+            </v-card-title>
             <v-card-text class="text-center cardTextSm">
               Data Mining
             </v-card-text>
@@ -194,17 +184,13 @@
               <div>
                 <div class="text-h6">
                   Activity:
-                  <v-tooltip v-model="show" location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        icon="mdi-help-circle-outline"
-                        size="20"
-                      >
-                      </v-icon>
-                    </template>
-                    <span>Placeholder with hardcoded values</span>
-                  </v-tooltip>
+                  <v-icon
+                    v-bind="props"
+                    icon="mdi-help-circle-outline"
+                    size="20"
+                    title="Placeholder with hardcoded values"
+                  >
+                  </v-icon>
                 </div>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -240,14 +226,14 @@
         <v-card class="rounded-xl border" height="20rem">
           <v-card-title class="text-center"
             >Today's Notes:
-            <v-tooltip v-model="show" location="top">
-              <template v-slot:activator="{ props }">
-                <v-icon v-bind="props" icon="mdi-help-circle-outline" size="20">
-                </v-icon>
-              </template>
-              <span>Placeholder with hardcoded values</span>
-            </v-tooltip></v-card-title
-          >
+            <v-icon
+              v-bind="props"
+              icon="mdi-help-circle-outline"
+              size="20"
+              title="Placeholder with hardcoded values"
+            >
+            </v-icon>
+          </v-card-title>
           <v-sheet class="ma-3">
             <v-textarea
               label="Notes"
