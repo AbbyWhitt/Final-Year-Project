@@ -23,7 +23,7 @@
       <v-list-item
         class="py-5"
         prepend-icon="mdi-account-cog"
-        value="flashcard sets"
+        value="userSettings"
       >
         <v-list-item-title class="itemsTitle">
           User Settings
@@ -35,7 +35,7 @@
       <v-list-item
         class="py-5"
         prepend-icon="mdi-shield-account"
-        value="Module"
+        value="Security"
       >
         <v-list-item-title class="itemsTitle"> Security </v-list-item-title>
       </v-list-item>
@@ -45,7 +45,7 @@
       <v-list-item
         class="py-5"
         prepend-icon="mdi-card-text-outline"
-        value="flashcard sets"
+        value="HelpDocs"
       >
         <v-list-item-title class="itemsTitle"> Help Docs </v-list-item-title>
       </v-list-item>
@@ -55,7 +55,7 @@
       <v-list-item
         class="py-5"
         prepend-icon="mdi-file-document"
-        value="flashcard sets"
+        value="privacyPolicy"
       >
         <v-list-item-title class="itemsTitle">
           Privacy Policy

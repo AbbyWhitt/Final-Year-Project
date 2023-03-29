@@ -341,7 +341,6 @@ export default {
         this.modContent.lastAssignDue
       ) {
         const currentUser = this.$store.state.user;
-        console.log(this.modContent);
         await addDoc(collection(db, "users", currentUser.uid, "modules"), {
           modName: this.modContent.modName,
           modCode: this.modContent.modCode,
