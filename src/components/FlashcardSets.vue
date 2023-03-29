@@ -15,7 +15,7 @@
               class="mt-2 mr-2"
             ></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light">
-              FlashcardSets
+              Flashcard Sets
             </v-card-title>
           </v-card>
         </v-col>
