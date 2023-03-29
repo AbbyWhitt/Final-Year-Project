@@ -13,8 +13,10 @@
             <v-card-title class="text-center">
               Next Assignment due in
             </v-card-title>
-            <v-card-text class="text-center cardText">
-              {{ diffInDays }} days
+            <v-card-text class="text-center cardText" >
+              {{ diffInDays }} 
+              <span v-if="diffInDays == 1"> day</span>
+              <span v-else> days</span>
             </v-card-text>
           </v-card>
           <!-- Hardcoded Task card -->
