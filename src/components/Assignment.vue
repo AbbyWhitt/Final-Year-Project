@@ -31,11 +31,11 @@
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn class="d-none d-lg-flex" rounded="lg" v-bind="props">
+              <v-btn class="d-none d-xl-flex" rounded="lg" v-bind="props">
                 Create an Assignment
               </v-btn>
               <v-btn
-                class="d-flex d-lg-none ml-10"
+                class="d-flex d-xl-none ml-10"
                 icon="mdi-plus-circle-outline"
                 v-bind="props"
                 variant="text"
@@ -115,7 +115,7 @@
                     aria-label="close form button"
                     color="black"
                     variant="text"
-                    @click="dialog = false"
+                    @click="cancelCreationAssign()"
                   >
                     Cancel
                   </v-btn>
@@ -129,13 +129,13 @@
           <v-btn
             aria-label="edit assignments - once clicked cancel assignments"
             rounded="lg"
-            class="d-none d-lg-flex"
+            class="d-none d-xl-flex"
             @click="edit = !edit"
           >
             {{ btnText }}
           </v-btn>
           <v-btn
-            class="d-flex d-lg-none mr-10"
+            class="d-flex d-xl-none mr-10"
             icon="mdi-pencil-circle-outline"
             variant="text"
             aria-label="pencil icon - activates edit and delete assignment icons"
@@ -277,13 +277,7 @@
                 Due Date:
               </span>
               <span class="text-subtitle-1">
-                {{
-                  assignment.dueDate.toDate().toLocaleDateString({
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
-                }}
+                {{ new Date(assignment.dueDate).toLocaleDateString("en-GB") }}
               </span>
             </v-card-text>
             <v-card class="ma-3 overflow-auto" height="150">
@@ -346,7 +340,7 @@ export default {
       { title: "Exam - Online", value: "Online Exam" },
       { title: "Exam - In Person", value: "In Person Exam" },
       { title: "Practical assessment", value: "Practical Assessment" },
-      { title: "Written Eassy", value: "Essay" },
+      { title: "Written Essay", value: "Essay" },
       { title: "Presentation", value: "Presentation" },
       { title: "Other", value: "Other" },
     ],
@@ -426,7 +420,7 @@ export default {
             name: this.assign.name,
             weight: this.assign.weight,
             type: this.assign.type,
-            due: new Date(this.assign.dueDate),
+            due: this.assign.dueDate,
             notes: this.assign.brief,
             modCode: this.module.modCode,
             modId: this.modId,
@@ -468,15 +462,23 @@ export default {
       );
       await updateDoc(docRef, {
         name: assignUpdate.name,
-            weight: assignUpdate.weight,
-            type: assignUpdate.type,
-            due: assignUpdate.dueDate,
-            notes: assignUpdate.brief,
-            modCode: assignUpdate.modCode,
-            userId: currentUser.uid,
+        weight: assignUpdate.weight,
+        type: assignUpdate.type,
+        due: assignUpdate.dueDate,
+        notes: assignUpdate.brief,
+        modCode: assignUpdate.modCode,
+        userId: currentUser.uid,
       });
       this.temporarySet = {};
       assignUpdate.editing = false;
+    },
+    cancelCreationAssign() {
+      this.dialog = false;
+      this.assign.name = "";
+      this.assign.weight = "";
+      this.assign.type = "";
+      this.assign.dueDate = "";
+      this.assign.brief = "";
     },
   },
 };

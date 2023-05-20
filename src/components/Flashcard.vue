@@ -24,11 +24,11 @@
         <v-col cols="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
-              <v-btn class="d-none d-lg-flex" rounded="lg" v-bind="props">
+              <v-btn class="d-none d-xl-flex" rounded="lg" v-bind="props">
                 Create a Flashcard
               </v-btn>
               <v-btn
-                class="d-flex d-lg-none"
+                class="d-flex d-xl-none"
                 variant="text"
                 icon="mdi-plus-circle-outline"
                 aria-label="Create a Flashcard"
@@ -70,7 +70,11 @@
                   <v-btn color="#449682" variant="text" type="submit">
                     Create
                   </v-btn>
-                  <v-btn color="black" variant="text" @click="dialog = false">
+                  <v-btn
+                    color="black"
+                    variant="text"
+                    @click="cancelCreationFlash()"
+                  >
                     Cancel
                   </v-btn>
                 </v-card-actions>
@@ -80,11 +84,11 @@
         </v-col>
         <!-- End of form -->
         <v-col cols="2">
-          <v-btn class="d-none d-lg-flex" rounded="lg" @click="edit = !edit">
+          <v-btn class="d-none d-xl-flex" rounded="lg" @click="edit = !edit">
             {{ btnText }}
           </v-btn>
           <v-btn
-            class="d-flex d-lg-none"
+            class="d-flex d-xl-none"
             variant="text"
             icon="mdi-pencil-circle-outline"
             aria-label="Edit Flashcard"
@@ -372,6 +376,11 @@ export default {
       });
       this.temporarySet = {};
       card.editing = false;
+    },
+    cancelCreationFlash() {
+      this.dialog = false;
+      this.setQ = "";
+      this.setAns = "";
     },
   },
 };

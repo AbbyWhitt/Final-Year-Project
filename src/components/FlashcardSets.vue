@@ -15,11 +15,11 @@
               class="mt-2 mr-2"
             ></v-icon>
             <v-card-title class="text-h5 ml-n3 font-weight-light">
-              FlashcardSets
+              Flashcard Sets
             </v-card-title>
           </v-card>
         </v-col>
-      <!-- create a set buttons -->
+        <!-- create a set buttons -->
         <v-col cols="2" offset="2">
           <v-dialog v-model="dialog" persistent>
             <template v-slot:activator="{ props }">
@@ -71,7 +71,7 @@
                     aria-label="close form"
                     color="black"
                     variant="text"
-                    @click="dialog = false"
+                    @click="cancelCreationSet()"
                   >
                     Cancel
                   </v-btn>
@@ -305,6 +305,10 @@ export default {
       await updateDoc(docRef, {
         fav: isFav,
       });
+    },
+    cancelCreationSet() {
+      this.dialog = false;
+      this.setName = "";
     },
   },
   created() {

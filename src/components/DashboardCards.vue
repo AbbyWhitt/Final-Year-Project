@@ -13,75 +13,73 @@
             <v-card-title class="text-center">
               Next Assignment due in
             </v-card-title>
-            <v-card-text class="text-center cardText">
-              {{ diffInDays }} days
+            <v-card-text class="text-center cardText" >
+              {{ diffInDays }} 
+              <span v-if="diffInDays == 1"> day</span>
+              <span v-else> days</span>
             </v-card-text>
           </v-card>
           <!-- Hardcoded Task card -->
           <v-card class="rounded-xl mt-5 border" height="20.3rem">
             <v-card-title class="text-center">
               Tasks:
-              <v-tooltip v-model="show" location="top">
-                <template v-slot:activator="{ props }">
-                  <v-icon
-                    v-bind="props"
-                    icon="mdi-help-circle-outline"
-                    size="20"
-                  >
-                </v-icon>
-                </template>
-                <span>Placeholder with hardcoded values</span>
-              </v-tooltip>
+              <v-icon
+                v-bind="props"
+                icon="mdi-help-circle-outline"
+                size="20"
+                title="Placeholder with hardcoded values"
+              >
+              </v-icon>
             </v-card-title>
             <v-list lines="three" select-strategy="classic">
               <v-list-item value="notifications">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title>Revise for Data Mining</v-list-item-title>
-                
+
                 <v-list-item-subtitle>
                   Finish the flashcard set for classification.
                 </v-list-item-subtitle>
               </v-list-item>
-              
+
               <v-list-item value="sound">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title>Group Project Work</v-list-item-title>
-                
+
                 <v-list-item-subtitle>
                   Arrange a catch-up meeting with others.
                 </v-list-item-subtitle>
               </v-list-item>
-              
+
               <v-list-item value="widgets">
                 <template v-slot:prepend="{ isActive }">
                   <v-list-item-action start>
                     <v-checkbox-btn
-                    :model-value="isActive"
-                    color="#ff96a8"
+                      :model-value="isActive"
+                      color="#ff96a8"
                     ></v-checkbox-btn>
                   </v-list-item-action>
                 </template>
-                
+
                 <v-list-item-title
-                >Finish code for Final Year Project</v-list-item-title
+                  >Finish code for Final Year Project</v-list-item-title
                 >
-                
+
                 <v-list-item-subtitle>
                   Finish off the dashboard cards.
                 </v-list-item-subtitle>
@@ -126,13 +124,7 @@
                 </td>
                 <td>{{ assignment.name }}</td>
                 <td>
-                  {{
-                    assignment.due.toDate().toLocaleDateString({
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })
-                  }}
+                  {{ new Date(assignment.due).toLocaleDateString("en-GB") }}
                 </td>
                 <td>{{ assignment.type }}</td>
               </tr>
@@ -166,8 +158,19 @@
           </v-card>
           <!-- New placeholder card -->
           <v-card class="rounded-xl border mt-5" height="7.8rem">
-            <v-card-title class="text-center">Need to Work on:</v-card-title>
-            <v-card-text class="text-center cardTextSm"> Data Mining </v-card-text>
+            <v-card-title class="text-center"
+              >Need to Work on:
+              <v-icon
+                v-bind="props"
+                icon="mdi-help-circle-outline"
+                size="20"
+                title="Placeholder with hardcoded values"
+              >
+              </v-icon>
+            </v-card-title>
+            <v-card-text class="text-center cardTextSm">
+              Data Mining
+            </v-card-text>
           </v-card>
         </v-sheet>
       </v-col>
@@ -183,17 +186,13 @@
               <div>
                 <div class="text-h6">
                   Activity:
-                  <v-tooltip v-model="show" location="top">
-                    <template v-slot:activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        icon="mdi-help-circle-outline"
-                        size="20"
-                      >
-                      </v-icon>
-                    </template>
-                    <span>Placeholder with hardcoded values</span>
-                  </v-tooltip>
+                  <v-icon
+                    v-bind="props"
+                    icon="mdi-help-circle-outline"
+                    size="20"
+                    title="Placeholder with hardcoded values"
+                  >
+                  </v-icon>
                 </div>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
@@ -227,7 +226,16 @@
       <!-- Next placeholder card -->
       <v-col>
         <v-card class="rounded-xl border" height="20rem">
-          <v-card-title class="text-center">Today's Notes:</v-card-title>
+          <v-card-title class="text-center"
+            >Today's Notes:
+            <v-icon
+              v-bind="props"
+              icon="mdi-help-circle-outline"
+              size="20"
+              title="Placeholder with hardcoded values"
+            >
+            </v-icon>
+          </v-card-title>
           <v-sheet class="ma-3">
             <v-textarea
               label="Notes"
@@ -293,13 +301,13 @@ export default {
         a.due > b.due ? 1 : b.due > a.due ? -1 : 0
       );
       this.assignments = this.assignments.filter(
-        (assignment) => assignment.due.toDate() >= new Date()
+        (assignment) => new Date(assignment.due) >= new Date()
       );
 
       const nearestDueAssignment = this.assignments[0];
 
       const diffInMs =
-        nearestDueAssignment.due.toDate().getTime() - new Date().getTime();
+        new Date(nearestDueAssignment.due).getTime() - new Date().getTime();
       this.diffInDays = Math.round(diffInMs / (1000 * 60 * 60 * 24));
     });
 
