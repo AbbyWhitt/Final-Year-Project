@@ -103,9 +103,9 @@
           v-for="flashcard in flashcards"
           :key="flashcard.uid"
           cols="3"
-          style="height: 100%"
+          style="max-height: 220px; margin-bottom: 1rem;"
         >
-          <v-card color="#ffe9ed" class="mt-3 ml-4">
+          <v-card color="#ffe9ed" class="mt-3 ml-4" style="height: 100%; overflow: auto">
             <v-card-title class="font-weight-light">
               Question
               <!-- buttons -->
@@ -189,7 +189,7 @@
               </v-dialog>
               <!-- End of update form -->
             </v-card-title>
-            <v-card-text class="pa-5 text-center" style="font-size: 1rem">
+            <v-card-text class="pa-3 text-center" style="font-size: 1rem">
               {{ flashcard.question }}</v-card-text
             >
             <v-card-actions>
@@ -197,6 +197,7 @@
                 variant="text"
                 @click="toggle(flashcard)"
                 aria-label="reveal flashcard answer"
+                class="reveal-btn"
               >
                 Reveal
               </v-btn>
@@ -396,5 +397,10 @@ export default {
   opacity: 1 !important;
   position: absolute;
   width: 100%;
+}
+.reveal-btn {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0.2rem;
 }
 </style>
