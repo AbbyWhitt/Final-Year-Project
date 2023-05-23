@@ -96,7 +96,7 @@
           aria-description="A table of all assignments ordered by nearest due date first. Shows module code for assignments."
           height="31rem"
         >
-          <v-card-title> Assignments: </v-card-title>
+          <v-card-title> Upcoming Assignments: </v-card-title>
           <v-table fixed-header class="pa-1 overflow-auto">
             <thead>
               <tr>
